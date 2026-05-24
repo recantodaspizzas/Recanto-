@@ -1,458 +1,756 @@
-<!-- SUBSTITUA APENAS ESTE BLOCO -->
-<!-- NAVIGAÇÃO -->
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Digital | Ativos Premium</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366f1',
+                        secondary: '#a855f7',
+                        darkBg: '#0f172a',
+                        darkCard: '#1e293b',
+                        darkBorder: '#334155'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-<nav class="sticky top-0 z-50 bg-white/98 backdrop-blur-lg flex overflow-x-auto px-3 py-3 gap-2 shadow-lg justify-center border-b border-red-100">
-
-    <a href="#pizzas"
-       class="nav-link px-5 py-2.5 bg-gradient-to-r from-green-50 to-green-100 rounded-full text-sm font-bold text-italian-green hover:from-italian-green hover:to-green-700 hover:text-white transition-all whitespace-nowrap no-underline">
-        🍕 Pizzas
-    </a>
-
-    <a href="#hamburgueres"
-       class="nav-link px-5 py-2.5 bg-gradient-to-r from-orange-50 to-orange-100 rounded-full text-sm font-bold text-orange-700 hover:from-orange-600 hover:to-orange-700 hover:text-white transition-all whitespace-nowrap no-underline">
-        🍔 Hambúrgueres
-    </a>
-
-    <a href="#bebidas"
-       class="nav-link px-5 py-2.5 bg-gradient-to-r from-red-50 to-red-100 rounded-full text-sm font-bold text-italian-red hover:from-italian-red hover:to-red-700 hover:text-white transition-all whitespace-nowrap no-underline">
-        🥤 Bebidas
-    </a>
-
-</nav>
-
-<script>
-
-const menuData = {
-
-    pizzas: [
-
-        {
-            id: 'p1',
-            name: 'Pizza Mussarela',
-            desc: 'Molho de tomate, mussarela, tomate e orégano',
-            image: 'images/pizza_mussarela.jpg.png.jpg',
-
-            sizes: [
-                { size: 'Brotinho', price: 25 },
-                { size: 'Média', price: 35 },
-                { size: 'Grande', price: 45 }
-            ]
-        },
-
-        {
-            id: 'p2',
-            name: 'Pizza Calabresa',
-            desc: 'Mussarela, calabresa, cebola e orégano',
-            image: 'images/pizza_calabresa.jpg.png',
-
-            sizes: [
-                { size: 'Brotinho', price: 25 },
-                { size: 'Média', price: 35 },
-                { size: 'Grande', price: 45 }
-            ]
-        },
-
-        {
-            id: 'p3',
-            name: 'Pizza Frango com Catupiry',
-            desc: 'Frango desfiado e catupiry original',
-            image: 'images/frango com catupiry.png',
-
-            sizes: [
-                { size: 'Brotinho', price: 28 },
-                { size: 'Média', price: 38 },
-                { size: 'Grande', price: 48 }
-            ]
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .dark ::-webkit-scrollbar-thumb { background: #475569; }
+        
+        /* Glassmorphism */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        .dark .glass-nav {
+            background: rgba(15, 23, 42, 0.8);
+            border-bottom: 1px solid rgba(51, 65, 85, 0.8);
         }
 
-    ],
-
-    hamburgueres: [
-
-        {
-            id: 'h1',
-            name: 'X-Burger Simples',
-            desc: 'Blend bovino 150g e cheddar',
-            price: 10,
-            image: 'images/x-burguer simplis.png'
+        .gradient-text {
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-    ],
+        /* SPA View Transitions */
+        .view-section { 
+            display: none; 
+            animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+        .view-section.active { display: block; }
 
-    bebidas: [
-
-        {
-            id: 'b1',
-            name: 'Coca-Cola 2L',
-            desc: 'Gelada',
-            price: 15,
-            image: 'images/coca-cola.webp'
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-    ]
+        /* Toast Notifications */
+        #toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .toast {
+            min-width: 300px;
+            padding: 16px 20px;
+            border-radius: 12px;
+            background: #fff;
+            color: #1e293b;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transform: translateX(120%);
+            animation: slideInRight 0.3s forwards ease-out;
+            border-left: 4px solid #6366f1;
+        }
+        .dark .toast {
+            background: #1e293b;
+            color: #f8fafc;
+            border-color: #334155;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+        }
+        .toast.success { border-left-color: #10b981; }
+        .toast.error { border-left-color: #ef4444; }
+        
+        @keyframes slideInRight { to { transform: translateX(0); } }
+        @keyframes fadeOut { to { opacity: 0; transform: translateX(20px); } }
+        .toast.hiding { animation: fadeOut 0.3s forwards ease-in; }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-darkBg text-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen flex flex-col font-sans">
 
-};
+    <header class="fixed w-full top-0 z-50 glass-nav transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div onclick="app.navigate('home')" class="flex-shrink-0 flex items-center gap-2 cursor-pointer group">
+                    <i class="ph-fill ph-hexagon text-4xl text-primary group-hover:rotate-180 transition-transform duration-500"></i>
+                    <span class="font-extrabold text-2xl tracking-tight text-gray-900 dark:text-white">Nexus<span class="text-primary">Digital</span></span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <nav class="hidden md:flex space-x-8">
+                    <button onclick="app.navigate('home')" class="text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition">Início</button>
+                    <button class="text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition">Produtos</button>
+                    <button class="text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition">Sobre</button>
+                </nav>
+                
+                <!-- Actions -->
+                <div class="flex items-center gap-3 sm:gap-5">
+                    <button id="theme-toggle" class="p-2 rounded-full text-gray-500 hover:bg-gray-200 dark:hover:bg-slate-800 transition">
+                        <i class="ph-bold ph-moon text-xl dark:hidden"></i>
+                        <i class="ph-bold ph-sun text-xl hidden dark:block"></i>
+                    </button>
+                    
+                    <button onclick="app.navigate('customer')" class="hidden sm:flex items-center gap-2 text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-primary transition">
+                        <i class="ph-bold ph-user text-lg"></i> Painel
+                    </button>
+                    
+                    <button onclick="app.navigate('checkout')" class="relative bg-gradient-to-r from-primary to-secondary text-white px-5 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-primary/30 hover:shadow-primary/50 transition transform hover:-translate-y-0.5 flex items-center gap-2">
+                        <i class="ph-bold ph-shopping-cart text-lg"></i>
+                        <span id="cart-counter">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
 
-let cart = {};
-
-function renderMenu() {
-
-    ['pizzas','hamburgueres','bebidas'].forEach(category => {
-
-        const container =
-            document.getElementById('menu-' + category);
-
-        container.innerHTML =
-            menuData[category].map(item => {
-
-            /* ========= PIZZAS ========= */
-
-            if(category === 'pizzas') {
-
-                return `
-
-                <div class="bg-white rounded-3xl overflow-hidden shadow-md mb-6 border border-red-100">
-
-                    <div class="p-4 flex gap-4 items-start">
-
-                        <img
-                            src="${item.image}"
-                            class="w-28 h-28 rounded-2xl object-cover shadow-md cursor-pointer hover:scale-105 transition"
-                            onclick="openImageModal('${item.image}')"
-                        >
-
-                        <div class="flex-1">
-
-                            <h3 class="playfair text-xl font-black text-gray-900">
-                                ${item.name}
-                            </h3>
-
-                            <p class="text-sm text-gray-500 mt-1 leading-relaxed">
-                                ${item.desc}
-                            </p>
-
-                            <button
-                                onclick="togglePizzaOptions('${item.id}')"
-                                class="mt-4 bg-gradient-to-r from-red-600 to-green-700 text-white px-5 py-2.5 rounded-xl font-bold text-sm hover:scale-105 transition-all shadow-lg"
-                            >
-                                Escolher tamanho 🍕
-                            </button>
-
-                        </div>
-
+    <!-- Main Content Area -->
+    <main class="flex-grow pt-20">
+        
+        <section id="view-home" class="view-section active pb-20">
+            <!-- Hero -->
+            <div class="relative overflow-hidden bg-white dark:bg-darkBg transition-colors duration-300">
+                <!-- Background Decoration -->
+                <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-primary/5 dark:bg-primary/10 blur-[100px] rounded-full pointer-events-none"></div>
+                
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-24 relative z-10 text-center">
+                    <span class="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-xs font-bold tracking-wider mb-6 border border-primary/20">NOVO LANÇAMENTO</span>
+                    <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-6 leading-tight">
+                        Acelere seu negócio com <br class="hidden md:block" />
+                        <span class="gradient-text">Ativos Digitais Premium</span>
+                    </h1>
+                    <p class="mt-4 text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-10 font-light">
+                        Scripts prontos, templates de alta conversão e sistemas completos. Compre, baixe instantaneamente e escale seus projetos hoje mesmo.
+                    </p>
+                    
+                    <!-- Search Bar -->
+                    <div class="max-w-xl mx-auto relative mb-12">
+                        <i class="ph-bold ph-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl"></i>
+                        <input type="text" placeholder="Buscar scripts, templates, e-books..." class="w-full pl-12 pr-32 py-4 bg-white dark:bg-darkCard border border-gray-200 dark:border-darkBorder rounded-full shadow-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all dark:text-white text-lg">
+                        <button class="absolute right-2 top-1/2 -translate-y-1/2 bg-gray-900 dark:bg-primary text-white px-6 py-2.5 rounded-full font-bold hover:scale-105 transition">Buscar</button>
                     </div>
 
-                    <!-- CASCATA -->
+                    <!-- Categories -->
+                    <div class="flex flex-wrap justify-center gap-3">
+                        <button class="px-5 py-2 rounded-full bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-semibold text-sm hover:scale-105 transition shadow-md">Todos</button>
+                        <button class="px-5 py-2 rounded-full bg-white dark:bg-darkCard text-gray-700 dark:text-gray-300 font-semibold text-sm border border-gray-200 dark:border-darkBorder hover:border-primary dark:hover:border-primary transition">Sistemas Web</button>
+                        <button class="px-5 py-2 rounded-full bg-white dark:bg-darkCard text-gray-700 dark:text-gray-300 font-semibold text-sm border border-gray-200 dark:border-darkBorder hover:border-primary dark:hover:border-primary transition">Templates</button>
+                        <button class="px-5 py-2 rounded-full bg-white dark:bg-darkCard text-gray-700 dark:text-gray-300 font-semibold text-sm border border-gray-200 dark:border-darkBorder hover:border-primary dark:hover:border-primary transition">E-books</button>
+                    </div>
+                </div>
+            </div>
 
-                    <div
-                        id="pizza-options-${item.id}"
-                        class="hidden px-4 pb-4"
-                    >
+            <!-- Products Grid -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-end mb-8">
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Mais Vendidos</h2>
+                        <p class="text-gray-500 dark:text-gray-400 mt-2">Os produtos mais desejados da plataforma.</p>
+                    </div>
+                </div>
 
-                        ${item.sizes.map(size => `
+                <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                    <!-- Products will be injected here via JS -->
+                </div>
+            </div>
+        </section>
 
-                        <div class="bg-gray-50 rounded-2xl p-4 flex items-center justify-between mb-3 border border-gray-100 hover:border-red-200 transition">
+        <section id="view-product" class="view-section py-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <button onclick="app.navigate('home')" class="mb-8 flex items-center gap-2 text-gray-500 hover:text-primary font-semibold transition">
+                    <i class="ph-bold ph-arrow-left"></i> Voltar para a loja
+                </button>
+                
+                <div class="bg-white dark:bg-darkCard rounded-3xl p-6 lg:p-10 border border-gray-100 dark:border-darkBorder shadow-xl grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <!-- Image -->
+                    <div class="rounded-2xl overflow-hidden relative group">
+                        <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition duration-300 z-10 pointer-events-none"></div>
+                        <img id="detail-img" src="" alt="Produto" class="w-full h-[400px] object-cover rounded-2xl group-hover:scale-105 transition duration-700">
+                        <div id="detail-category" class="absolute top-4 left-4 bg-white/90 dark:bg-darkBg/90 backdrop-blur-md text-primary font-bold px-4 py-1.5 rounded-full text-xs z-20 shadow-lg"></div>
+                    </div>
+                    
+                    <!-- Info -->
+                    <div>
+                        <h1 id="detail-title" class="text-3xl lg:text-4xl font-extrabold text-gray-900 dark:text-white mb-4 leading-tight"></h1>
+                        <p id="detail-desc" class="text-lg text-gray-600 dark:text-gray-400 mb-8 leading-relaxed"></p>
+                        
+                        <div class="flex flex-wrap gap-4 mb-8">
+                            <span class="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-slate-800 px-4 py-2 rounded-xl">
+                                <i class="ph-bold ph-download text-primary"></i> Download Imediato
+                            </span>
+                            <span class="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-slate-800 px-4 py-2 rounded-xl">
+                                <i class="ph-bold ph-code text-primary"></i> Código Fonte Incluído
+                            </span>
+                            <span class="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-slate-800 px-4 py-2 rounded-xl">
+                                <i class="ph-bold ph-headset text-primary"></i> Suporte Vitalício
+                            </span>
+                        </div>
 
-                            <div>
+                        <div class="flex items-end gap-4 mb-8 pb-8 border-b border-gray-100 dark:border-darkBorder">
+                            <span id="detail-old-price" class="text-xl text-gray-400 line-through mb-1"></span>
+                            <span id="detail-price" class="text-5xl font-black text-gray-900 dark:text-white"></span>
+                        </div>
+                        
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <button id="btn-add-cart" class="flex-1 bg-gradient-to-r from-primary to-secondary text-white py-4 rounded-2xl font-bold text-lg shadow-xl shadow-primary/30 hover:shadow-primary/50 hover:-translate-y-1 transition flex justify-center items-center gap-2">
+                                <i class="ph-bold ph-shopping-cart-simple text-xl"></i> Adicionar ao Carrinho
+                            </button>
+                            <button onclick="app.navigate('checkout')" class="flex-1 bg-gray-900 dark:bg-white text-white dark:text-gray-900 py-4 rounded-2xl font-bold text-lg shadow-xl hover:-translate-y-1 transition flex justify-center items-center gap-2">
+                                <i class="ph-bold ph-lightning text-xl text-yellow-400 dark:text-yellow-500"></i> Comprar Agora
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-                                <div class="font-black text-gray-800">
-                                    ${size.size}
+        <section id="view-checkout" class="view-section py-12">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-8 text-center sm:text-left">Finalizar Compra</h1>
+                
+                <div id="checkout-content" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Formulário de Pagamento (Left) -->
+                    <div class="lg:col-span-2 space-y-6">
+                        <!-- Step 1: Dados -->
+                        <div class="bg-white dark:bg-darkCard p-6 md:p-8 rounded-3xl border border-gray-100 dark:border-darkBorder shadow-sm">
+                            <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
+                                <span class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm">1</span> Dados Pessoais
+                            </h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                <div class="md:col-span-2">
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nome Completo</label>
+                                    <input type="text" id="chk-name" placeholder="Seu nome" class="w-full px-4 py-3 bg-gray-50 dark:bg-slate-800/50 border border-gray-200 dark:border-darkBorder rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all dark:text-white">
                                 </div>
-
-                                <div class="text-red-600 font-black text-lg">
-                                    R$ ${size.price.toFixed(2).replace('.', ',')}
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">E-mail (Para receber o acesso)</label>
+                                    <input type="email" id="chk-email" placeholder="seu@email.com" class="w-full px-4 py-3 bg-gray-50 dark:bg-slate-800/50 border border-gray-200 dark:border-darkBorder rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all dark:text-white">
                                 </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">WhatsApp / Telefone</label>
+                                    <input type="text" placeholder="(00) 00000-0000" class="w-full px-4 py-3 bg-gray-50 dark:bg-slate-800/50 border border-gray-200 dark:border-darkBorder rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all dark:text-white">
+                                </div>
+                            </div>
+                        </div>
 
+                        <!-- Step 2: Pagamento -->
+                        <div class="bg-white dark:bg-darkCard p-6 md:p-8 rounded-3xl border border-gray-100 dark:border-darkBorder shadow-sm">
+                            <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
+                                <span class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm">2</span> Forma de Pagamento
+                            </h2>
+                            
+                            <!-- Tabs de Pagamento -->
+                            <div class="grid grid-cols-2 gap-4 mb-6">
+                                <button class="py-4 border-2 border-primary bg-primary/5 rounded-2xl flex flex-col items-center justify-center gap-2 text-primary font-bold transition">
+                                    <i class="ph-fill ph-qr-code text-3xl"></i> PIX (Aprovação Imediata)
+                                </button>
+                                <button class="py-4 border-2 border-gray-200 dark:border-darkBorder hover:border-gray-300 dark:hover:border-gray-600 text-gray-500 dark:text-gray-400 rounded-2xl flex flex-col items-center justify-center gap-2 font-bold transition opacity-50 cursor-not-allowed" title="Simulação">
+                                    <i class="ph-fill ph-credit-card text-3xl"></i> Cartão de Crédito
+                                </button>
                             </div>
 
-                            <button
-                                onclick="addPizzaToCart(
-                                    '${item.id}',
-                                    '${item.name}',
-                                    '${size.size}',
-                                    ${size.price}
-                                )"
-                                class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-xl font-bold shadow-md transition"
-                            >
-                                Adicionar
-                            </button>
+                            <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-900/50 rounded-xl p-4 flex gap-4">
+                                <i class="ph-fill ph-info text-2xl text-blue-500"></i>
+                                <div>
+                                    <p class="text-sm text-blue-800 dark:text-blue-300 font-medium mb-1">Pagamento Seguro Mercado Pago</p>
+                                    <p class="text-xs text-blue-600 dark:text-blue-400">Ao clicar em finalizar, o sistema simulará um pagamento aprovado instantaneamente para liberar o produto.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
+                    <!-- Resumo (Right) -->
+                    <div class="lg:col-span-1">
+                        <div class="bg-white dark:bg-darkCard p-6 rounded-3xl border border-gray-100 dark:border-darkBorder shadow-xl sticky top-28">
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4 pb-4 border-b border-gray-100 dark:border-darkBorder">Resumo do Pedido</h3>
+                            
+                            <div id="checkout-items" class="space-y-4 mb-6 max-h-64 overflow-y-auto pr-2">
+                                <!-- Items will be injected here -->
+                            </div>
+
+                            <div class="pt-4 border-t border-gray-100 dark:border-darkBorder">
+                                <div class="flex justify-between text-gray-600 dark:text-gray-400 mb-2">
+                                    <span>Subtotal</span>
+                                    <span id="chk-subtotal" class="font-medium">R$ 0,00</span>
+                                </div>
+                                <div class="flex justify-between text-green-500 font-medium mb-4">
+                                    <span>Desconto Pix (5%)</span>
+                                    <span>- R$ 0,00</span>
+                                </div>
+                                <div class="flex justify-between items-center text-xl font-bold text-gray-900 dark:text-white">
+                                    <span>Total</span>
+                                    <span id="chk-total">R$ 0,00</span>
+                                </div>
+                            </div>
+
+                            <button onclick="app.processPayment()" class="w-full mt-6 bg-gradient-to-r from-primary to-secondary text-white py-4 rounded-xl font-bold text-lg shadow-xl shadow-primary/30 hover:shadow-primary/50 hover:-translate-y-1 transition flex justify-center items-center gap-2">
+                                <i class="ph-bold ph-lock-key"></i> Finalizar Compra Segura
+                            </button>
+                            
+                            <div class="flex justify-center items-center gap-2 mt-4 text-xs text-gray-400">
+                                <i class="ph-fill ph-shield-check text-green-500 text-base"></i> Ambiente Seguro de Pagamento
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Empty State Checkout -->
+                <div id="checkout-empty" class="hidden text-center py-20 bg-white dark:bg-darkCard rounded-3xl border border-gray-100 dark:border-darkBorder">
+                    <div class="w-24 h-24 bg-gray-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-6 text-gray-400">
+                        <i class="ph-fill ph-shopping-cart text-4xl"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Seu carrinho está vazio</h2>
+                    <p class="text-gray-500 mb-8">Volte para a loja e adicione produtos incríveis!</p>
+                    <button onclick="app.navigate('home')" class="bg-primary text-white px-8 py-3 rounded-full font-bold hover:bg-primary/90 transition">Explorar Produtos</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="view-customer" class="view-section py-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row gap-8">
+                    <!-- Sidebar Profile -->
+                    <div class="w-full md:w-80 flex-shrink-0">
+                        <div class="bg-white dark:bg-darkCard rounded-3xl border border-gray-100 dark:border-darkBorder shadow-sm overflow-hidden sticky top-28">
+                            <div class="bg-gradient-to-r from-primary to-secondary h-24"></div>
+                            <div class="px-6 pb-6 text-center relative">
+                                <div class="w-20 h-20 bg-white dark:bg-darkCard rounded-full p-1 border-4 border-white dark:border-darkCard absolute -top-10 left-1/2 -translate-x-1/2 flex justify-center items-center text-primary shadow-lg">
+                                    <i class="ph-fill ph-user text-4xl"></i>
+                                </div>
+                                <h3 id="profile-name" class="text-xl font-bold text-gray-900 dark:text-white mt-12 mb-1">Cliente</h3>
+                                <p id="profile-email" class="text-sm text-gray-500 dark:text-gray-400 mb-6">cliente@email.com</p>
+                                
+                                <nav class="space-y-2 text-left">
+                                    <button class="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-primary/10 text-primary font-bold transition">
+                                        <i class="ph-bold ph-package text-xl"></i> Minhas Compras
+                                    </button>
+                                    <button class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800 font-medium transition">
+                                        <i class="ph-bold ph-receipt text-xl"></i> Histórico de Pedidos
+                                    </button>
+                                    <button class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800 font-medium transition">
+                                        <i class="ph-bold ph-gear text-xl"></i> Configurações
+                                    </button>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Area - Purchased Items -->
+                    <div class="flex-1">
+                        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Produtos Adquiridos</h2>
+                        
+                        <div id="purchased-items" class="space-y-4">
+                            <!-- Items will be injected here -->
                         </div>
 
-                        `).join('')}
-
+                        <!-- Empty State Purchases -->
+                        <div id="purchased-empty" class="text-center py-16 bg-white dark:bg-darkCard rounded-3xl border border-dashed border-gray-300 dark:border-darkBorder">
+                            <i class="ph-duotone ph-package text-6xl text-gray-300 dark:text-gray-600 mb-4"></i>
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Nenhuma compra ainda</h3>
+                            <p class="text-gray-500 mb-6">Seus produtos digitais aparecerão aqui após o pagamento.</p>
+                            <button onclick="app.navigate('home')" class="bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-6 py-2 rounded-full font-bold hover:scale-105 transition">Ir para a Loja</button>
+                        </div>
                     </div>
-
                 </div>
-
-                `;
-            }
-
-            /* ========= OUTROS ========= */
-
-            return `
-
-            <div class="bg-white rounded-2xl p-5 mb-4 flex gap-4 shadow-md hover:shadow-lg transition">
-
-                <img
-                    src="${item.image}"
-                    class="w-20 h-20 rounded-xl object-cover"
-                >
-
-                <div class="flex-1">
-
-                    <div class="playfair font-bold text-lg">
-                        ${item.name}
-                    </div>
-
-                    <div class="text-xs text-gray-600 mt-1">
-                        ${item.desc}
-                    </div>
-
-                    <div class="flex justify-between items-center mt-4">
-
-                        <span class="font-black text-red-600 text-lg">
-                            R$ ${item.price.toFixed(2).replace('.', ',')}
-                        </span>
-
-                        <button
-                            onclick="addSimpleItem('${item.id}')"
-                            class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl font-bold text-sm"
-                        >
-                            Adicionar
-                        </button>
-
-                    </div>
-
-                </div>
-
             </div>
+        </section>
 
-            `;
+    </main>
 
-        }).join('');
-
-    });
-
-}
-
-/* ========= ABRIR CASCATA ========= */
-
-function togglePizzaOptions(id) {
-
-    const el =
-        document.getElementById('pizza-options-' + id);
-
-    el.classList.toggle('hidden');
-
-}
-
-/* ========= ADICIONAR PIZZA ========= */
-
-function addPizzaToCart(id, name, size, price) {
-
-    const key = id + '-' + size;
-
-    if(!cart[key]) {
-
-        cart[key] = {
-
-            name: name + ' - ' + size,
-            price: price,
-            qty: 1
-
-        };
-
-    } else {
-
-        cart[key].qty++;
-
-    }
-
-    updateCartBar();
-
-}
-
-/* ========= ITENS SIMPLES ========= */
-
-function addSimpleItem(id) {
-
-    const item =
-        [...menuData.hamburgueres, ...menuData.bebidas]
-        .find(i => i.id === id);
-
-    if(!cart[id]) {
-
-        cart[id] = {
-
-            name: item.name,
-            price: item.price,
-            qty: 1
-
-        };
-
-    } else {
-
-        cart[id].qty++;
-
-    }
-
-    updateCartBar();
-
-}
-
-/* ========= CARRINHO ========= */
-
-function updateCartBar() {
-
-    let total = 0;
-    let count = 0;
-
-    Object.values(cart).forEach(item => {
-
-        total += item.price * item.qty;
-        count += item.qty;
-
-    });
-
-    document.getElementById('cart-count').textContent =
-        count + (count === 1 ? ' item' : ' itens');
-
-    document.getElementById('cart-total').textContent =
-        'R$ ' + total.toFixed(2).replace('.', ',');
-
-    document.getElementById('cart-bar').style.bottom =
-        count > 0 ? '20px' : '-100px';
-
-}
-
-/* ========= MODAL CARRINHO ========= */
-
-function openCart() {
-
-    const modal =
-        document.getElementById('cart-modal');
-
-    modal.classList.remove('hidden');
-
-    const cartItems =
-        document.getElementById('cart-items');
-
-    const footer =
-        document.getElementById('cart-footer');
-
-    const empty =
-        document.getElementById('cart-empty');
-
-    if(Object.keys(cart).length === 0) {
-
-        empty.classList.remove('hidden');
-        footer.classList.add('hidden');
-        cartItems.innerHTML = '';
-
-        return;
-    }
-
-    empty.classList.add('hidden');
-    footer.classList.remove('hidden');
-
-    let total = 0;
-
-    cartItems.innerHTML = Object.values(cart).map(item => {
-
-        const subtotal =
-            item.price * item.qty;
-
-        total += subtotal;
-
-        return `
-
-        <div class="flex justify-between items-center py-4 border-b">
-
-            <div>
-
-                <div class="font-bold">
-                    ${item.name}
+    <footer class="bg-white dark:bg-darkCard border-t border-gray-200 dark:border-darkBorder mt-auto transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-1">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i class="ph-fill ph-hexagon text-3xl text-primary"></i>
+                        <span class="font-bold text-xl text-gray-900 dark:text-white">Nexus<span class="text-primary">Digital</span></span>
+                    </div>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">Plataforma profissional para venda e distribuição de ativos digitais premium.</p>
                 </div>
-
-                <div class="text-sm text-gray-500">
-                    ${item.qty}x
+                <div>
+                    <h4 class="font-bold text-gray-900 dark:text-white mb-4">Categorias</h4>
+                    <ul class="space-y-2 text-sm text-gray-500 dark:text-gray-400">
+                        <li><a href="#" class="hover:text-primary transition">Sistemas SaaS</a></li>
+                        <li><a href="#" class="hover:text-primary transition">Templates HTML/Vue</a></li>
+                        <li><a href="#" class="hover:text-primary transition">Scripts PHP</a></li>
+                        <li><a href="#" class="hover:text-primary transition">UI Kits Figma</a></li>
+                    </ul>
                 </div>
-
+                <div>
+                    <h4 class="font-bold text-gray-900 dark:text-white mb-4">Suporte</h4>
+                    <ul class="space-y-2 text-sm text-gray-500 dark:text-gray-400">
+                        <li><a href="#" class="hover:text-primary transition">Central de Ajuda</a></li>
+                        <li><a href="#" class="hover:text-primary transition">Termos de Uso</a></li>
+                        <li><a href="#" class="hover:text-primary transition">Política de Privacidade</a></li>
+                        <li><a href="#" class="hover:text-primary transition">Contato</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-gray-900 dark:text-white mb-4">Pagamento Seguro</h4>
+                    <div class="flex gap-2 mb-4">
+                        <div class="w-12 h-8 bg-gray-100 dark:bg-slate-800 rounded flex items-center justify-center text-xl text-gray-500"><i class="ph-fill ph-credit-card"></i></div>
+                        <div class="w-12 h-8 bg-gray-100 dark:bg-slate-800 rounded flex items-center justify-center text-xl text-gray-500"><i class="ph-fill ph-qr-code"></i></div>
+                        <div class="w-12 h-8 bg-gray-100 dark:bg-slate-800 rounded flex items-center justify-center text-xl text-gray-500"><i class="ph-fill ph-bank"></i></div>
+                    </div>
+                    <p class="text-xs text-gray-400">Certificado SSL de 256 bits. Seus dados estão seguros.</p>
+                </div>
             </div>
-
-            <div class="font-black text-red-600">
-                R$ ${subtotal.toFixed(2).replace('.', ',')}
+            <div class="border-t border-gray-100 dark:border-darkBorder mt-12 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+                <p>&copy; 2023 Nexus Digital. Todos os direitos reservados.</p>
+                <div class="flex gap-4 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-primary text-lg"><i class="ph-fill ph-instagram-logo"></i></a>
+                    <a href="#" class="hover:text-primary text-lg"><i class="ph-fill ph-twitter-logo"></i></a>
+                    <a href="#" class="hover:text-primary text-lg"><i class="ph-fill ph-github-logo"></i></a>
+                </div>
             </div>
-
         </div>
+    </footer>
 
-        `;
+    <!-- Toast Notifications Container -->
+    <div id="toast-container"></div>
 
-    }).join('');
+    <script>
+        // --- 1. MOCK DATABASE (Produtos Digitais) ---
+        const productsDB = [
+            {
+                id: 1,
+                title: "SaaS Dashboard Pro Template",
+                category: "Sistemas Web",
+                price: 147.00,
+                oldPrice: 297.00,
+                image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
+                desc: "Painel administrativo completo em HTML, Tailwind e Vanilla JS. Pronto para integrar com seu backend Node.js, PHP ou Python. Design premium focado em UX/UI com dezenas de páginas pré-construídas."
+            },
+            {
+                id: 2,
+                title: "E-commerce Front UI Kit",
+                category: "Templates",
+                price: 97.90,
+                oldPrice: 159.90,
+                image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
+                desc: "Kit de interface de usuário completo para lojas virtuais. Mais de 40 componentes reutilizáveis, fluxo de checkout otimizado, carrinho lateral e páginas de produto de alta conversão."
+            },
+            {
+                id: 3,
+                title: "Script API Gateway Node.js",
+                category: "Scripts",
+                price: 199.00,
+                oldPrice: 350.00,
+                image: "https://images.unsplash.com/photo-1555099962-4199c345e5dd?auto=format&fit=crop&w=800&q=80",
+                desc: "Código fonte completo de um API Gateway robusto feito em Node.js e Express. Inclui rate limiting, JWT auth, logging e rotas dinâmicas. Ideal para microserviços."
+            },
+            {
+                id: 4,
+                title: "E-book: Mestre do Clean Code",
+                category: "E-books",
+                price: 47.00,
+                oldPrice: 97.00,
+                image: "https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&w=800&q=80",
+                desc: "Aprenda as melhores práticas de engenharia de software neste e-book PDF com mais de 200 páginas. Exemplos reais em JavaScript e arquitetura escalável."
+            }
+        ];
 
-    document.getElementById('modal-total').textContent =
-        'R$ ' + total.toFixed(2).replace('.', ',');
+        // --- 2. APPLICATION STATE ---
+        const app = {
+            cart: [],
+            purchases: [],
+            currentProduct: null,
+            
+            // Notification System
+            toast: function(message, type = 'success') {
+                const container = document.getElementById('toast-container');
+                const toast = document.createElement('div');
+                toast.className = `toast ${type}`;
+                
+                const icon = type === 'success' ? '<i class="ph-fill ph-check-circle text-green-500 text-2xl"></i>' : '<i class="ph-fill ph-warning-circle text-red-500 text-2xl"></i>';
+                
+                toast.innerHTML = `
+                    ${icon}
+                    <div class="flex-1 font-medium text-sm">${message}</div>
+                `;
+                
+                container.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.classList.add('hiding');
+                    toast.addEventListener('animationend', () => toast.remove());
+                }, 3000);
+            },
 
-}
+            // Format Currency
+            formatMoney: (val) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(val),
 
-/* ========= FECHAR ========= */
+            // SPA Navigation
+            navigate: function(viewId, param = null) {
+                // Hide all views
+                document.querySelectorAll('.view-section').forEach(el => {
+                    el.classList.remove('active');
+                });
+                
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
 
-function closeCart() {
+                // Prep views before showing
+                if(viewId === 'product' && param) {
+                    this.loadProductDetail(param);
+                } else if(viewId === 'checkout') {
+                    this.renderCheckout();
+                } else if(viewId === 'customer') {
+                    this.renderPurchases();
+                }
 
-    document.getElementById('cart-modal')
-        .classList.add('hidden');
+                // Show target view
+                document.getElementById(`view-${viewId}`).classList.add('active');
+            },
 
-}
+            // Render Storefront
+            renderHome: function() {
+                const grid = document.getElementById('products-grid');
+                grid.innerHTML = '';
+                
+                productsDB.forEach(prod => {
+                    const card = document.createElement('div');
+                    card.className = "bg-white dark:bg-darkCard rounded-2xl overflow-hidden border border-gray-100 dark:border-darkBorder group shadow-sm hover:shadow-xl hover:shadow-primary/10 transition-all flex flex-col h-full";
+                    card.innerHTML = `
+                        <div class="h-48 relative overflow-hidden bg-gray-100 dark:bg-slate-800 cursor-pointer" onclick="app.navigate('product', ${prod.id})">
+                            <img src="${prod.image}" alt="${prod.title}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                            <div class="absolute top-3 left-3 bg-white/90 dark:bg-darkBg/90 backdrop-blur-sm text-primary text-xs font-bold px-3 py-1.5 rounded-full shadow-sm">
+                                ${prod.category}
+                            </div>
+                        </div>
+                        <div class="p-5 flex flex-col flex-grow">
+                            <h3 class="font-bold text-lg mb-2 text-gray-900 dark:text-white group-hover:text-primary transition cursor-pointer" onclick="app.navigate('product', ${prod.id})">${prod.title}</h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 mb-4 line-clamp-2 flex-grow">${prod.desc}</p>
+                            <div class="flex justify-between items-end mt-auto pt-4 border-t border-gray-50 dark:border-darkBorder/50">
+                                <div>
+                                    <span class="block text-xs text-gray-400 line-through mb-0.5">${this.formatMoney(prod.oldPrice)}</span>
+                                    <div class="font-extrabold text-xl text-gray-900 dark:text-white">${this.formatMoney(prod.price)}</div>
+                                </div>
+                                <button onclick="app.addToCart(${prod.id}, event)" class="bg-primary/10 text-primary hover:bg-primary hover:text-white p-3 rounded-xl transition shadow-sm">
+                                    <i class="ph-bold ph-shopping-cart-plus text-xl"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            },
 
-/* ========= WHATSAPP ========= */
+            // Load Single Product
+            loadProductDetail: function(id) {
+                const prod = productsDB.find(p => p.id === id);
+                if(!prod) return;
+                this.currentProduct = prod;
 
-function sendWhatsApp() {
+                document.getElementById('detail-img').src = prod.image;
+                document.getElementById('detail-category').innerText = prod.category;
+                document.getElementById('detail-title').innerText = prod.title;
+                document.getElementById('detail-desc').innerText = prod.desc;
+                document.getElementById('detail-old-price').innerText = this.formatMoney(prod.oldPrice);
+                document.getElementById('detail-price').innerText = this.formatMoney(prod.price);
+                
+                const btnAdd = document.getElementById('btn-add-cart');
+                btnAdd.onclick = () => this.addToCart(prod.id);
+            },
 
-    let msg =
-        '🍕 *NOVO PEDIDO - Recanto das Pizzas*%0A%0A';
+            // Cart Functions
+            addToCart: function(id, event) {
+                if(event) event.stopPropagation(); // Prevent opening product detail if clicked on grid icon
+                
+                const prod = productsDB.find(p => p.id === id);
+                // Check if already in cart
+                if(!this.cart.find(item => item.id === id)) {
+                    this.cart.push(prod);
+                    document.getElementById('cart-counter').innerText = this.cart.length;
+                    this.toast(`${prod.title} adicionado ao carrinho!`);
+                } else {
+                    this.toast('Produto já está no carrinho.', 'error');
+                }
+            },
 
-    let total = 0;
+            removeFromCart: function(id) {
+                this.cart = this.cart.filter(item => item.id !== id);
+                document.getElementById('cart-counter').innerText = this.cart.length;
+                this.renderCheckout();
+                this.toast('Item removido.');
+            },
 
-    Object.values(cart).forEach(item => {
+            // Render Checkout View
+            renderCheckout: function() {
+                const container = document.getElementById('checkout-items');
+                const content = document.getElementById('checkout-content');
+                const empty = document.getElementById('checkout-empty');
+                
+                if(this.cart.length === 0) {
+                    content.classList.add('hidden');
+                    empty.classList.remove('hidden');
+                    return;
+                }
+                
+                content.classList.remove('hidden');
+                empty.classList.add('hidden');
+                container.innerHTML = '';
+                
+                let total = 0;
 
-        const subtotal =
-            item.price * item.qty;
+                this.cart.forEach(item => {
+                    total += item.price;
+                    container.innerHTML += `
+                        <div class="flex gap-4 items-center bg-gray-50 dark:bg-slate-800/50 p-3 rounded-xl border border-gray-100 dark:border-darkBorder">
+                            <img src="${item.image}" class="w-16 h-16 rounded-lg object-cover">
+                            <div class="flex-1">
+                                <h4 class="text-sm font-bold text-gray-900 dark:text-white line-clamp-1">${item.title}</h4>
+                                <div class="text-primary font-bold text-sm mt-1">${this.formatMoney(item.price)}</div>
+                            </div>
+                            <button onclick="app.removeFromCart(${item.id})" class="text-gray-400 hover:text-red-500 p-2 transition">
+                                <i class="ph-bold ph-trash"></i>
+                            </button>
+                        </div>
+                    `;
+                });
 
-        total += subtotal;
+                document.getElementById('chk-subtotal').innerText = this.formatMoney(total);
+                document.getElementById('chk-total').innerText = this.formatMoney(total);
+            },
 
-        msg +=
-            `*${item.qty}x* ${item.name} - R$ ${subtotal.toFixed(2).replace('.', ',')}%0A`;
+            // Process Payment (Simulation)
+            processPayment: function() {
+                const name = document.getElementById('chk-name').value;
+                const email = document.getElementById('chk-email').value;
 
-    });
+                if(!name || !email) {
+                    this.toast('Preencha nome e e-mail para receber o acesso.', 'error');
+                    return;
+                }
 
-    msg += `%0A*TOTAL: R$ ${total.toFixed(2).replace('.', ',')}*`;
+                // Simulate processing delay
+                const btn = document.querySelector('#view-checkout button[onclick="app.processPayment()"]');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = `<i class="ph-bold ph-spinner animate-spin"></i> Processando Pagamento...`;
+                btn.disabled = true;
 
-    window.open(
-        `https://wa.me/5581997367519?text=${msg}`,
-        '_blank'
-    );
+                setTimeout(() => {
+                    // Success Simulation
+                    this.toast('Pagamento Aprovado com Sucesso!');
+                    
+                    // Move from cart to purchases
+                    this.purchases = [...this.purchases, ...this.cart];
+                    this.cart = []; // Empty cart
+                    document.getElementById('cart-counter').innerText = '0';
+                    
+                    // Set Profile Info
+                    document.getElementById('profile-name').innerText = name.split(' ')[0];
+                    document.getElementById('profile-email').innerText = email;
 
-}
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                    
+                    // Redirect to Customer Dashboard
+                    this.navigate('customer');
+                }, 1500);
+            },
 
-/* ========= IMAGEM ========= */
+            // Render Customer Purchases
+            renderPurchases: function() {
+                const container = document.getElementById('purchased-items');
+                const empty = document.getElementById('purchased-empty');
 
-function openImageModal(src) {
+                if(this.purchases.length === 0) {
+                    container.classList.add('hidden');
+                    empty.classList.remove('hidden');
+                    return;
+                }
 
-    document.getElementById('modal-image').src = src;
+                container.classList.remove('hidden');
+                empty.classList.add('hidden');
+                container.innerHTML = '';
 
-    document.getElementById('image-modal')
-        .classList.remove('hidden');
+                this.purchases.forEach(item => {
+                    container.innerHTML += `
+                        <div class="bg-white dark:bg-darkCard p-5 rounded-2xl border border-gray-100 dark:border-darkBorder shadow-sm flex flex-col sm:flex-row gap-5 items-center">
+                            <img src="${item.image}" class="w-24 h-24 rounded-xl object-cover shadow-sm">
+                            <div class="flex-1 text-center sm:text-left">
+                                <div class="inline-block px-2 py-1 rounded bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 text-xs font-bold mb-2">
+                                    PAGAMENTO APROVADO
+                                </div>
+                                <h3 class="font-bold text-lg text-gray-900 dark:text-white leading-tight">${item.title}</h3>
+                                <p class="text-sm text-gray-500 mt-1">Acesso vitalício garantido.</p>
+                            </div>
+                            <button onclick="app.downloadFile('${item.title}')" class="w-full sm:w-auto px-6 py-3 bg-primary text-white font-bold rounded-xl shadow-lg shadow-primary/30 hover:-translate-y-1 hover:shadow-primary/50 transition flex items-center justify-center gap-2">
+                                <i class="ph-bold ph-download-simple text-xl"></i> Baixar Arquivos
+                            </button>
+                        </div>
+                    `;
+                });
+            },
 
-}
+            downloadFile: function(title) {
+                this.toast(`Iniciando download seguro de: ${title}`);
+                // Aqui seria feita a requisição para pegar a signed URL no backend
+            }
+        };
 
-function closeImageModal() {
+        // --- 3. THEME INITIALIZATION (Dark Mode) ---
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const html = document.documentElement;
 
-    document.getElementById('image-modal')
-        .classList.add('hidden');
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+        } else {
+            html.classList.remove('dark');
+        }
 
-}
+        themeToggleBtn.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            localStorage.theme = html.classList.contains('dark') ? 'dark' : 'light';
+        });
 
-renderMenu();
+        // --- 4. START APP ---
+        window.onload = () => {
+            app.renderHome();
+        };
 
-</script>
+    </script>
+</body>
+</html>
