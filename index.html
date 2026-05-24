@@ -1,273 +1,854 @@
-<!DOCTYPE html>
-<title>WhatsApp Business Dashboard</title>
-<link rel="stylesheet" href="style.css">
+<!-- ARQUIVO: index.html -->
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+<title>Recanto das Pizzas | Delivery Online</title>
+
+<meta name="description" content="Peça pizzas, hambúrgueres e bebidas online no Recanto das Pizzas. Delivery rápido, sabor incrível e atendimento premium." />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+
+<style>
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    margin:0;
+    font-family:'Lato',sans-serif;
+    background:#fafafa;
+    overflow-x:hidden;
+}
+
+.playfair{
+    font-family:'Playfair Display',serif;
+}
+
+.hero{
+    background:
+    linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
+    url('https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1200&auto=format&fit=crop');
+    background-size:cover;
+    background-position:center;
+}
+
+.cart-bar{
+    transition:.3s;
+}
+
+.product-card{
+    transition:.3s;
+}
+
+.product-card:hover{
+    transform:translateY(-3px);
+}
+
+.modal{
+    animation:fade .2s ease;
+}
+
+@keyframes fade{
+    from{
+        opacity:0;
+    }
+    to{
+        opacity:1;
+    }
+}
+
+.slide-up{
+    animation:slideUp .3s ease;
+}
+
+@keyframes slideUp{
+    from{
+        transform:translateY(100%);
+    }
+    to{
+        transform:translateY(0);
+    }
+}
+
+nav::-webkit-scrollbar{
+    display:none;
+}
+
+.badge-open{
+    background:#16a34a;
+}
+
+.badge-close{
+    background:#dc2626;
+}
+
+</style>
+
+<script>
+tailwind.config = {
+    theme:{
+        extend:{
+            colors:{
+                greenPizza:'#065f46',
+                redPizza:'#dc2626',
+            }
+        }
+    }
+}
+</script>
 </head>
+
 <body>
 
-<div class="sidebar">
-  <h2>WhatsApp CRM</h2>
-
-  <ul>
-    <li>Dashboard</li>
-    <li>Campanhas</li>
-    <li>Contatos</li>
-    <li>Automação</li>
-    <li>Relatórios</li>
-    <li>Configurações</li>
-  </ul>
+<!-- TOPO PROMO -->
+<div class="bg-redPizza text-white text-center py-2 font-black text-sm">
+🔥 PROMOÇÃO: Pizza Grande + Refrigerante 2L por apenas R$ 49,90
 </div>
 
-<div class="main">
+<!-- HERO -->
+<section class="hero h-[330px] flex items-center justify-center text-center relative">
 
-  <div class="topbar">
-    <h1>Painel Administrativo</h1>
-  </div>
+<div class="absolute top-4 right-4">
 
-  <div class="cards">
-
-    <div class="card">
-      <h3>Contatos</h3>
-      <span id="totalContatos">0</span>
-    </div>
-
-    <div class="card">
-      <h3>Mensagens Enviadas</h3>
-      <span id="totalMensagens">0</span>
-    </div>
-
-    <div class="card">
-      <h3>Campanhas</h3>
-      <span>Ativas</span>
-    </div>
-
-  </div>
-
-  <div class="painel">
-
-    <div class="box">
-      <h2>Nova Campanha</h2>
-
-      <textarea id="mensagem" placeholder="Digite sua campanha..."></textarea>
-
-      <button onclick="enviarCampanha()">
-        Enviar Campanha
-      </button>
-    </div>
-
-    <div class="box">
-      <h2>Adicionar Contato</h2>
-
-      <input type="text" id="nome" placeholder="Nome">
-      <input type="text" id="telefone" placeholder="5511999999999">
-
-      <button onclick="adicionarContato()">
-        Salvar Contato
-      </button>
-    </div>
-
-  </div>
-
-  <div class="lista" id="listaContatos"></div>
+<span id="store-status"
+class="badge-open text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+ABERTO
+</span>
 
 </div>
 
-<script src="script.js"></script>
+<div class="px-4">
+
+<img
+src="https://cdn-icons-png.flaticon.com/512/6978/6978255.png"
+class="w-32 h-32 mx-auto rounded-full border-4 border-white shadow-2xl bg-white object-cover"
+/>
+
+<h1 class="playfair text-white text-5xl font-black mt-4 drop-shadow-lg">
+Recanto das Pizzas
+</h1>
+
+<p class="text-red-100 mt-3 font-bold">
+🍕 Delivery Premium • 🍔 Hambúrguer Artesanal • 🥤 Bebidas Geladas
+</p>
+
+<p class="text-white/90 text-sm mt-2">
+Funcionamos das 18:30 às 22:00 • Fechado às segundas
+</p>
+
+</div>
+
+</section>
+
+<!-- MENU -->
+<nav class="sticky top-0 z-40 bg-white shadow-lg overflow-auto flex gap-3 px-4 py-3">
+
+<a href="#pizzas"
+class="bg-green-100 text-greenPizza px-5 py-2 rounded-full font-bold whitespace-nowrap">
+🍕 Pizzas
+</a>
+
+<a href="#hamburgueres"
+class="bg-orange-100 text-orange-700 px-5 py-2 rounded-full font-bold whitespace-nowrap">
+🍔 Hambúrgueres
+</a>
+
+<a href="#bebidas"
+class="bg-red-100 text-redPizza px-5 py-2 rounded-full font-bold whitespace-nowrap">
+🥤 Bebidas
+</a>
+
+</nav>
+
+<!-- CONTEÚDO -->
+<div class="max-w-3xl mx-auto px-4 pb-40">
+
+<!-- PIZZAS -->
+<section id="pizzas" class="pt-8">
+
+<h2 class="playfair text-3xl font-black text-greenPizza mb-6">
+🍕 Pizzas
+</h2>
+
+<div id="menu-pizzas"></div>
+
+</section>
+
+<!-- HAMBURGUER -->
+<section id="hamburgueres" class="pt-10">
+
+<h2 class="playfair text-3xl font-black text-orange-600 mb-6">
+🍔 Hambúrgueres
+</h2>
+
+<div id="menu-hamburgueres"></div>
+
+</section>
+
+<!-- BEBIDAS -->
+<section id="bebidas" class="pt-10">
+
+<h2 class="playfair text-3xl font-black text-redPizza mb-6">
+🥤 Bebidas
+</h2>
+
+<div id="menu-bebidas"></div>
+
+</section>
+
+</div>
+
+<!-- BOTÃO WHATS -->
+<a
+href="https://wa.me/5581997367519"
+target="_blank"
+class="fixed bottom-6 right-6 bg-green-500 w-16 h-16 rounded-full flex items-center justify-center shadow-2xl z-50">
+
+<i data-lucide="message-circle" class="w-8 h-8 text-white"></i>
+
+</a>
+
+<!-- CARRINHO -->
+<div
+id="cart-bar"
+onclick="openCart()"
+class="cart-bar fixed left-1/2 -translate-x-1/2 bottom-[-120px] w-[calc(100%-20px)] max-w-md bg-gradient-to-r from-greenPizza to-redPizza text-white rounded-2xl shadow-2xl p-4 z-50 cursor-pointer">
+
+<div class="flex items-center justify-between">
+
+<div class="flex items-center gap-3">
+
+<div class="bg-white/20 w-12 h-12 rounded-full flex items-center justify-center">
+<i data-lucide="shopping-cart"></i>
+</div>
+
+<div>
+<div id="cart-count" class="font-black">0 itens</div>
+<div class="text-xs opacity-80">Toque para abrir</div>
+</div>
+
+</div>
+
+<div id="cart-total" class="text-xl font-black">
+R$ 0,00
+</div>
+
+</div>
+
+</div>
+
+<!-- MODAL CARRINHO -->
+<div id="cart-modal" class="hidden fixed inset-0 z-[100] modal">
+
+<div
+onclick="closeCart()"
+class="absolute inset-0 bg-black/60 backdrop-blur-sm">
+</div>
+
+<div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl max-h-[90%] overflow-auto slide-up p-6">
+
+<div class="flex justify-between items-center mb-6">
+
+<h2 class="playfair text-3xl font-black text-greenPizza">
+Seu Pedido
+</h2>
+
+<button
+onclick="closeCart()"
+class="bg-red-100 w-10 h-10 rounded-full flex items-center justify-center">
+
+<i data-lucide="x" class="text-redPizza"></i>
+
+</button>
+
+</div>
+
+<div id="cart-items"></div>
+
+<div id="cart-empty" class="text-center py-16 text-gray-400">
+🛒 Carrinho vazio
+</div>
+
+<div id="cart-footer" class="hidden">
+
+<!-- FRETE -->
+<div class="bg-gray-50 rounded-2xl p-4 mt-6">
+
+<div class="flex justify-between mb-2">
+<span>Subtotal</span>
+<span id="subtotal-text">R$ 0,00</span>
+</div>
+
+<div class="flex justify-between mb-2">
+<span>Entrega</span>
+<span>R$ 5,00</span>
+</div>
+
+<div class="border-t pt-3 mt-3 flex justify-between text-xl font-black">
+<span>Total</span>
+<span id="total-text">R$ 0,00</span>
+</div>
+
+</div>
+
+<!-- CAMPOS -->
+<div class="mt-5 space-y-4">
+
+<input
+id="customer-name"
+placeholder="Seu nome"
+class="w-full border rounded-xl px-4 py-3 outline-none"
+/>
+
+<input
+id="customer-address"
+placeholder="Seu endereço"
+class="w-full border rounded-xl px-4 py-3 outline-none"
+/>
+
+<select
+id="payment-method"
+class="w-full border rounded-xl px-4 py-3 outline-none">
+
+<option value="Dinheiro">Dinheiro</option>
+<option value="PIX">PIX</option>
+<option value="Cartão">Cartão</option>
+
+</select>
+
+<textarea
+id="notes"
+placeholder="Observações do pedido..."
+class="w-full border rounded-xl px-4 py-3 outline-none h-28 resize-none"></textarea>
+
+</div>
+
+<button
+onclick="sendWhatsApp()"
+class="w-full mt-6 bg-gradient-to-r from-greenPizza to-redPizza text-white py-4 rounded-2xl font-black text-lg shadow-xl">
+
+Enviar Pedido no WhatsApp
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- MODAL FECHADO -->
+<div
+id="closed-overlay"
+class="hidden fixed inset-0 bg-black/80 z-[999] flex items-center justify-center p-6">
+
+<div class="bg-white rounded-3xl p-8 text-center max-w-md shadow-2xl">
+
+<div class="text-6xl mb-4">
+🍕
+</div>
+
+<h2 class="text-3xl font-black text-redPizza">
+Estamos Fechados
+</h2>
+
+<p class="mt-3 text-gray-600 font-semibold">
+Funcionamos das 18:30 às 22:00
+</p>
+
+<p class="text-sm text-gray-400 mt-2">
+Fechado às segundas-feiras
+</p>
+
+</div>
+
+</div>
+
+<script>
+
+const DELIVERY_FEE = 5;
+
+const config = {
+    storeName:'Recanto das Pizzas',
+    whatsapp:'5581997367519'
+};
+
+const menuData = {
+
+pizzas:[
+
+{
+id:'p1',
+name:'Pizza Mussarela',
+desc:'Molho de tomate, mussarela, tomate e orégano',
+sizes:{
+'Brotinho':25,
+'Média':35,
+'Grande':45
+},
+image:'https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=800&auto=format&fit=crop',
+available:true
+},
+
+{
+id:'p2',
+name:'Pizza Calabresa',
+desc:'Calabresa fatiada, cebola e mussarela',
+sizes:{
+'Brotinho':27,
+'Média':38,
+'Grande':48
+},
+image:'https://images.unsplash.com/photo-1594007654729-407eedc4be65?q=80&w=800&auto=format&fit=crop',
+available:true
+},
+
+{
+id:'p3',
+name:'Pizza Portuguesa',
+desc:'Presunto, ovos, ervilha e cebola',
+sizes:{
+'Brotinho':28,
+'Média':40,
+'Grande':50
+},
+image:'https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?q=80&w=800&auto=format&fit=crop',
+available:false
+}
+
+],
+
+hamburgueres:[
+
+{
+id:'h1',
+name:'X-Bacon',
+desc:'Blend bovino 150g + bacon + cheddar',
+price:18,
+image:'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=800&auto=format&fit=crop',
+available:true
+},
+
+{
+id:'h2',
+name:'X-Tudo',
+desc:'2 carnes + cheddar + bacon + calabresa',
+price:28,
+image:'https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=800&auto=format&fit=crop',
+available:true
+}
+
+],
+
+bebidas:[
+
+{
+id:'b1',
+name:'Coca-Cola 2L',
+desc:'Bem gelada',
+price:15,
+image:'https://images.unsplash.com/photo-1581006852262-e4307cf6283a?q=80&w=800&auto=format&fit=crop',
+available:true
+},
+
+{
+id:'b2',
+name:'Guaraná 2L',
+desc:'Bem gelado',
+price:8,
+image:'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?q=80&w=800&auto=format&fit=crop',
+available:true
+}
+
+]
+
+};
+
+let cart = JSON.parse(localStorage.getItem('cart')) || {};
+
+function saveCart(){
+    localStorage.setItem('cart',JSON.stringify(cart));
+}
+
+function getAllItems(){
+    return [
+        ...menuData.pizzas,
+        ...menuData.hamburgueres,
+        ...menuData.bebidas
+    ];
+}
+
+function renderMenu(){
+
+['pizzas','hamburgueres','bebidas'].forEach(category=>{
+
+const container = document.getElementById('menu-'+category);
+
+container.innerHTML = menuData[category].map(item=>{
+
+const priceHTML = item.sizes
+? Object.entries(item.sizes).map(([size,price])=>`
+<div class="flex justify-between text-sm">
+<span>${size}</span>
+<span class="font-bold text-redPizza">
+R$ ${price.toFixed(2).replace('.',',')}
+</span>
+</div>
+`).join('')
+: `
+<div class="text-redPizza font-black text-lg">
+R$ ${item.price.toFixed(2).replace('.',',')}
+</div>
+`;
+
+const buttons = item.available
+? `
+<button
+onclick="addToCart('${category}','${item.id}')"
+class="mt-4 bg-gradient-to-r from-greenPizza to-redPizza text-white px-4 py-2 rounded-xl font-bold w-full">
+Adicionar
+</button>
+`
+: `
+<div class="mt-4 bg-red-100 text-red-700 text-center py-2 rounded-xl font-bold">
+Indisponível
+</div>
+`;
+
+return `
+
+<div class="product-card bg-white rounded-3xl overflow-hidden shadow-lg mb-5">
+
+<img
+src="${item.image}"
+class="w-full h-56 object-cover"
+loading="lazy"
+/>
+
+<div class="p-5">
+
+<h3 class="playfair text-2xl font-black">
+${item.name}
+</h3>
+
+<p class="text-gray-600 text-sm mt-2">
+${item.desc}
+</p>
+
+<div class="mt-4 space-y-1">
+${priceHTML}
+</div>
+
+${buttons}
+
+</div>
+
+</div>
+
+`;
+
+}).join('');
+
+});
+
+}
+
+function addToCart(category,id){
+
+const item = menuData[category].find(i=>i.id===id);
+
+if(item.sizes){
+
+const size = prompt(
+'Escolha o tamanho:\n\nBrotinho\nMédia\nGrande'
+);
+
+if(!size) return;
+
+const normalized = Object.keys(item.sizes).find(
+s => s.toLowerCase() === size.toLowerCase()
+);
+
+if(!normalized){
+    alert('Tamanho inválido');
+    return;
+}
+
+const cartId = id+'-'+normalized;
+
+if(!cart[cartId]){
+
+cart[cartId] = {
+name:item.name+' ('+normalized+')',
+price:item.sizes[normalized],
+qty:1
+};
+
+}else{
+cart[cartId].qty++;
+}
+
+}else{
+
+if(!cart[id]){
+
+cart[id] = {
+name:item.name,
+price:item.price,
+qty:1
+};
+
+}else{
+cart[id].qty++;
+}
+
+}
+
+saveCart();
+updateCart();
+
+}
+
+function updateCart(){
+
+let total = 0;
+let count = 0;
+
+Object.values(cart).forEach(item=>{
+
+total += item.price * item.qty;
+count += item.qty;
+
+});
+
+document.getElementById('cart-count').innerText =
+count+' itens';
+
+document.getElementById('cart-total').innerText =
+'R$ '+(total+DELIVERY_FEE).toFixed(2).replace('.',',');
+
+document.getElementById('cart-bar').style.bottom =
+count > 0 ? '20px' : '-120px';
+
+}
+
+function openCart(){
+
+document.getElementById('cart-modal')
+.classList.remove('hidden');
+
+const itemsEl = document.getElementById('cart-items');
+
+if(Object.keys(cart).length === 0){
+
+document.getElementById('cart-empty')
+.classList.remove('hidden');
+
+document.getElementById('cart-footer')
+.classList.add('hidden');
+
+itemsEl.innerHTML = '';
+
+}else{
+
+document.getElementById('cart-empty')
+.classList.add('hidden');
+
+document.getElementById('cart-footer')
+.classList.remove('hidden');
+
+let subtotal = 0;
+
+itemsEl.innerHTML = Object.entries(cart).map(([id,item])=>{
+
+const itemTotal = item.price * item.qty;
+
+subtotal += itemTotal;
+
+return `
+
+<div class="flex justify-between items-center py-4 border-b">
+
+<div>
+
+<div class="font-black">
+${item.name}
+</div>
+
+<div class="text-sm text-gray-500">
+${item.qty}x R$ ${item.price.toFixed(2).replace('.',',')}
+</div>
+
+</div>
+
+<div class="flex items-center gap-3">
+
+<button
+onclick="decreaseItem('${id}')"
+class="w-8 h-8 bg-red-100 rounded-lg">
+-
+</button>
+
+<span class="font-bold">
+${item.qty}
+</span>
+
+<button
+onclick="increaseItem('${id}')"
+class="w-8 h-8 bg-green-100 rounded-lg">
++
+</button>
+
+</div>
+
+</div>
+
+`;
+
+}).join('');
+
+document.getElementById('subtotal-text').innerText =
+'R$ '+subtotal.toFixed(2).replace('.',',');
+
+document.getElementById('total-text').innerText =
+'R$ '+(subtotal+DELIVERY_FEE).toFixed(2).replace('.',',');
+
+}
+
+lucide.createIcons();
+
+}
+
+function closeCart(){
+document.getElementById('cart-modal')
+.classList.add('hidden');
+}
+
+function increaseItem(id){
+
+cart[id].qty++;
+
+saveCart();
+updateCart();
+openCart();
+
+}
+
+function decreaseItem(id){
+
+cart[id].qty--;
+
+if(cart[id].qty <= 0){
+delete cart[id];
+}
+
+saveCart();
+updateCart();
+openCart();
+
+}
+
+function sendWhatsApp(){
+
+const name = document.getElementById('customer-name').value;
+const address = document.getElementById('customer-address').value;
+const payment = document.getElementById('payment-method').value;
+const notes = document.getElementById('notes').value;
+
+if(!name || !address){
+
+alert('Preencha nome e endereço');
+return;
+
+}
+
+let msg = `🍕 *NOVO PEDIDO - ${config.storeName}*\n\n`;
+
+let subtotal = 0;
+
+Object.values(cart).forEach(item=>{
+
+subtotal += item.price * item.qty;
+
+msg += `*${item.qty}x* ${item.name}\n`;
+msg += `💰 R$ ${(item.price * item.qty).toFixed(2).replace('.',',')}\n\n`;
+
+});
+
+msg += `━━━━━━━━━━━━━━\n`;
+
+msg += `🛵 *Entrega:* R$ ${DELIVERY_FEE.toFixed(2).replace('.',',')}\n`;
+
+msg += `💵 *TOTAL:* R$ ${(subtotal+DELIVERY_FEE).toFixed(2).replace('.',',')}\n\n`;
+
+msg += `👤 *Nome:* ${name}\n`;
+msg += `📍 *Endereço:* ${address}\n`;
+msg += `💳 *Pagamento:* ${payment}\n`;
+
+if(notes){
+msg += `📝 *Observações:* ${notes}\n`;
+}
+
+window.open(
+`https://wa.me/${config.whatsapp}?text=${encodeURIComponent(msg)}`,
+'_blank'
+);
+
+}
+
+function checkStoreStatus(){
+
+const now = new Date();
+
+const hour = now.getHours();
+const minute = now.getMinutes();
+
+const current = hour + minute / 60;
+
+const day = now.getDay();
+
+const open = 18.5;
+const close = 22;
+
+const closed =
+day === 1 || current < open || current >= close;
+
+if(closed){
+
+document.getElementById('store-status')
+.innerText = 'FECHADO';
+
+document.getElementById('store-status')
+.classList.remove('badge-open');
+
+document.getElementById('store-status')
+.classList.add('badge-close');
+
+document.getElementById('closed-overlay')
+.classList.remove('hidden');
+
+}
+
+}
+
+renderMenu();
+updateCart();
+checkStoreStatus();
+
+lucide.createIcons();
+
+</script>
+
 </body>
-</html>* {
-  padding: 20px;
-  border-radius: 15px;
-}
-
-.card span {
-  font-size: 30px;
-  color: #25D366;
-}
-
-.painel {
-  display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
-  gap: 20px;
-  margin-top: 30px;
-}
-
-.box {
-  background: #1e293b;
-  padding: 20px;
-  border-radius: 15px;
-}
-
-input,
-textarea,
-button {
-  width: 100%;
-  margin-top: 10px;
-  padding: 12px;
-  border: none;
-  border-radius: 10px;
-}
-
-textarea {
-  min-height: 150px;
-}
-
-button {
-  background: #25D366;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.lista {
-  margin-top: 30px;
-}
-
-.contato {
-  background: #1e293b;
-  padding: 15px;
-  border-radius: 10px;
-  margin-bottom: 10px;
-}let contatos = [];
-
-function adicionarContato() {
-
-  const nome = document.getElementById('nome').value;
-  const telefone = document.getElementById('telefone').value;
-
-  if(!nome || !telefone) {
-    alert('Preencha todos os campos');
-    return;
-  }
-
-  contatos.push({nome, telefone});
-
-  atualizarLista();
-}
-
-function atualizarLista() {
-
-  const lista = document.getElementById('listaContatos');
-
-  lista.innerHTML = '';
-
-  contatos.forEach(contato => {
-
-    lista.innerHTML += `
-      <div class="contato">
-        <strong>${contato.nome}</strong><br>
-        ${contato.telefone}
-      </div>
-    `;
-  });
-
-  document.getElementById('totalContatos').innerText = contatos.length;
-}
-
-async function enviarCampanha() {
-
-  const mensagem = document.getElementById('mensagem').value;
-
-  if(!mensagem) {
-    alert('Digite a mensagem');
-    return;
-  }
-
-  await fetch('api/enviar.php', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      contatos,
-      mensagem
-    })
-  });
-
-  alert('Campanha enviada');
-}<?php
-
-$token = "SEU_TOKEN_WHATSAPP";
-$phone_number_id = "SEU_PHONE_NUMBER_ID";
-
-$conn = new mysqli(
-  "localhost",
-  "root",
-  "senha",
-  "whatsapp"
-);
-
-?><?php
-
-include 'config.php';
-
-$data = json_decode(file_get_contents("php://input"), true);
-
-$mensagem = $data['mensagem'];
-$contatos = $data['contatos'];
-
-foreach($contatos as $contato) {
-
-  $telefone = $contato['telefone'];
-
-  $payload = [
-    "messaging_product" => "whatsapp",
-    "to" => $telefone,
-    "type" => "text",
-    "text" => [
-      "body" => $mensagem
-    ]
-  ];
-
-  $curl = curl_init();
-
-  curl_setopt_array($curl, [
-    CURLOPT_URL => "https://graph.facebook.com/v20.0/$phone_number_id/messages",
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_POST => true,
-    CURLOPT_HTTPHEADER => [
-      "Authorization: Bearer $token",
-      "Content-Type: application/json"
-    ],
-    CURLOPT_POSTFIELDS => json_encode($payload)
-  ]);
-
-  $response = curl_exec($curl);
-
-  curl_close($curl);
-}
-
-echo json_encode([
-  'status' => true
-]);<?php
-
-$verify_token = "TOKEN_WEBHOOK";
-
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-
-  $mode = $_GET['hub_mode'];
-  $token = $_GET['hub_verify_token'];
-  $challenge = $_GET['hub_challenge'];
-
-  if ($mode && $token === $verify_token) {
-    echo $challenge;
-  }
-}
-
-$input = file_get_contents("php://input");
-file_put_contents("webhook-log.txt", $input . PHP_EOL, FILE_APPEND);CREATE DATABASE whatsapp;
-
-USE whatsapp;
-
-CREATE TABLE contatos (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  nome VARCHAR(255),
-  telefone VARCHAR(20),
-  criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE mensagens (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  telefone VARCHAR(20),
-  mensagem TEXT,
-  status VARCHAR(50),
-  criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+</html>
