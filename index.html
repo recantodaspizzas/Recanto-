@@ -1,346 +1,527 @@
-<!-- ARQUIVO: index.html -->
+# Cardápio Premium Responsivo — Recanto das Pizzas
+
+```html
 <!doctype html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recanto das Pizzas | Delivery Premium</title>
 
-<title>Recanto das Pizzas | Delivery Online</title>
-
-<meta name="description" content="Peça pizzas, hambúrgueres e bebidas online no Recanto das Pizzas. Delivery rápido, sabor incrível e atendimento premium." />
+<meta name="description" content="Peça pizzas, hambúrgueres e bebidas online no Recanto das Pizzas.">
 
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
-
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 *{
-    box-sizing:border-box;
-    -webkit-tap-highlight-color:transparent;
+margin:0;
+padding:0;
+box-sizing:border-box;
+-webkit-tap-highlight-color:transparent;
 }
 
 html{
-    scroll-behavior:smooth;
+scroll-behavior:smooth;
 }
 
 body{
-    margin:0;
-    font-family:'Lato',sans-serif;
-    background:#fafafa;
-    overflow-x:hidden;
-}
-
-.playfair{
-    font-family:'Playfair Display',serif;
+font-family:'Poppins',sans-serif;
+background:#f5f5f5;
+overflow-x:hidden;
 }
 
 .hero{
-    background:
-    linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
-    url('https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1200&auto=format&fit=crop');
-    background-size:cover;
-    background-position:center;
+background:
+linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.65)),
+url('https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1600&auto=format&fit=crop');
+background-size:cover;
+background-position:center;
 }
 
-.cart-bar{
-    transition:.3s;
+.category-btn{
+transition:.3s;
+white-space:nowrap;
+}
+
+.category-btn:hover{
+transform:translateY(-2px) scale(1.03);
 }
 
 .product-card{
-    transition:.3s;
+transition:.35s;
 }
 
 .product-card:hover{
-    transform:translateY(-3px);
+transform:translateY(-4px);
 }
 
-.modal{
-    animation:fade .2s ease;
+.cascade-card{
+opacity:0;
+transform:translateY(40px);
+animation:cascade .6s forwards;
 }
 
-@keyframes fade{
-    from{
-        opacity:0;
-    }
-    to{
-        opacity:1;
-    }
+@keyframes cascade{
+100%{
+opacity:1;
+transform:translateY(0);
+}
 }
 
-.slide-up{
-    animation:slideUp .3s ease;
+.cart-bar{
+transition:.35s;
 }
 
-@keyframes slideUp{
-    from{
-        transform:translateY(100%);
-    }
-    to{
-        transform:translateY(0);
-    }
+.hide-scroll::-webkit-scrollbar{
+display:none;
 }
 
-nav::-webkit-scrollbar{
-    display:none;
+.glass{
+background:rgba(255,255,255,.18);
+backdrop-filter:blur(10px);
 }
 
-.badge-open{
-    background:#16a34a;
+.gradient-red{
+background:linear-gradient(135deg,#dc2626,#991b1b);
 }
 
-.badge-close{
-    background:#dc2626;
+.gradient-green{
+background:linear-gradient(135deg,#065f46,#047857);
+}
+
+.shadow-premium{
+box-shadow:0 15px 40px rgba(0,0,0,.12);
 }
 
 </style>
 
 <script>
-tailwind.config = {
-    theme:{
-        extend:{
-            colors:{
-                greenPizza:'#065f46',
-                redPizza:'#dc2626',
-            }
-        }
+tailwind.config={
+  theme:{
+    extend:{
+      colors:{
+        greenPizza:'#065f46',
+        redPizza:'#dc2626',
+        darkPizza:'#111827'
+      }
     }
+  }
 }
 </script>
 </head>
 
 <body>
 
-<!-- TOPO PROMO -->
-<div class="bg-redPizza text-white text-center py-2 font-black text-sm">
-🔥 PROMOÇÃO: Pizza Grande + Refrigerante 2L por apenas R$ 49,90
+<!-- TOPO -->
+<div class="gradient-red text-white text-center py-2 font-bold text-sm px-4">
+🔥 Hoje: Pizza Grande + Refrigerante por R$ 49,90
 </div>
 
 <!-- HERO -->
-<section class="hero h-[330px] flex items-center justify-center text-center relative">
+<section class="hero min-h-[420px] flex items-center justify-center text-center relative px-4">
 
-<div class="absolute top-4 right-4">
+<div class="absolute inset-0 bg-gradient-to-b from-black/20 to-black/70"></div>
 
-<span id="store-status"
-class="badge-open text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
-ABERTO
-</span>
+<div class="relative z-10 max-w-3xl mx-auto">
 
-</div>
-
-<div class="px-4">
-
+<div class="glass w-32 h-32 rounded-full p-2 mx-auto shadow-2xl border border-white/30">
 <img
 src="https://cdn-icons-png.flaticon.com/512/6978/6978255.png"
-class="w-32 h-32 mx-auto rounded-full border-4 border-white shadow-2xl bg-white object-cover"
-/>
+class="w-full h-full rounded-full object-cover bg-white"
+>
+</div>
 
-<h1 class="playfair text-white text-5xl font-black mt-4 drop-shadow-lg">
+<h1 class="text-white text-5xl md:text-7xl font-black mt-6 leading-tight">
 Recanto das Pizzas
 </h1>
 
-<p class="text-red-100 mt-3 font-bold">
-🍕 Delivery Premium • 🍔 Hambúrguer Artesanal • 🥤 Bebidas Geladas
+<p class="text-red-100 mt-5 text-lg md:text-2xl font-medium leading-relaxed">
+O melhor delivery da região 🍕
 </p>
 
-<p class="text-white/90 text-sm mt-2">
-Funcionamos das 18:30 às 22:00 • Fechado às segundas
-</p>
+<div class="flex flex-wrap items-center justify-center gap-3 mt-8">
+
+<div class="glass px-5 py-3 rounded-2xl text-white font-semibold text-sm md:text-base">
+⏰ 18:30 às 22:00
+</div>
+
+<div class="glass px-5 py-3 rounded-2xl text-white font-semibold text-sm md:text-base">
+🛵 Entrega rápida
+</div>
+
+<div class="glass px-5 py-3 rounded-2xl text-white font-semibold text-sm md:text-base">
+⭐ Qualidade Premium
+</div>
+
+</div>
 
 </div>
 
 </section>
 
-<!-- MENU -->
-<nav class="sticky top-0 z-40 bg-white shadow-lg overflow-auto flex gap-3 px-4 py-3">
+<!-- PESQUISA -->
+<div class="sticky top-0 z-50 bg-white shadow-lg px-4 py-4">
 
-<a href="#pizzas"
-class="bg-green-100 text-greenPizza px-5 py-2 rounded-full font-bold whitespace-nowrap">
+<div class="max-w-6xl mx-auto">
+
+<div class="relative">
+
+<i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5"></i>
+
+<input
+id="searchInput"
+type="text"
+placeholder="Buscar pizza, hambúrguer ou bebida..."
+class="w-full bg-gray-100 rounded-2xl pl-12 pr-4 py-4 outline-none text-gray-700 font-medium border-2 border-transparent focus:border-redPizza"
+>
+
+</div>
+
+<!-- MENU CATEGORIAS -->
+<div class="flex gap-3 overflow-auto hide-scroll mt-4 pb-1">
+
+<a href="#pizzas" class="category-btn gradient-red text-white px-6 py-3 rounded-2xl font-bold shadow-lg">
 🍕 Pizzas
 </a>
 
-<a href="#hamburgueres"
-class="bg-orange-100 text-orange-700 px-5 py-2 rounded-full font-bold whitespace-nowrap">
+<a href="#hamburgueres" class="category-btn bg-orange-500 text-white px-6 py-3 rounded-2xl font-bold shadow-lg">
 🍔 Hambúrgueres
 </a>
 
-<a href="#bebidas"
-class="bg-red-100 text-redPizza px-5 py-2 rounded-full font-bold whitespace-nowrap">
+<a href="#bebidas" class="category-btn bg-sky-500 text-white px-6 py-3 rounded-2xl font-bold shadow-lg">
 🥤 Bebidas
 </a>
 
-</nav>
+<a href="#promocoes" class="category-btn gradient-green text-white px-6 py-3 rounded-2xl font-bold shadow-lg">
+🔥 Promoções
+</a>
+
+</div>
+
+</div>
+
+</div>
 
 <!-- CONTEÚDO -->
-<div class="max-w-3xl mx-auto px-4 pb-40">
+<main class="max-w-7xl mx-auto px-4 py-8 pb-40">
 
-<!-- PIZZAS -->
-<section id="pizzas" class="pt-8">
+<!-- PROMOÇÕES -->
+<section id="promocoes" class="mb-14">
 
-<h2 class="playfair text-3xl font-black text-greenPizza mb-6">
-🍕 Pizzas
+<div class="flex items-center gap-3 mb-7">
+<h2 class="text-3xl md:text-4xl font-black text-redPizza">
+🔥 Promoções
 </h2>
+<div class="h-1 flex-1 bg-gradient-to-r from-redPizza to-transparent rounded-full"></div>
+</div>
 
-<div id="menu-pizzas"></div>
+<div class="grid md:grid-cols-2 gap-6">
+
+<div class="gradient-red rounded-3xl p-8 text-white shadow-premium">
+<h3 class="text-3xl font-black mb-3">
+Combo Família
+</h3>
+<p class="text-white/90 leading-relaxed">
+1 Pizza Grande + Refrigerante 2L
+</p>
+<div class="text-5xl font-black mt-5">
+R$ 49,90
+</div>
+<button class="mt-6 bg-white text-redPizza font-black px-6 py-4 rounded-2xl w-full">
+Pedir Agora
+</button>
+</div>
+
+<div class="gradient-green rounded-3xl p-8 text-white shadow-premium">
+<h3 class="text-3xl font-black mb-3">
+Hambúrguer Duplo
+</h3>
+<p class="text-white/90 leading-relaxed">
+2 X-Bacon + Batata + Refri
+</p>
+<div class="text-5xl font-black mt-5">
+R$ 39,90
+</div>
+<button class="mt-6 bg-white text-greenPizza font-black px-6 py-4 rounded-2xl w-full">
+Pedir Agora
+</button>
+</div>
+
+</div>
 
 </section>
 
-<!-- HAMBURGUER -->
-<section id="hamburgueres" class="pt-10">
+<!-- PIZZAS -->
+<section id="pizzas" class="mb-16">
 
-<h2 class="playfair text-3xl font-black text-orange-600 mb-6">
+<div class="flex items-center gap-3 mb-7">
+<h2 class="text-3xl md:text-4xl font-black text-redPizza">
+🍕 Pizzas
+</h2>
+<div class="h-1 flex-1 bg-gradient-to-r from-redPizza to-transparent rounded-full"></div>
+</div>
+
+<div class="grid sm:grid-cols-2 xl:grid-cols-3 gap-7" id="pizza-list">
+
+<!-- CARD -->
+<div class="product-card cascade-card bg-white rounded-[30px] overflow-hidden shadow-premium" style="animation-delay:.1s">
+
+<div class="relative overflow-hidden">
+<img
+src="https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1200&auto=format&fit=crop"
+class="w-full h-64 object-cover hover:scale-110 transition duration-500"
+>
+
+<div class="absolute top-4 left-4 gradient-red text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg">
+Mais Vendida
+</div>
+
+</div>
+
+<div class="p-6">
+
+<h3 class="text-2xl font-black text-gray-800">
+Pizza Mussarela
+</h3>
+
+<p class="text-gray-500 mt-3 leading-relaxed text-sm">
+Molho especial, mussarela premium, tomate fresco e orégano.
+</p>
+
+<div class="space-y-2 mt-5">
+
+<div class="flex items-center justify-between bg-gray-50 rounded-xl p-3">
+<span class="font-semibold">Brotinho</span>
+<span class="font-black text-redPizza">R$ 25</span>
+</div>
+
+<div class="flex items-center justify-between bg-gray-50 rounded-xl p-3">
+<span class="font-semibold">Média</span>
+<span class="font-black text-redPizza">R$ 35</span>
+</div>
+
+<div class="flex items-center justify-between bg-gray-50 rounded-xl p-3">
+<span class="font-semibold">Grande</span>
+<span class="font-black text-redPizza">R$ 45</span>
+</div>
+
+</div>
+
+<button class="gradient-red text-white font-black w-full py-4 rounded-2xl mt-6 shadow-lg hover:scale-[1.02] transition">
+Adicionar ao Carrinho
+</button>
+
+</div>
+
+</div>
+
+<!-- CARD -->
+<div class="product-card cascade-card bg-white rounded-[30px] overflow-hidden shadow-premium" style="animation-delay:.2s">
+
+<div class="relative overflow-hidden">
+<img
+src="https://images.unsplash.com/photo-1594007654729-407eedc4be65?q=80&w=1200&auto=format&fit=crop"
+class="w-full h-64 object-cover hover:scale-110 transition duration-500"
+>
+
+<div class="absolute top-4 left-4 bg-green-600 text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg">
+Oferta
+</div>
+
+</div>
+
+<div class="p-6">
+
+<h3 class="text-2xl font-black text-gray-800">
+Pizza Calabresa
+</h3>
+
+<p class="text-gray-500 mt-3 leading-relaxed text-sm">
+Calabresa premium, cebola caramelizada e muito queijo.
+</p>
+
+<div class="space-y-2 mt-5">
+
+<div class="flex items-center justify-between bg-gray-50 rounded-xl p-3">
+<span class="font-semibold">Brotinho</span>
+<span class="font-black text-redPizza">R$ 28</span>
+</div>
+
+<div class="flex items-center justify-between bg-gray-50 rounded-xl p-3">
+<span class="font-semibold">Média</span>
+<span class="font-black text-redPizza">R$ 38</span>
+</div>
+
+<div class="flex items-center justify-between bg-gray-50 rounded-xl p-3">
+<span class="font-semibold">Grande</span>
+<span class="font-black text-redPizza">R$ 49</span>
+</div>
+
+</div>
+
+<button class="gradient-red text-white font-black w-full py-4 rounded-2xl mt-6 shadow-lg hover:scale-[1.02] transition">
+Adicionar ao Carrinho
+</button>
+
+</div>
+
+</div>
+
+<!-- CARD -->
+<div class="product-card cascade-card bg-white rounded-[30px] overflow-hidden shadow-premium" style="animation-delay:.3s">
+
+<div class="relative overflow-hidden">
+<img
+src="https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?q=80&w=1200&auto=format&fit=crop"
+class="w-full h-64 object-cover hover:scale-110 transition duration-500"
+>
+
+<div class="absolute top-4 left-4 bg-yellow-500 text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg">
+Novo
+</div>
+
+</div>
+
+<div class="p-6">
+
+<h3 class="text-2xl font-black text-gray-800">
+Pizza Portuguesa
+</h3>
+
+<p class="text-gray-500 mt-3 leading-relaxed text-sm">
+Presunto, ovos, cebola, ervilha e mussarela premium.
+</p>
+
+<div class="space-y-2 mt-5">
+
+<div class="flex items-center justify-between bg-gray-50 rounded-xl p-3">
+<span class="font-semibold">Brotinho</span>
+<span class="font-black text-redPizza">R$ 29</span>
+</div>
+
+<div class="flex items-center justify-between bg-gray-50 rounded-xl p-3">
+<span class="font-semibold">Média</span>
+<span class="font-black text-redPizza">R$ 42</span>
+</div>
+
+<div class="flex items-center justify-between bg-gray-50 rounded-xl p-3">
+<span class="font-semibold">Grande</span>
+<span class="font-black text-redPizza">R$ 52</span>
+</div>
+
+</div>
+
+<button class="gradient-red text-white font-black w-full py-4 rounded-2xl mt-6 shadow-lg hover:scale-[1.02] transition">
+Adicionar ao Carrinho
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- HAMBÚRGUERES -->
+<section id="hamburgueres" class="mb-16">
+
+<div class="flex items-center gap-3 mb-7">
+<h2 class="text-3xl md:text-4xl font-black text-orange-600">
 🍔 Hambúrgueres
 </h2>
+<div class="h-1 flex-1 bg-gradient-to-r from-orange-500 to-transparent rounded-full"></div>
+</div>
 
-<div id="menu-hamburgueres"></div>
+<div class="grid sm:grid-cols-2 xl:grid-cols-3 gap-7">
+
+<div class="product-card cascade-card bg-white rounded-[30px] overflow-hidden shadow-premium" style="animation-delay:.1s">
+<img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=1200&auto=format&fit=crop" class="w-full h-64 object-cover">
+<div class="p-6">
+<h3 class="text-2xl font-black">X-Bacon</h3>
+<p class="text-gray-500 mt-3 text-sm">Blend bovino 150g + bacon crocante + cheddar.</p>
+<div class="text-4xl font-black text-orange-600 mt-5">R$ 18</div>
+<button class="bg-orange-500 text-white font-black w-full py-4 rounded-2xl mt-6 shadow-lg">Adicionar ao Carrinho</button>
+</div>
+</div>
+
+<div class="product-card cascade-card bg-white rounded-[30px] overflow-hidden shadow-premium" style="animation-delay:.2s">
+<img src="https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=1200&auto=format&fit=crop" class="w-full h-64 object-cover">
+<div class="p-6">
+<h3 class="text-2xl font-black">X-Tudo</h3>
+<p class="text-gray-500 mt-3 text-sm">2 carnes, bacon, cheddar e calabresa.</p>
+<div class="text-4xl font-black text-orange-600 mt-5">R$ 28</div>
+<button class="bg-orange-500 text-white font-black w-full py-4 rounded-2xl mt-6 shadow-lg">Adicionar ao Carrinho</button>
+</div>
+</div>
+
+</div>
 
 </section>
 
 <!-- BEBIDAS -->
-<section id="bebidas" class="pt-10">
+<section id="bebidas">
 
-<h2 class="playfair text-3xl font-black text-redPizza mb-6">
+<div class="flex items-center gap-3 mb-7">
+<h2 class="text-3xl md:text-4xl font-black text-sky-600">
 🥤 Bebidas
 </h2>
+<div class="h-1 flex-1 bg-gradient-to-r from-sky-500 to-transparent rounded-full"></div>
+</div>
 
-<div id="menu-bebidas"></div>
+<div class="grid sm:grid-cols-2 xl:grid-cols-4 gap-6">
+
+<div class="product-card cascade-card bg-white rounded-[30px] overflow-hidden shadow-premium p-5" style="animation-delay:.1s">
+<img src="https://images.unsplash.com/photo-1581006852262-e4307cf6283a?q=80&w=800&auto=format&fit=crop" class="w-full h-52 object-cover rounded-2xl">
+<h3 class="text-2xl font-black mt-5">Coca-Cola 2L</h3>
+<div class="text-3xl font-black text-sky-600 mt-4">R$ 15</div>
+<button class="bg-sky-500 text-white font-black w-full py-4 rounded-2xl mt-5 shadow-lg">Adicionar</button>
+</div>
+
+<div class="product-card cascade-card bg-white rounded-[30px] overflow-hidden shadow-premium p-5" style="animation-delay:.2s">
+<img src="https://images.unsplash.com/photo-1622483767028-3f66f32aef97?q=80&w=800&auto=format&fit=crop" class="w-full h-52 object-cover rounded-2xl">
+<h3 class="text-2xl font-black mt-5">Guaraná 2L</h3>
+<div class="text-3xl font-black text-sky-600 mt-4">R$ 8</div>
+<button class="bg-sky-500 text-white font-black w-full py-4 rounded-2xl mt-5 shadow-lg">Adicionar</button>
+</div>
+
+</div>
 
 </section>
 
-</div>
-
-<!-- BOTÃO WHATS -->
-<a
-href="https://wa.me/5581997367519"
-target="_blank"
-class="fixed bottom-6 right-6 bg-green-500 w-16 h-16 rounded-full flex items-center justify-center shadow-2xl z-50">
-
-<i data-lucide="message-circle" class="w-8 h-8 text-white"></i>
-
-</a>
+</main>
 
 <!-- CARRINHO -->
-<div
-id="cart-bar"
-onclick="openCart()"
-class="cart-bar fixed left-1/2 -translate-x-1/2 bottom-[-120px] w-[calc(100%-20px)] max-w-md bg-gradient-to-r from-greenPizza to-redPizza text-white rounded-2xl shadow-2xl p-4 z-50 cursor-pointer">
+<div class="fixed bottom-5 left-1/2 -translate-x-1/2 w-[calc(100%-20px)] max-w-lg z-50">
 
-<div class="flex items-center justify-between">
+<div class="gradient-red rounded-3xl p-5 shadow-2xl text-white cart-bar">
 
-<div class="flex items-center gap-3">
+<div class="flex items-center justify-between gap-4">
 
-<div class="bg-white/20 w-12 h-12 rounded-full flex items-center justify-center">
-<i data-lucide="shopping-cart"></i>
+<div class="flex items-center gap-4">
+
+<div class="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center">
+<i data-lucide="shopping-bag" class="w-7 h-7"></i>
 </div>
 
 <div>
-<div id="cart-count" class="font-black">0 itens</div>
-<div class="text-xs opacity-80">Toque para abrir</div>
+<div class="font-black text-lg">
+3 itens adicionados
+</div>
+<div class="text-white/80 text-sm">
+Toque para finalizar pedido
+</div>
 </div>
 
 </div>
 
-<div id="cart-total" class="text-xl font-black">
-R$ 0,00
+<div class="text-right">
+<div class="text-3xl font-black">
+R$ 74
 </div>
-
 </div>
-
-</div>
-
-<!-- MODAL CARRINHO -->
-<div id="cart-modal" class="hidden fixed inset-0 z-[100] modal">
-
-<div
-onclick="closeCart()"
-class="absolute inset-0 bg-black/60 backdrop-blur-sm">
-</div>
-
-<div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl max-h-[90%] overflow-auto slide-up p-6">
-
-<div class="flex justify-between items-center mb-6">
-
-<h2 class="playfair text-3xl font-black text-greenPizza">
-Seu Pedido
-</h2>
-
-<button
-onclick="closeCart()"
-class="bg-red-100 w-10 h-10 rounded-full flex items-center justify-center">
-
-<i data-lucide="x" class="text-redPizza"></i>
-
-</button>
-
-</div>
-
-<div id="cart-items"></div>
-
-<div id="cart-empty" class="text-center py-16 text-gray-400">
-🛒 Carrinho vazio
-</div>
-
-<div id="cart-footer" class="hidden">
-
-<!-- FRETE -->
-<div class="bg-gray-50 rounded-2xl p-4 mt-6">
-
-<div class="flex justify-between mb-2">
-<span>Subtotal</span>
-<span id="subtotal-text">R$ 0,00</span>
-</div>
-
-<div class="flex justify-between mb-2">
-<span>Entrega</span>
-<span>R$ 5,00</span>
-</div>
-
-<div class="border-t pt-3 mt-3 flex justify-between text-xl font-black">
-<span>Total</span>
-<span id="total-text">R$ 0,00</span>
-</div>
-
-</div>
-
-<!-- CAMPOS -->
-<div class="mt-5 space-y-4">
-
-<input
-id="customer-name"
-placeholder="Seu nome"
-class="w-full border rounded-xl px-4 py-3 outline-none"
-/>
-
-<input
-id="customer-address"
-placeholder="Seu endereço"
-class="w-full border rounded-xl px-4 py-3 outline-none"
-/>
-
-<select
-id="payment-method"
-class="w-full border rounded-xl px-4 py-3 outline-none">
-
-<option value="Dinheiro">Dinheiro</option>
-<option value="PIX">PIX</option>
-<option value="Cartão">Cartão</option>
-
-</select>
-
-<textarea
-id="notes"
-placeholder="Observações do pedido..."
-class="w-full border rounded-xl px-4 py-3 outline-none h-28 resize-none"></textarea>
-
-</div>
-
-<button
-onclick="sendWhatsApp()"
-class="w-full mt-6 bg-gradient-to-r from-greenPizza to-redPizza text-white py-4 rounded-2xl font-black text-lg shadow-xl">
-
-Enviar Pedido no WhatsApp
-
-</button>
 
 </div>
 
@@ -348,507 +529,98 @@ Enviar Pedido no WhatsApp
 
 </div>
 
-<!-- MODAL FECHADO -->
-<div
-id="closed-overlay"
-class="hidden fixed inset-0 bg-black/80 z-[999] flex items-center justify-center p-6">
+<!-- WHATSAPP -->
+<a
+href="https://wa.me/5581997367519"
+class="fixed bottom-32 right-5 z-50 bg-green-500 w-16 h-16 rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition"
+>
+<i data-lucide="message-circle" class="w-8 h-8 text-white"></i>
+</a>
 
-<div class="bg-white rounded-3xl p-8 text-center max-w-md shadow-2xl">
+<!-- RODAPÉ -->
+<footer class="bg-darkPizza text-white mt-20 py-16 px-4">
 
-<div class="text-6xl mb-4">
-🍕
-</div>
+<div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-10">
 
-<h2 class="text-3xl font-black text-redPizza">
-Estamos Fechados
-</h2>
-
-<p class="mt-3 text-gray-600 font-semibold">
-Funcionamos das 18:30 às 22:00
+<div>
+<h3 class="text-3xl font-black mb-5">
+🍕 Recanto das Pizzas
+</h3>
+<p class="text-gray-400 leading-relaxed">
+O melhor delivery da região com pizzas artesanais, hambúrgueres e bebidas geladas.
 </p>
+</div>
 
-<p class="text-sm text-gray-400 mt-2">
-Fechado às segundas-feiras
-</p>
+<div>
+<h4 class="font-black text-xl mb-5">Horário</h4>
+<ul class="space-y-3 text-gray-400">
+<li>Terça a Domingo</li>
+<li>18:30 às 22:00</li>
+<li>Fechado às segundas</li>
+</ul>
+</div>
 
+<div>
+<h4 class="font-black text-xl mb-5">Contato</h4>
+<ul class="space-y-3 text-gray-400">
+<li>📞 (81) 99736-7519</li>
+<li>📍 Pernambuco - Brasil</li>
+<li>🛵 Delivery rápido</li>
+</ul>
 </div>
 
 </div>
+
+<div class="border-t border-white/10 mt-10 pt-8 text-center text-gray-500 text-sm">
+© 2026 Recanto das Pizzas — Todos os direitos reservados.
+</div>
+
+</footer>
 
 <script>
-
-const DELIVERY_FEE = 5;
-
-const config = {
-    storeName:'Recanto das Pizzas',
-    whatsapp:'5581997367519'
-};
-
-const menuData = {
-
-pizzas:[
-
-{
-id:'p1',
-name:'Pizza Mussarela',
-desc:'Molho de tomate, mussarela, tomate e orégano',
-sizes:{
-'Brotinho':25,
-'Média':35,
-'Grande':45
-},
-image:'https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=800&auto=format&fit=crop',
-available:true
-},
-
-{
-id:'p2',
-name:'Pizza Calabresa',
-desc:'Calabresa fatiada, cebola e mussarela',
-sizes:{
-'Brotinho':27,
-'Média':38,
-'Grande':48
-},
-image:'https://images.unsplash.com/photo-1594007654729-407eedc4be65?q=80&w=800&auto=format&fit=crop',
-available:true
-},
-
-{
-id:'p3',
-name:'Pizza Portuguesa',
-desc:'Presunto, ovos, ervilha e cebola',
-sizes:{
-'Brotinho':28,
-'Média':40,
-'Grande':50
-},
-image:'https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?q=80&w=800&auto=format&fit=crop',
-available:false
-}
-
-],
-
-hamburgueres:[
-
-{
-id:'h1',
-name:'X-Bacon',
-desc:'Blend bovino 150g + bacon + cheddar',
-price:18,
-image:'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=800&auto=format&fit=crop',
-available:true
-},
-
-{
-id:'h2',
-name:'X-Tudo',
-desc:'2 carnes + cheddar + bacon + calabresa',
-price:28,
-image:'https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=800&auto=format&fit=crop',
-available:true
-}
-
-],
-
-bebidas:[
-
-{
-id:'b1',
-name:'Coca-Cola 2L',
-desc:'Bem gelada',
-price:15,
-image:'https://images.unsplash.com/photo-1581006852262-e4307cf6283a?q=80&w=800&auto=format&fit=crop',
-available:true
-},
-
-{
-id:'b2',
-name:'Guaraná 2L',
-desc:'Bem gelado',
-price:8,
-image:'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?q=80&w=800&auto=format&fit=crop',
-available:true
-}
-
-]
-
-};
-
-let cart = JSON.parse(localStorage.getItem('cart')) || {};
-
-function saveCart(){
-    localStorage.setItem('cart',JSON.stringify(cart));
-}
-
-function getAllItems(){
-    return [
-        ...menuData.pizzas,
-        ...menuData.hamburgueres,
-        ...menuData.bebidas
-    ];
-}
-
-function renderMenu(){
-
-['pizzas','hamburgueres','bebidas'].forEach(category=>{
-
-const container = document.getElementById('menu-'+category);
-
-container.innerHTML = menuData[category].map(item=>{
-
-const priceHTML = item.sizes
-? Object.entries(item.sizes).map(([size,price])=>`
-<div class="flex justify-between text-sm">
-<span>${size}</span>
-<span class="font-bold text-redPizza">
-R$ ${price.toFixed(2).replace('.',',')}
-</span>
-</div>
-`).join('')
-: `
-<div class="text-redPizza font-black text-lg">
-R$ ${item.price.toFixed(2).replace('.',',')}
-</div>
-`;
-
-const buttons = item.available
-? `
-<button
-onclick="addToCart('${category}','${item.id}')"
-class="mt-4 bg-gradient-to-r from-greenPizza to-redPizza text-white px-4 py-2 rounded-xl font-bold w-full">
-Adicionar
-</button>
-`
-: `
-<div class="mt-4 bg-red-100 text-red-700 text-center py-2 rounded-xl font-bold">
-Indisponível
-</div>
-`;
-
-return `
-
-<div class="product-card bg-white rounded-3xl overflow-hidden shadow-lg mb-5">
-
-<img
-src="${item.image}"
-class="w-full h-56 object-cover"
-loading="lazy"
-/>
-
-<div class="p-5">
-
-<h3 class="playfair text-2xl font-black">
-${item.name}
-</h3>
-
-<p class="text-gray-600 text-sm mt-2">
-${item.desc}
-</p>
-
-<div class="mt-4 space-y-1">
-${priceHTML}
-</div>
-
-${buttons}
-
-</div>
-
-</div>
-
-`;
-
-}).join('');
-
-});
-
-}
-
-function addToCart(category,id){
-
-const item = menuData[category].find(i=>i.id===id);
-
-if(item.sizes){
-
-const size = prompt(
-'Escolha o tamanho:\n\nBrotinho\nMédia\nGrande'
-);
-
-if(!size) return;
-
-const normalized = Object.keys(item.sizes).find(
-s => s.toLowerCase() === size.toLowerCase()
-);
-
-if(!normalized){
-    alert('Tamanho inválido');
-    return;
-}
-
-const cartId = id+'-'+normalized;
-
-if(!cart[cartId]){
-
-cart[cartId] = {
-name:item.name+' ('+normalized+')',
-price:item.sizes[normalized],
-qty:1
-};
-
-}else{
-cart[cartId].qty++;
-}
-
-}else{
-
-if(!cart[id]){
-
-cart[id] = {
-name:item.name,
-price:item.price,
-qty:1
-};
-
-}else{
-cart[id].qty++;
-}
-
-}
-
-saveCart();
-updateCart();
-
-}
-
-function updateCart(){
-
-let total = 0;
-let count = 0;
-
-Object.values(cart).forEach(item=>{
-
-total += item.price * item.qty;
-count += item.qty;
-
-});
-
-document.getElementById('cart-count').innerText =
-count+' itens';
-
-document.getElementById('cart-total').innerText =
-'R$ '+(total+DELIVERY_FEE).toFixed(2).replace('.',',');
-
-document.getElementById('cart-bar').style.bottom =
-count > 0 ? '20px' : '-120px';
-
-}
-
-function openCart(){
-
-document.getElementById('cart-modal')
-.classList.remove('hidden');
-
-const itemsEl = document.getElementById('cart-items');
-
-if(Object.keys(cart).length === 0){
-
-document.getElementById('cart-empty')
-.classList.remove('hidden');
-
-document.getElementById('cart-footer')
-.classList.add('hidden');
-
-itemsEl.innerHTML = '';
-
-}else{
-
-document.getElementById('cart-empty')
-.classList.add('hidden');
-
-document.getElementById('cart-footer')
-.classList.remove('hidden');
-
-let subtotal = 0;
-
-itemsEl.innerHTML = Object.entries(cart).map(([id,item])=>{
-
-const itemTotal = item.price * item.qty;
-
-subtotal += itemTotal;
-
-return `
-
-<div class="flex justify-between items-center py-4 border-b">
-
-<div>
-
-<div class="font-black">
-${item.name}
-</div>
-
-<div class="text-sm text-gray-500">
-${item.qty}x R$ ${item.price.toFixed(2).replace('.',',')}
-</div>
-
-</div>
-
-<div class="flex items-center gap-3">
-
-<button
-onclick="decreaseItem('${id}')"
-class="w-8 h-8 bg-red-100 rounded-lg">
--
-</button>
-
-<span class="font-bold">
-${item.qty}
-</span>
-
-<button
-onclick="increaseItem('${id}')"
-class="w-8 h-8 bg-green-100 rounded-lg">
-+
-</button>
-
-</div>
-
-</div>
-
-`;
-
-}).join('');
-
-document.getElementById('subtotal-text').innerText =
-'R$ '+subtotal.toFixed(2).replace('.',',');
-
-document.getElementById('total-text').innerText =
-'R$ '+(subtotal+DELIVERY_FEE).toFixed(2).replace('.',',');
-
-}
-
 lucide.createIcons();
 
+const searchInput = document.getElementById('searchInput');
+
+searchInput.addEventListener('keyup',()=>{
+
+const filter = searchInput.value.toLowerCase();
+
+const cards = document.querySelectorAll('.product-card');
+
+cards.forEach(card=>{
+
+const text = card.innerText.toLowerCase();
+
+if(text.includes(filter)){
+card.style.display='block';
+}else{
+card.style.display='none';
 }
-
-function closeCart(){
-document.getElementById('cart-modal')
-.classList.add('hidden');
-}
-
-function increaseItem(id){
-
-cart[id].qty++;
-
-saveCart();
-updateCart();
-openCart();
-
-}
-
-function decreaseItem(id){
-
-cart[id].qty--;
-
-if(cart[id].qty <= 0){
-delete cart[id];
-}
-
-saveCart();
-updateCart();
-openCart();
-
-}
-
-function sendWhatsApp(){
-
-const name = document.getElementById('customer-name').value;
-const address = document.getElementById('customer-address').value;
-const payment = document.getElementById('payment-method').value;
-const notes = document.getElementById('notes').value;
-
-if(!name || !address){
-
-alert('Preencha nome e endereço');
-return;
-
-}
-
-let msg = `🍕 *NOVO PEDIDO - ${config.storeName}*\n\n`;
-
-let subtotal = 0;
-
-Object.values(cart).forEach(item=>{
-
-subtotal += item.price * item.qty;
-
-msg += `*${item.qty}x* ${item.name}\n`;
-msg += `💰 R$ ${(item.price * item.qty).toFixed(2).replace('.',',')}\n\n`;
 
 });
 
-msg += `━━━━━━━━━━━━━━\n`;
-
-msg += `🛵 *Entrega:* R$ ${DELIVERY_FEE.toFixed(2).replace('.',',')}\n`;
-
-msg += `💵 *TOTAL:* R$ ${(subtotal+DELIVERY_FEE).toFixed(2).replace('.',',')}\n\n`;
-
-msg += `👤 *Nome:* ${name}\n`;
-msg += `📍 *Endereço:* ${address}\n`;
-msg += `💳 *Pagamento:* ${payment}\n`;
-
-if(notes){
-msg += `📝 *Observações:* ${notes}\n`;
-}
-
-window.open(
-`https://wa.me/${config.whatsapp}?text=${encodeURIComponent(msg)}`,
-'_blank'
-);
-
-}
-
-function checkStoreStatus(){
-
-const now = new Date();
-
-const hour = now.getHours();
-const minute = now.getMinutes();
-
-const current = hour + minute / 60;
-
-const day = now.getDay();
-
-const open = 18.5;
-const close = 22;
-
-const closed =
-day === 1 || current < open || current >= close;
-
-if(closed){
-
-document.getElementById('store-status')
-.innerText = 'FECHADO';
-
-document.getElementById('store-status')
-.classList.remove('badge-open');
-
-document.getElementById('store-status')
-.classList.add('badge-close');
-
-document.getElementById('closed-overlay')
-.classList.remove('hidden');
-
-}
-
-}
-
-renderMenu();
-updateCart();
-checkStoreStatus();
-
-lucide.createIcons();
-
+});
 </script>
 
 </body>
 </html>
+```
+
+## Melhorias adicionadas
+
+* Totalmente responsivo
+* Visual premium moderno
+* Layout em cascata animado
+* Cards profissionais
+* Menu moderno horizontal
+* Campo de busca inteligente
+* Hero premium
+* Seção de promoções
+* Botão WhatsApp flutuante
+* Melhor experiência mobile
+* Melhor organização visual
+* Mais rápido para o cliente comprar
+* Melhor UX/UI
+* Estilo parecido com apps profissionais de delivery
+* Estrutura pronta para GitHub Pages
