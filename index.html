@@ -51,47 +51,43 @@ tailwind.config = {
 
 <body class="h-full text-gray-900">
 
-<section class="hero relative h-[340px] flex items-center justify-center text-center px-4">
+<section class="hero relative h-[300px] sm:h-[340px] flex items-center justify-center text-center px-4">
 <div class="absolute inset-0 bg-gradient-to-br from-greenx/80 to-redx/70"></div>
-<div class="relative z-10 max-w-xl">
-<img src="images/logo.png" class="w-36 h-36 rounded-full object-cover border-4 border-white shadow-2xl mx-auto mb-5" alt="Logo Recanto das Pizzas" onerror="this.src='https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=200&auto=format&fit=crop'">
-<h1 class="playfair text-5xl font-black text-white drop-shadow-lg">Recanto das Pizzas</h1>
-<p class="text-red-100 mt-4 font-bold text-lg">Aberto das 18:30 às 22:00 • Fechado às segundas</p>
-<div class="flex justify-center gap-3 mt-6 flex-wrap">
-<a href="#pizzas" class="bg-white text-greenx font-black px-5 py-3 rounded-full shadow-lg hover:scale-105 transition">🍕 Ver Cardápio</a>
-<a href="https://wa.me/5581997367519" class="bg-green-500 text-white font-black px-5 py-3 rounded-full shadow-lg hover:scale-105 transition">WhatsApp</a>
-</div>
+<div class="relative z-10 max-w-xl w-full">
+<img src="images/logo.png" class="w-28 h-28 sm:w-36 sm:h-36 rounded-full object-cover border-4 border-white shadow-2xl mx-auto mb-4 sm:mb-5" alt="Logo Recanto das Pizzas" onerror="this.src='https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=200&auto=format&fit=crop'">
+<h1 class="playfair text-4xl sm:text-5xl font-black text-white drop-shadow-lg leading-tight">Recanto das Pizzas</h1>
+<p class="text-red-100 mt-2 sm:mt-4 font-bold text-sm sm:text-lg">Aberto das 18:30 às 22:00 • Fechado às segundas</p>
 </div>
 </section>
 
-<nav class="sticky top-0 z-50 glass border-b border-white/50 px-3 py-3 shadow-sm">
-<div class="flex gap-3 overflow-x-auto category-scroll justify-center">
-<a href="#pizzas" class="whitespace-nowrap bg-green-100 text-greenx px-5 py-2 rounded-full font-bold text-sm hover:bg-greenx hover:text-white transition">🍕 Pizzas</a>
-<a href="#hamburgueres" class="whitespace-nowrap bg-orange-100 text-orange-700 px-5 py-2 rounded-full font-bold text-sm hover:bg-orange-600 hover:text-white transition">🍔 Hambúrgueres</a>
-<a href="#bebidas" class="whitespace-nowrap bg-red-100 text-redx px-5 py-2 rounded-full font-bold text-sm hover:bg-redx hover:text-white transition">🥤 Bebidas</a>
+<nav class="sticky top-0 z-50 glass border-b border-white/50 px-2 py-3 shadow-sm">
+<div class="flex gap-2 sm:gap-3 overflow-x-auto category-scroll justify-start sm:justify-center px-2">
+<a href="#pizzas" class="whitespace-nowrap bg-green-100 text-greenx px-4 sm:px-5 py-2 rounded-full font-bold text-xs sm:text-sm hover:bg-greenx hover:text-white transition">🍕 Pizzas</a>
+<a href="#hamburgueres" class="whitespace-nowrap bg-orange-100 text-orange-700 px-4 sm:px-5 py-2 rounded-full font-bold text-xs sm:text-sm hover:bg-orange-600 hover:text-white transition">🍔 Hambúrgueres</a>
+<a href="#bebidas" class="whitespace-nowrap bg-red-100 text-redx px-4 sm:px-5 py-2 rounded-full font-bold text-xs sm:text-sm hover:bg-redx hover:text-white transition">🥤 Bebidas</a>
 </div>
 </nav>
 
-<div class="max-w-3xl mx-auto px-4 pb-36">
+<div class="max-w-3xl mx-auto px-4 pb-36 w-full">
 
-<section id="pizzas" class="pt-8">
-<h2 class="playfair text-3xl font-black text-greenx flex items-center gap-3 mb-6">
+<section id="pizzas" class="pt-8 scroll-mt-16">
+<h2 class="playfair text-2xl sm:text-3xl font-black text-greenx flex items-center gap-3 mb-6">
 🍕 Pizzas
 <span class="h-1 flex-1 bg-gradient-to-r from-redx to-transparent rounded-full"></span>
 </h2>
 <div id="menu-pizzas"></div>
 </section>
 
-<section id="hamburgueres" class="pt-8">
-<h2 class="playfair text-3xl font-black text-orange-700 flex items-center gap-3 mb-6">
+<section id="hamburgueres" class="pt-8 scroll-mt-16">
+<h2 class="playfair text-2xl sm:text-3xl font-black text-orange-700 flex items-center gap-3 mb-6">
 🍔 Hambúrgueres
 <span class="h-1 flex-1 bg-gradient-to-r from-orange-500 to-transparent rounded-full"></span>
 </h2>
 <div id="menu-hamburgueres"></div>
 </section>
 
-<section id="bebidas" class="pt-8">
-<h2 class="playfair text-3xl font-black text-redx flex items-center gap-3 mb-6">
+<section id="bebidas" class="pt-8 scroll-mt-16">
+<h2 class="playfair text-2xl sm:text-3xl font-black text-redx flex items-center gap-3 mb-6">
 🥤 Bebidas
 <span class="h-1 flex-1 bg-gradient-to-r from-redx to-transparent rounded-full"></span>
 </h2>
@@ -100,52 +96,52 @@ tailwind.config = {
 
 </div>
 
-<div id="cart-bar" class="cart-bar fixed left-1/2 -translate-x-1/2 bottom-[-120px] z-50 bg-gradient-to-r from-greenx to-redx text-white w-[calc(100%-20px)] max-w-lg rounded-2xl shadow-2xl p-4 flex items-center justify-between cursor-pointer" onclick="openCart()">
-<div class="flex items-center gap-3">
-<div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
-<i data-lucide="shopping-bag" class="w-6 h-6"></i>
+<div id="cart-bar" class="cart-bar fixed left-1/2 -translate-x-1/2 bottom-[-120px] z-50 bg-gradient-to-r from-greenx to-redx text-white w-[calc(100%-24px)] sm:w-[calc(100%-40px)] max-w-lg rounded-2xl shadow-2xl p-3 sm:p-4 flex items-center justify-between cursor-pointer" onclick="openCart()">
+<div class="flex items-center gap-2 sm:gap-3">
+<div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+<i data-lucide="shopping-bag" class="w-5 h-5 sm:w-6 sm:h-6"></i>
 </div>
-<div>
-<div id="cart-count" class="font-black text-sm">0 itens</div>
-<div class="text-xs opacity-80">Toque para abrir</div>
+<div class="min-w-0">
+<div id="cart-count" class="font-black text-xs sm:text-sm truncate">0 itens</div>
+<div class="text-[10px] sm:text-xs opacity-80 truncate">Toque para abrir</div>
 </div>
 </div>
-<div id="cart-total" class="playfair text-2xl font-black">R$ 0,00</div>
+<div id="cart-total" class="playfair text-lg sm:text-2xl font-black flex-shrink-0">R$ 0,00</div>
 </div>
 
-<div id="image-modal" class="fixed inset-0 z-[120] hidden items-center justify-center">
+<div id="image-modal" class="fixed inset-0 z-[120] hidden items-center justify-center p-4">
 <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeImageModal()"></div>
-<div class="relative z-10 max-w-2xl w-11/12 modal-anim">
+<div class="relative z-10 max-w-2xl w-full modal-anim">
 <button onclick="closeImageModal()" class="absolute -top-12 right-0 bg-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg">
 <i data-lucide="x"></i>
 </button>
-<img id="modal-image" class="w-full rounded-3xl shadow-2xl object-cover max-h-[85vh]" src="" alt="Imagem do item">
+<img id="modal-image" class="w-full rounded-3xl shadow-2xl object-cover max-h-[80vh]" src="" alt="Imagem do item">
 </div>
 </div>
 
 <div id="cart-modal" class="fixed inset-0 z-[100] hidden">
 <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeCart()"></div>
-<div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-[35px] max-h-[90%] overflow-y-auto p-6 modal-anim">
-<div class="flex items-center justify-between mb-6 border-b pb-4">
-<h3 class="playfair text-3xl font-black text-greenx">Seu Pedido</h3>
-<button onclick="closeCart()" class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-redx">
+<div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-[30px] sm:rounded-t-[35px] max-h-[90%] overflow-y-auto p-4 sm:p-6 modal-anim w-full max-w-3xl mx-auto">
+<div class="flex items-center justify-between mb-4 sm:mb-6 border-b pb-4">
+<h3 class="playfair text-2xl sm:text-3xl font-black text-greenx">Seu Pedido</h3>
+<button onclick="closeCart()" class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-redx flex-shrink-0">
 <i data-lucide="x"></i>
 </button>
 </div>
 <div id="cart-items"></div>
-<div id="cart-empty" class="py-16 text-center text-gray-400">
-<div class="text-6xl mb-4">🛒</div>
-<p class="font-bold text-xl">Seu carrinho está vazio</p>
+<div id="cart-empty" class="py-12 sm:py-16 text-center text-gray-400">
+<div class="text-5xl sm:text-6xl mb-4">🛒</div>
+<p class="font-bold text-lg sm:text-xl">Seu carrinho está vazio</p>
 </div>
-<div id="cart-footer" class="hidden pt-6 mt-6 border-t">
-<div class="bg-gray-50 rounded-2xl p-5 mb-5">
+<div id="cart-footer" class="hidden pt-4 sm:pt-6 mt-4 sm:mt-6 border-t">
+<div class="bg-gray-50 rounded-2xl p-4 sm:p-5 mb-4 sm:mb-5">
 <div class="flex justify-between items-center">
-<span class="font-bold text-lg">Total</span>
-<span id="modal-total" class="playfair text-3xl font-black text-redx">R$ 0,00</span>
+<span class="font-bold text-base sm:text-lg">Total</span>
+<span id="modal-total" class="playfair text-2xl sm:text-3xl font-black text-redx">R$ 0,00</span>
 </div>
 </div>
-<textarea id="obs" placeholder="Observações do pedido..." class="w-full border rounded-2xl p-4 mb-5 outline-none resize-none h-28"></textarea>
-<button onclick="sendWhatsApp()" class="w-full bg-gradient-to-r from-greenx to-redx text-white font-black text-lg py-4 rounded-2xl shadow-xl hover:scale-[1.02] transition flex items-center justify-center gap-3">
+<textarea id="obs" placeholder="Observações do pedido..." class="w-full border rounded-2xl p-4 mb-4 sm:mb-5 outline-none resize-none h-24 sm:h-28 text-sm sm:text-base"></textarea>
+<button onclick="sendWhatsApp()" class="w-full bg-gradient-to-r from-greenx to-redx text-white font-black text-base sm:text-lg py-3 sm:py-4 rounded-2xl shadow-xl hover:scale-[1.02] transition flex items-center justify-center gap-3">
 <i data-lucide="send"></i>
 Enviar Pedido
 </button>
@@ -153,18 +149,18 @@ Enviar Pedido
 </div>
 </div>
 
-<div id="closed-modal" class="fixed inset-0 z-[150] hidden items-center justify-center">
+<div id="closed-modal" class="fixed inset-0 z-[150] hidden items-center justify-center p-4">
   <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeStoreStatusModal()"></div>
-  <div class="relative z-10 bg-white max-w-sm w-11/12 p-6 rounded-3xl shadow-2xl text-center modal-anim">
-    <div class="w-20 h-20 bg-red-100 text-redx rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner">
-      <i data-lucide="clock" class="w-10 h-10"></i>
+  <div class="relative z-10 bg-white max-w-sm w-full p-5 sm:p-6 rounded-3xl shadow-2xl text-center modal-anim">
+    <div class="w-16 h-16 sm:w-20 sm:h-20 bg-red-100 text-redx rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner">
+      <i data-lucide="clock" class="w-8 h-8 sm:w-10 sm:h-10"></i>
     </div>
-    <h3 class="playfair text-3xl font-black text-gray-900 mb-2">Estamos Fechados</h3>
-    <p class="text-gray-600 mt-3 mb-6 text-lg leading-relaxed">
+    <h3 class="playfair text-2xl sm:text-3xl font-black text-gray-900 mb-2">Estamos Fechados</h3>
+    <p class="text-gray-600 mt-2 sm:mt-3 mb-5 sm:mb-6 text-base sm:text-lg leading-relaxed">
       Nosso horário de funcionamento é das <strong class="text-redx">18:30 às 22:00</strong>.<br>
-      <em>(Não abrimos às segundas-feiras)</em>
+      <span class="text-sm sm:text-base italic">(Não abrimos às segundas-feiras)</span>
     </p>
-    <button onclick="closeStoreStatusModal()" class="w-full bg-gray-100 text-gray-800 font-black text-lg py-4 rounded-2xl shadow hover:bg-gray-200 transition">
+    <button onclick="closeStoreStatusModal()" class="w-full bg-gray-100 text-gray-800 font-black text-base sm:text-lg py-3 sm:py-4 rounded-2xl shadow hover:bg-gray-200 transition">
       Ver o Cardápio Mesmo Assim
     </button>
   </div>
@@ -227,31 +223,31 @@ const menuData = {
 function renderMenu(){
   const pizzas = document.getElementById('menu-pizzas');
   pizzas.innerHTML = menuData.pizzas.map(item=>`
-    <div class="bg-white rounded-3xl overflow-hidden shadow-lg mb-5 item-card border border-gray-100">
-      <div class="flex gap-4 p-4 cursor-pointer" onclick="togglePizza('${item.id}')">
-        <img src="${item.image}" class="w-28 h-28 rounded-2xl object-cover shadow-md cursor-pointer hover:scale-105 transition" onclick="event.stopPropagation();openImageModal('${item.image}')" onerror="this.src='https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=200&auto=format&fit=crop'">
-        <div class="flex-1">
-          <h3 class="playfair text-2xl font-black">${item.name}</h3>
-          <p class="text-sm text-gray-500 mt-2 leading-relaxed">${item.desc}</p>
-          <div class="text-redx font-black mt-3">Escolha o tamanho</div>
+    <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-lg mb-4 sm:mb-5 item-card border border-gray-100">
+      <div class="flex gap-3 sm:gap-4 p-3 sm:p-4 cursor-pointer items-center" onclick="togglePizza('${item.id}')">
+        <img src="${item.image}" class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl object-cover shadow-md cursor-pointer hover:scale-105 transition flex-shrink-0" onclick="event.stopPropagation();openImageModal('${item.image}')" onerror="this.src='https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=200&auto=format&fit=crop'">
+        <div class="flex-1 min-w-0">
+          <h3 class="playfair text-xl sm:text-2xl font-black leading-tight">${item.name}</h3>
+          <p class="text-xs sm:text-sm text-gray-500 mt-1 sm:mt-2 leading-relaxed truncate whitespace-normal line-clamp-2">${item.desc}</p>
+          <div class="text-redx font-black text-sm mt-2 sm:mt-3">Escolha o tamanho</div>
         </div>
-        <div class="flex items-center">
-          <i id="icon-${item.id}" data-lucide="chevron-down" class="pizza-expand"></i>
+        <div class="flex items-center flex-shrink-0 pl-1">
+          <i id="icon-${item.id}" data-lucide="chevron-down" class="pizza-expand w-5 h-5 sm:w-6 sm:h-6 text-gray-400"></i>
         </div>
       </div>
       <div id="sizes-${item.id}" class="hidden bg-gray-50 border-t">
         ${item.sizes.map(size=>{
           const itemId = `${item.id}_${size.suffix}`;
           return `
-            <div class="flex justify-between items-center p-4 border-b">
-              <div>
-                <div class="font-black text-lg">🍕 ${size.label}</div>
-                <div class="text-redx font-black text-xl mt-1">R$ ${size.price.toFixed(2).replace('.',',')}</div>
+            <div class="flex flex-wrap sm:flex-nowrap justify-between items-center p-3 sm:p-4 border-b gap-3">
+              <div class="min-w-0 flex-1">
+                <div class="font-black text-base sm:text-lg truncate">🍕 ${size.label}</div>
+                <div class="text-redx font-black text-lg sm:text-xl mt-1">R$ ${size.price.toFixed(2).replace('.',',')}</div>
               </div>
-              <div class="flex items-center gap-2 bg-white p-2 rounded-xl shadow">
-                <button onclick="event.stopPropagation();changeQty('${itemId}',-1)" class="w-9 h-9 rounded-lg bg-gray-100 font-black text-xl">−</button>
-                <span id="qty-${itemId}" class="font-black min-w-[24px] text-center">${cart[itemId]||0}</span>
-                <button onclick="event.stopPropagation();changeQty('${itemId}',1)" class="w-9 h-9 rounded-lg bg-redx text-white font-black text-xl">+</button>
+              <div class="flex items-center gap-1 sm:gap-2 bg-white p-1 sm:p-2 rounded-xl shadow border border-gray-100 flex-shrink-0">
+                <button onclick="event.stopPropagation();changeQty('${itemId}',-1)" class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-gray-100 font-black text-lg sm:text-xl flex items-center justify-center">−</button>
+                <span id="qty-${itemId}" class="font-black min-w-[24px] text-center text-sm sm:text-base">${cart[itemId]||0}</span>
+                <button onclick="event.stopPropagation();changeQty('${itemId}',1)" class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-redx text-white font-black text-lg sm:text-xl flex items-center justify-center">+</button>
               </div>
             </div>
           `
@@ -271,19 +267,19 @@ function renderMenu(){
 
 function card(item){
   return `
-    <div class="bg-white rounded-3xl p-4 shadow-lg mb-5 flex gap-4 item-card border border-gray-100">
-      <img src="${item.image}" class="w-24 h-24 rounded-2xl object-cover cursor-pointer hover:scale-105 transition" onclick="openImageModal('${item.image}')" onerror="this.src='https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=200&auto=format&fit=crop'">
-      <div class="flex-1 flex flex-col justify-between">
+    <div class="bg-white rounded-3xl p-3 sm:p-4 shadow-sm hover:shadow-lg mb-4 sm:mb-5 flex gap-3 sm:gap-4 item-card border border-gray-100 items-center sm:items-stretch">
+      <img src="${item.image}" class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-cover cursor-pointer hover:scale-105 transition flex-shrink-0" onclick="openImageModal('${item.image}')" onerror="this.src='https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=200&auto=format&fit=crop'">
+      <div class="flex-1 flex flex-col justify-between min-w-0">
         <div>
-          <h3 class="font-black text-xl">${item.name}</h3>
-          <p class="text-sm text-gray-500 mt-1">${item.desc}</p>
+          <h3 class="font-black text-lg sm:text-xl leading-tight truncate whitespace-normal line-clamp-1 sm:line-clamp-none">${item.name}</h3>
+          <p class="text-xs sm:text-sm text-gray-500 mt-1 truncate whitespace-normal line-clamp-1 sm:line-clamp-2">${item.desc}</p>
         </div>
-        <div class="flex justify-between items-center mt-4">
-          <div class="text-redx font-black text-2xl">R$ ${item.price.toFixed(2).replace('.',',')}</div>
-          <div class="flex items-center gap-2 bg-gray-100 p-1 rounded-xl">
-            <button onclick="changeQty('${item.id}',-1)" class="w-9 h-9 rounded-lg bg-white shadow font-black text-xl">−</button>
-            <span id="qty-${item.id}" class="font-black min-w-[20px] text-center">${cart[item.id]||0}</span>
-            <button onclick="changeQty('${item.id}',1)" class="w-9 h-9 rounded-lg bg-redx text-white shadow font-black text-xl">+</button>
+        <div class="flex justify-between items-center mt-2 sm:mt-4">
+          <div class="text-redx font-black text-lg sm:text-2xl">R$ ${item.price.toFixed(2).replace('.',',')}</div>
+          <div class="flex items-center gap-1 sm:gap-2 bg-gray-50 border p-1 rounded-xl flex-shrink-0">
+            <button onclick="changeQty('${item.id}',-1)" class="w-7 h-7 sm:w-9 sm:h-9 rounded-lg bg-white shadow-sm font-black text-base sm:text-xl flex items-center justify-center">−</button>
+            <span id="qty-${item.id}" class="font-black min-w-[20px] text-center text-sm sm:text-base">${cart[item.id]||0}</span>
+            <button onclick="changeQty('${item.id}',1)" class="w-7 h-7 sm:w-9 sm:h-9 rounded-lg bg-redx text-white shadow-sm font-black text-base sm:text-xl flex items-center justify-center">+</button>
           </div>
         </div>
       </div>
@@ -330,7 +326,7 @@ function updateCartBar(){
   });
 
   const bar = document.getElementById('cart-bar');
-  bar.style.bottom = count>0 ? '20px' : '-120px';
+  bar.style.bottom = count>0 ? '16px' : '-120px';
   document.getElementById('cart-count').innerText = `${count} itens`;
   document.getElementById('cart-total').innerText = `R$ ${total.toFixed(2).replace('.',',')}`;
 }
@@ -360,12 +356,12 @@ function openCart(){
     const subtotal = item.price * qty;
     total += subtotal;
     return `
-      <div class="flex justify-between items-center border-b py-4">
-        <div>
-          <div class="font-black">${item.name}</div>
-          <div class="text-sm text-gray-500 mt-1">${qty}x unidade</div>
+      <div class="flex justify-between items-center border-b py-3 sm:py-4 gap-3">
+        <div class="min-w-0 flex-1">
+          <div class="font-black text-sm sm:text-base leading-tight truncate whitespace-normal line-clamp-2">${item.name}</div>
+          <div class="text-xs sm:text-sm text-gray-500 mt-1">${qty}x unidade</div>
         </div>
-        <div class="font-black text-redx text-lg">R$ ${subtotal.toFixed(2).replace('.',',')}</div>
+        <div class="font-black text-redx text-base sm:text-lg flex-shrink-0">R$ ${subtotal.toFixed(2).replace('.',',')}</div>
       </div>
     `
   }).join('');
@@ -394,7 +390,7 @@ function closeImageModal(){
 // ---- LÓGICA DE VERIFICAÇÃO DE HORÁRIO ----
 function checkStoreStatus() {
   const now = new Date();
-  const day = now.getDay(); // 0 = Domingo, 1 = Segunda, ..., 6 = Sábado
+  const day = now.getDay(); 
   const hour = now.getHours();
   const minutes = now.getMinutes();
   
@@ -421,14 +417,12 @@ function closeStoreStatusModal() {
   modal.classList.remove('flex');
 }
 
-// Roda a verificação assim que a janela carrega
 window.addEventListener('load', () => {
   checkStoreStatus();
 });
 // ------------------------------------------
 
 function sendWhatsApp(){
-  // TRAVA DE ENVIO SE ESTIVER FECHADO
   if (!checkStoreStatus()) {
     alert("Não podemos receber seu pedido agora. Estamos fora do horário de funcionamento!");
     return;
