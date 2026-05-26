@@ -14,72 +14,24 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
--webkit-tap-highlight-color:transparent;
-}
-
-body{
-font-family:'Lato',sans-serif;
-background:#fafafa;
-overflow-x:hidden;
-}
-
-.playfair{
-font-family:'Playfair Display',serif;
-}
-
+*{ margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+body{ font-family:'Lato',sans-serif; background:#fafafa; overflow-x:hidden; }
+.playfair{ font-family:'Playfair Display',serif; }
 .hero{
-background:
-linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.65)),
-url('https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1600&auto=format&fit=crop');
-background-size:cover;
-background-position:center;
+  background: linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.65)), url('https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1600&auto=format&fit=crop');
+  background-size:cover; background-position:center;
 }
-
-.category-scroll::-webkit-scrollbar{
-display:none;
-}
-
-.cart-bar{
-transition:.4s;
-}
-
-.pizza-expand{
-transition:.3s;
-}
-
-.glass{
-backdrop-filter:blur(14px);
-background:rgba(255,255,255,.75);
-}
-
-.item-card:hover{
-transform:translateY(-3px);
-}
-
-.item-card{
-transition:.25s;
-}
-
-.modal-anim{
-animation:up .3s ease;
-}
-
+.category-scroll::-webkit-scrollbar{ display:none; }
+.cart-bar{ transition:.4s; }
+.pizza-expand{ transition:.3s; }
+.glass{ backdrop-filter:blur(14px); background:rgba(255,255,255,.75); }
+.item-card:hover{ transform:translateY(-3px); }
+.item-card{ transition:.25s; }
+.modal-anim{ animation:up .3s ease; }
 @keyframes up{
-from{
-transform:translateY(100px);
-opacity:0;
+  from{ transform:translateY(100px); opacity:0; }
+  to{ transform:translateY(0); opacity:1; }
 }
-
-to{
-transform:translateY(0);
-opacity:1;
-}
-}
-
 </style>
 
 <script>
@@ -99,728 +51,416 @@ tailwind.config = {
 
 <body class="h-full text-gray-900">
 
-<!-- HERO -->
 <section class="hero relative h-[340px] flex items-center justify-center text-center px-4">
-
 <div class="absolute inset-0 bg-gradient-to-br from-greenx/80 to-redx/70"></div>
-
 <div class="relative z-10 max-w-xl">
-
-<img
-src="images/logo.png"
-class="w-36 h-36 rounded-full object-cover border-4 border-white shadow-2xl mx-auto mb-5"
-alt="Logo"
->
-
-<h1 class="playfair text-5xl font-black text-white drop-shadow-lg">
-Recanto das Pizzas
-</h1>
-
-<p class="text-red-100 mt-4 font-bold text-lg">
-Aberto das 18:30 às 22:00 • Fechado às segundas
-</p>
-
+<img src="images/logo.png" class="w-36 h-36 rounded-full object-cover border-4 border-white shadow-2xl mx-auto mb-5" alt="Logo Recanto das Pizzas" onerror="this.src='https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=200&auto=format&fit=crop'">
+<h1 class="playfair text-5xl font-black text-white drop-shadow-lg">Recanto das Pizzas</h1>
+<p class="text-red-100 mt-4 font-bold text-lg">Aberto das 18:30 às 22:00 • Fechado às segundas</p>
 <div class="flex justify-center gap-3 mt-6 flex-wrap">
-
-<a href="#pizzas"
-class="bg-white text-greenx font-black px-5 py-3 rounded-full shadow-lg hover:scale-105 transition">
-🍕 Ver Cardápio
-</a>
-
-<a href="https://wa.me/5581997367519"
-class="bg-green-500 text-white font-black px-5 py-3 rounded-full shadow-lg hover:scale-105 transition">
-WhatsApp
-</a>
-
+<a href="#pizzas" class="bg-white text-greenx font-black px-5 py-3 rounded-full shadow-lg hover:scale-105 transition">🍕 Ver Cardápio</a>
+<a href="https://wa.me/5581997367519" class="bg-green-500 text-white font-black px-5 py-3 rounded-full shadow-lg hover:scale-105 transition">WhatsApp</a>
 </div>
-
 </div>
 </section>
 
-<!-- NAV -->
 <nav class="sticky top-0 z-50 glass border-b border-white/50 px-3 py-3 shadow-sm">
 <div class="flex gap-3 overflow-x-auto category-scroll justify-center">
-
-<a href="#pizzas"
-class="whitespace-nowrap bg-green-100 text-greenx px-5 py-2 rounded-full font-bold text-sm hover:bg-greenx hover:text-white transition">
-🍕 Pizzas
-</a>
-
-<a href="#hamburgueres"
-class="whitespace-nowrap bg-orange-100 text-orange-700 px-5 py-2 rounded-full font-bold text-sm hover:bg-orange-600 hover:text-white transition">
-🍔 Hambúrgueres
-</a>
-
-<a href="#bebidas"
-class="whitespace-nowrap bg-red-100 text-redx px-5 py-2 rounded-full font-bold text-sm hover:bg-redx hover:text-white transition">
-🥤 Bebidas
-</a>
-
+<a href="#pizzas" class="whitespace-nowrap bg-green-100 text-greenx px-5 py-2 rounded-full font-bold text-sm hover:bg-greenx hover:text-white transition">🍕 Pizzas</a>
+<a href="#hamburgueres" class="whitespace-nowrap bg-orange-100 text-orange-700 px-5 py-2 rounded-full font-bold text-sm hover:bg-orange-600 hover:text-white transition">🍔 Hambúrgueres</a>
+<a href="#bebidas" class="whitespace-nowrap bg-red-100 text-redx px-5 py-2 rounded-full font-bold text-sm hover:bg-redx hover:text-white transition">🥤 Bebidas</a>
 </div>
 </nav>
 
-<!-- CONTAINER -->
 <div class="max-w-3xl mx-auto px-4 pb-36">
 
-<!-- PIZZAS -->
 <section id="pizzas" class="pt-8">
-
 <h2 class="playfair text-3xl font-black text-greenx flex items-center gap-3 mb-6">
 🍕 Pizzas
 <span class="h-1 flex-1 bg-gradient-to-r from-redx to-transparent rounded-full"></span>
 </h2>
-
 <div id="menu-pizzas"></div>
-
 </section>
 
-<!-- BURGER -->
 <section id="hamburgueres" class="pt-8">
-
 <h2 class="playfair text-3xl font-black text-orange-700 flex items-center gap-3 mb-6">
 🍔 Hambúrgueres
 <span class="h-1 flex-1 bg-gradient-to-r from-orange-500 to-transparent rounded-full"></span>
 </h2>
-
 <div id="menu-hamburgueres"></div>
-
 </section>
 
-<!-- BEBIDAS -->
 <section id="bebidas" class="pt-8">
-
 <h2 class="playfair text-3xl font-black text-redx flex items-center gap-3 mb-6">
 🥤 Bebidas
 <span class="h-1 flex-1 bg-gradient-to-r from-redx to-transparent rounded-full"></span>
 </h2>
-
 <div id="menu-bebidas"></div>
-
 </section>
 
 </div>
 
-<!-- CART BAR -->
-<div id="cart-bar"
-class="cart-bar fixed left-1/2 -translate-x-1/2 bottom-[-120px] z-50 bg-gradient-to-r from-greenx to-redx text-white w-[calc(100%-20px)] max-w-lg rounded-2xl shadow-2xl p-4 flex items-center justify-between cursor-pointer"
-onclick="openCart()">
-
+<div id="cart-bar" class="cart-bar fixed left-1/2 -translate-x-1/2 bottom-[-120px] z-50 bg-gradient-to-r from-greenx to-redx text-white w-[calc(100%-20px)] max-w-lg rounded-2xl shadow-2xl p-4 flex items-center justify-between cursor-pointer" onclick="openCart()">
 <div class="flex items-center gap-3">
-
 <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
 <i data-lucide="shopping-bag" class="w-6 h-6"></i>
 </div>
-
 <div>
 <div id="cart-count" class="font-black text-sm">0 itens</div>
 <div class="text-xs opacity-80">Toque para abrir</div>
 </div>
-
+</div>
+<div id="cart-total" class="playfair text-2xl font-black">R$ 0,00</div>
 </div>
 
-<div id="cart-total" class="playfair text-2xl font-black">
-R$ 0,00
-</div>
-
-</div>
-
-<!-- IMAGE MODAL -->
 <div id="image-modal" class="fixed inset-0 z-[120] hidden items-center justify-center">
-
 <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeImageModal()"></div>
-
 <div class="relative z-10 max-w-2xl w-11/12 modal-anim">
-
-<button onclick="closeImageModal()"
-class="absolute -top-12 right-0 bg-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg">
+<button onclick="closeImageModal()" class="absolute -top-12 right-0 bg-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg">
 <i data-lucide="x"></i>
 </button>
-
-<img id="modal-image"
-class="w-full rounded-3xl shadow-2xl object-cover max-h-[85vh]"
-src="">
-
+<img id="modal-image" class="w-full rounded-3xl shadow-2xl object-cover max-h-[85vh]" src="" alt="Imagem do item">
+</div>
 </div>
 
-</div>
-
-<!-- CART MODAL -->
 <div id="cart-modal" class="fixed inset-0 z-[100] hidden">
-
 <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeCart()"></div>
-
 <div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-[35px] max-h-[90%] overflow-y-auto p-6 modal-anim">
-
 <div class="flex items-center justify-between mb-6 border-b pb-4">
-
-<h3 class="playfair text-3xl font-black text-greenx">
-Seu Pedido
-</h3>
-
-<button onclick="closeCart()"
-class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center">
+<h3 class="playfair text-3xl font-black text-greenx">Seu Pedido</h3>
+<button onclick="closeCart()" class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-redx">
 <i data-lucide="x"></i>
 </button>
-
 </div>
-
 <div id="cart-items"></div>
-
 <div id="cart-empty" class="py-16 text-center text-gray-400">
 <div class="text-6xl mb-4">🛒</div>
 <p class="font-bold text-xl">Seu carrinho está vazio</p>
 </div>
-
 <div id="cart-footer" class="hidden pt-6 mt-6 border-t">
-
 <div class="bg-gray-50 rounded-2xl p-5 mb-5">
 <div class="flex justify-between items-center">
-
-<span class="font-bold text-lg">
-Total
-</span>
-
-<span id="modal-total" class="playfair text-3xl font-black text-redx">
-R$ 0,00
-</span>
-
+<span class="font-bold text-lg">Total</span>
+<span id="modal-total" class="playfair text-3xl font-black text-redx">R$ 0,00</span>
 </div>
 </div>
-
-<textarea
-id="obs"
-placeholder="Observações do pedido..."
-class="w-full border rounded-2xl p-4 mb-5 outline-none resize-none h-28"></textarea>
-
-<button
-onclick="sendWhatsApp()"
-class="w-full bg-gradient-to-r from-greenx to-redx text-white font-black text-lg py-4 rounded-2xl shadow-xl hover:scale-[1.02] transition flex items-center justify-center gap-3">
+<textarea id="obs" placeholder="Observações do pedido..." class="w-full border rounded-2xl p-4 mb-5 outline-none resize-none h-28"></textarea>
+<button onclick="sendWhatsApp()" class="w-full bg-gradient-to-r from-greenx to-redx text-white font-black text-lg py-4 rounded-2xl shadow-xl hover:scale-[1.02] transition flex items-center justify-center gap-3">
 <i data-lucide="send"></i>
 Enviar Pedido
 </button>
-
+</div>
+</div>
 </div>
 
-</div>
-
+<div id="closed-modal" class="fixed inset-0 z-[150] hidden items-center justify-center">
+  <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeStoreStatusModal()"></div>
+  <div class="relative z-10 bg-white max-w-sm w-11/12 p-6 rounded-3xl shadow-2xl text-center modal-anim">
+    <div class="w-20 h-20 bg-red-100 text-redx rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner">
+      <i data-lucide="clock" class="w-10 h-10"></i>
+    </div>
+    <h3 class="playfair text-3xl font-black text-gray-900 mb-2">Estamos Fechados</h3>
+    <p class="text-gray-600 mt-3 mb-6 text-lg leading-relaxed">
+      Nosso horário de funcionamento é das <strong class="text-redx">18:30 às 22:00</strong>.<br>
+      <em>(Não abrimos às segundas-feiras)</em>
+    </p>
+    <button onclick="closeStoreStatusModal()" class="w-full bg-gray-100 text-gray-800 font-black text-lg py-4 rounded-2xl shadow hover:bg-gray-200 transition">
+      Ver o Cardápio Mesmo Assim
+    </button>
+  </div>
 </div>
 
 <script>
-
 const config = {
-store:'Recanto das Pizzas',
-whatsapp:'5581997367519'
+  store:'Recanto das Pizzas',
+  whatsapp:'5581997367519'
 }
 
 let cart = {};
 
 const menuData = {
-
-pizzas:[
-
-{
-id:'p1',
-name:'Pizza Mussarela',
-desc:'Molho de tomate, mussarela, fatias de tomate, azeitonas e orégano',
-image:'images/pizza_mussarela.jpg.png.jpg',
-sizes:[
-{label:'Grande',price:40,suffix:'grande'},
-{label:'Média',price:30,suffix:'media'},
-{label:'Brotinho',price:20,suffix:'brotinho'}
-]
-},
-
-{
-id:'p2',
-name:'Pizza Calabresa',
-desc:'Molho de tomate, mussarela, calabresa fatiada e cebola',
-image:'images/pizza_calabresa.jpg.png',
-sizes:[
-{label:'Grande',price:40,suffix:'grande'},
-{label:'Média',price:30,suffix:'media'},
-{label:'Brotinho',price:20,suffix:'brotinho'}
-]
-},
-
-{
-id:'p3',
-name:'Pizza Frango com Catupiry',
-desc:'Molho de tomate, frango desfiado e catupiry original',
-image:'images/frango com catupiry.png',
-sizes:[
-{label:'Grande',price:42,suffix:'grande'},
-{label:'Média',price:32,suffix:'media'},
-{label:'Brotinho',price:22,suffix:'brotinho'}
-]
-},
-
-{
-id:'p4',
-name:'Pizza Portuguesa',
-desc:'Presunto, mussarela, ovos, ervilha, cebola e azeitonas',
-image:'images/pizza de portuguesa.png',
-sizes:[
-{label:'Grande',price:42,suffix:'grande'},
-{label:'Média',price:32,suffix:'media'},
-{label:'Brotinho',price:22,suffix:'brotinho'}
-]
-},
-
-{
-id:'p5',
-name:'Pizza 2 Queijos',
-desc:'Mussarela, parmesão e gorgonzola',
-image:'images/pizza dois queijo.png',
-sizes:[
-{label:'Grande',price:45,suffix:'grande'},
-{label:'Média',price:35,suffix:'media'},
-{label:'Brotinho',price:25,suffix:'brotinho'}
-]
-},
-
-{
-id:'p6',
-name:'Pizza Napolitana',
-desc:'Mussarela, tomate, manjericão e azeitonas',
-image:'images/pizza napolitano.png',
-sizes:[
-{label:'Grande',price:45,suffix:'grande'},
-{label:'Média',price:35,suffix:'media'},
-{label:'Brotinho',price:25,suffix:'brotinho'}
-]
-}
-
-],
-
-hamburgueres:[
-{
-id:'h1',
-name:'X-Burger Simples',
-desc:'Blend bovino 150g, cheddar, milho e maionese da casa',
-price:10,
-image:'images/x-burguer simplis.png'
-},
-
-{
-id:'h2',
-name:'X-Bacon',
-desc:'Blend 150g, cheddar, bacon crocante e salada',
-price:17,
-image:'images/x-bacon (2).png'
-},
-
-{
-id:'h3',
-name:'X-Calabresa',
-desc:'Blend 150g, cheddar e calabresa fatiada',
-price:15,
-image:'images/x-calabresa.png'
-},
-
-{
-id:'h4',
-name:'X-EGG',
-desc:'Blend 150g, cheddar, ovo e salada',
-price:14,
-image:'images/x-Egg.png'
-},
-
-{
-id:'h5',
-name:'X-Tudo',
-desc:'2 blends 150g, cheddar, calabresa e salada',
-price:25,
-image:'images/x-tudo.png'
-}
-],
-
-bebidas:[
-{
-id:'b1',
-name:'Coca-Cola 2L',
-desc:'Bem gelada',
-price:15,
-image:'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?q=80&w=1200&auto=format&fit=crop'
-},
-
-{
-id:'b2',
-name:'Guaraná 2L',
-desc:'Bem gelado',
-price:10,
-image:'https://images.unsplash.com/photo-1581006852262-e4307cf6283a?q=80&w=1200&auto=format&fit=crop'
-}
-]
-
+  pizzas:[
+    {
+      id:'p1', name:'Pizza Mussarela', desc:'Molho de tomate, mussarela, fatias de tomate, azeitonas e orégano',
+      image:'images/pizza_mussarela.jpg.png.jpg',
+      sizes:[ {label:'Grande',price:40,suffix:'grande'}, {label:'Média',price:30,suffix:'media'}, {label:'Brotinho',price:20,suffix:'brotinho'} ]
+    },
+    {
+      id:'p2', name:'Pizza Calabresa', desc:'Molho de tomate, mussarela, calabresa fatiada e cebola',
+      image:'images/pizza_calabresa.jpg.png',
+      sizes:[ {label:'Grande',price:40,suffix:'grande'}, {label:'Média',price:30,suffix:'media'}, {label:'Brotinho',price:20,suffix:'brotinho'} ]
+    },
+    {
+      id:'p3', name:'Pizza Frango com Catupiry', desc:'Molho de tomate, frango desfiado e catupiry original',
+      image:'images/frango com catupiry.png',
+      sizes:[ {label:'Grande',price:42,suffix:'grande'}, {label:'Média',price:32,suffix:'media'}, {label:'Brotinho',price:22,suffix:'brotinho'} ]
+    },
+    {
+      id:'p4', name:'Pizza Portuguesa', desc:'Presunto, mussarela, ovos, ervilha, cebola e azeitonas',
+      image:'images/pizza de portuguesa.png',
+      sizes:[ {label:'Grande',price:42,suffix:'grande'}, {label:'Média',price:32,suffix:'media'}, {label:'Brotinho',price:22,suffix:'brotinho'} ]
+    },
+    {
+      id:'p5', name:'Pizza 2 Queijos', desc:'Mussarela, parmesão e gorgonzola',
+      image:'images/pizza dois queijo.png',
+      sizes:[ {label:'Grande',price:45,suffix:'grande'}, {label:'Média',price:35,suffix:'media'}, {label:'Brotinho',price:25,suffix:'brotinho'} ]
+    },
+    {
+      id:'p6', name:'Pizza Napolitana', desc:'Mussarela, tomate, manjericão e azeitonas',
+      image:'images/pizza napolitano.png',
+      sizes:[ {label:'Grande',price:45,suffix:'grande'}, {label:'Média',price:35,suffix:'media'}, {label:'Brotinho',price:25,suffix:'brotinho'} ]
+    }
+  ],
+  hamburgueres:[
+    { id:'h1', name:'X-Burger Simples', desc:'Blend bovino 150g, cheddar, milho e maionese da casa', price:10, image:'images/x-burguer simplis.png' },
+    { id:'h2', name:'X-Bacon', desc:'Blend 150g, cheddar, bacon crocante e salada', price:17, image:'images/x-bacon (2).png' },
+    { id:'h3', name:'X-Calabresa', desc:'Blend 150g, cheddar e calabresa fatiada', price:15, image:'images/x-calabresa.png' },
+    { id:'h4', name:'X-EGG', desc:'Blend 150g, cheddar, ovo e salada', price:14, image:'images/x-Egg.png' },
+    { id:'h5', name:'X-Tudo', desc:'2 blends 150g, cheddar, calabresa e salada', price:25, image:'images/x-tudo.png' }
+  ],
+  bebidas:[
+    { id:'b1', name:'Coca-Cola 2L', desc:'Bem gelada', price:15, image:'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?q=80&w=1200&auto=format&fit=crop' },
+    { id:'b2', name:'Guaraná 2L', desc:'Bem gelado', price:10, image:'https://images.unsplash.com/photo-1581006852262-e4307cf6283a?q=80&w=1200&auto=format&fit=crop' }
+  ]
 }
 
 function renderMenu(){
+  const pizzas = document.getElementById('menu-pizzas');
+  pizzas.innerHTML = menuData.pizzas.map(item=>`
+    <div class="bg-white rounded-3xl overflow-hidden shadow-lg mb-5 item-card border border-gray-100">
+      <div class="flex gap-4 p-4 cursor-pointer" onclick="togglePizza('${item.id}')">
+        <img src="${item.image}" class="w-28 h-28 rounded-2xl object-cover shadow-md cursor-pointer hover:scale-105 transition" onclick="event.stopPropagation();openImageModal('${item.image}')" onerror="this.src='https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=200&auto=format&fit=crop'">
+        <div class="flex-1">
+          <h3 class="playfair text-2xl font-black">${item.name}</h3>
+          <p class="text-sm text-gray-500 mt-2 leading-relaxed">${item.desc}</p>
+          <div class="text-redx font-black mt-3">Escolha o tamanho</div>
+        </div>
+        <div class="flex items-center">
+          <i id="icon-${item.id}" data-lucide="chevron-down" class="pizza-expand"></i>
+        </div>
+      </div>
+      <div id="sizes-${item.id}" class="hidden bg-gray-50 border-t">
+        ${item.sizes.map(size=>{
+          const itemId = `${item.id}_${size.suffix}`;
+          return `
+            <div class="flex justify-between items-center p-4 border-b">
+              <div>
+                <div class="font-black text-lg">🍕 ${size.label}</div>
+                <div class="text-redx font-black text-xl mt-1">R$ ${size.price.toFixed(2).replace('.',',')}</div>
+              </div>
+              <div class="flex items-center gap-2 bg-white p-2 rounded-xl shadow">
+                <button onclick="event.stopPropagation();changeQty('${itemId}',-1)" class="w-9 h-9 rounded-lg bg-gray-100 font-black text-xl">−</button>
+                <span id="qty-${itemId}" class="font-black min-w-[24px] text-center">${cart[itemId]||0}</span>
+                <button onclick="event.stopPropagation();changeQty('${itemId}',1)" class="w-9 h-9 rounded-lg bg-redx text-white font-black text-xl">+</button>
+              </div>
+            </div>
+          `
+        }).join('')}
+      </div>
+    </div>
+  `).join('');
 
-const pizzas = document.getElementById('menu-pizzas');
+  const hamb = document.getElementById('menu-hamburgueres');
+  hamb.innerHTML = menuData.hamburgueres.map(item=>card(item)).join('');
 
-pizzas.innerHTML = menuData.pizzas.map(item=>`
+  const bebidas = document.getElementById('menu-bebidas');
+  bebidas.innerHTML = menuData.bebidas.map(item=>card(item)).join('');
 
-<div class="bg-white rounded-3xl overflow-hidden shadow-lg mb-5 item-card border border-gray-100">
-
-<div class="flex gap-4 p-4 cursor-pointer" onclick="togglePizza('${item.id}')">
-
-<img src="${item.image}"
-class="w-28 h-28 rounded-2xl object-cover shadow-md cursor-pointer hover:scale-105 transition"
-onclick="event.stopPropagation();openImageModal('${item.image}')">
-
-<div class="flex-1">
-
-<h3 class="playfair text-2xl font-black">
-${item.name}
-</h3>
-
-<p class="text-sm text-gray-500 mt-2 leading-relaxed">
-${item.desc}
-</p>
-
-<div class="text-redx font-black mt-3">
-Escolha o tamanho
-</div>
-
-</div>
-
-<div class="flex items-center">
-<i id="icon-${item.id}" data-lucide="chevron-down" class="pizza-expand"></i>
-</div>
-
-</div>
-
-<div id="sizes-${item.id}" class="hidden bg-gray-50 border-t">
-
-${item.sizes.map(size=>{
-
-const itemId = `${item.id}_${size.suffix}`;
-
-return `
-
-<div class="flex justify-between items-center p-4 border-b">
-
-<div>
-<div class="font-black text-lg">
-🍕 ${size.label}
-</div>
-
-<div class="text-redx font-black text-xl mt-1">
-R$ ${size.price.toFixed(2).replace('.',',')}
-</div>
-</div>
-
-<div class="flex items-center gap-2 bg-white p-2 rounded-xl shadow">
-
-<button onclick="event.stopPropagation();changeQty('${itemId}',-1)"
-class="w-9 h-9 rounded-lg bg-gray-100 font-black text-xl">
-−
-</button>
-
-<span id="qty-${itemId}" class="font-black min-w-[24px] text-center">
-${cart[itemId]||0}
-</span>
-
-<button onclick="event.stopPropagation();changeQty('${itemId}',1)"
-class="w-9 h-9 rounded-lg bg-redx text-white font-black text-xl">
-+
-</button>
-
-</div>
-
-</div>
-
-`
-
-}).join('')}
-
-</div>
-
-</div>
-
-`).join('');
-
-
-const hamb = document.getElementById('menu-hamburgueres');
-
-hamb.innerHTML = menuData.hamburgueres.map(item=>card(item)).join('');
-
-const bebidas = document.getElementById('menu-bebidas');
-
-bebidas.innerHTML = menuData.bebidas.map(item=>card(item)).join('');
-
-lucide.createIcons();
-
+  lucide.createIcons();
 }
 
 function card(item){
-
-return `
-
-<div class="bg-white rounded-3xl p-4 shadow-lg mb-5 flex gap-4 item-card border border-gray-100">
-
-<img src="${item.image}" class="w-24 h-24 rounded-2xl object-cover cursor-pointer hover:scale-105 transition"
-onclick="openImageModal('${item.image}')">
-
-<div class="flex-1 flex flex-col justify-between">
-
-<div>
-<h3 class="font-black text-xl">
-${item.name}
-</h3>
-
-<p class="text-sm text-gray-500 mt-1">
-${item.desc}
-</p>
-</div>
-
-<div class="flex justify-between items-center mt-4">
-
-<div class="text-redx font-black text-2xl">
-R$ ${item.price.toFixed(2).replace('.',',')}
-</div>
-
-<div class="flex items-center gap-2 bg-gray-100 p-1 rounded-xl">
-
-<button onclick="changeQty('${item.id}',-1)"
-class="w-9 h-9 rounded-lg bg-white shadow font-black text-xl">
-−
-</button>
-
-<span id="qty-${item.id}" class="font-black min-w-[20px] text-center">
-${cart[item.id]||0}
-</span>
-
-<button onclick="changeQty('${item.id}',1)"
-class="w-9 h-9 rounded-lg bg-redx text-white shadow font-black text-xl">
-+
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-`
-
+  return `
+    <div class="bg-white rounded-3xl p-4 shadow-lg mb-5 flex gap-4 item-card border border-gray-100">
+      <img src="${item.image}" class="w-24 h-24 rounded-2xl object-cover cursor-pointer hover:scale-105 transition" onclick="openImageModal('${item.image}')" onerror="this.src='https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=200&auto=format&fit=crop'">
+      <div class="flex-1 flex flex-col justify-between">
+        <div>
+          <h3 class="font-black text-xl">${item.name}</h3>
+          <p class="text-sm text-gray-500 mt-1">${item.desc}</p>
+        </div>
+        <div class="flex justify-between items-center mt-4">
+          <div class="text-redx font-black text-2xl">R$ ${item.price.toFixed(2).replace('.',',')}</div>
+          <div class="flex items-center gap-2 bg-gray-100 p-1 rounded-xl">
+            <button onclick="changeQty('${item.id}',-1)" class="w-9 h-9 rounded-lg bg-white shadow font-black text-xl">−</button>
+            <span id="qty-${item.id}" class="font-black min-w-[20px] text-center">${cart[item.id]||0}</span>
+            <button onclick="changeQty('${item.id}',1)" class="w-9 h-9 rounded-lg bg-redx text-white shadow font-black text-xl">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `
 }
 
 function togglePizza(id){
-
-const box = document.getElementById(`sizes-${id}`);
-const icon = document.getElementById(`icon-${id}`);
-
-box.classList.toggle('hidden');
-
-if(box.classList.contains('hidden')){
-icon.style.transform='rotate(0deg)';
-}else{
-icon.style.transform='rotate(180deg)';
-}
-
+  const box = document.getElementById(`sizes-${id}`);
+  const icon = document.getElementById(`icon-${id}`);
+  box.classList.toggle('hidden');
+  icon.style.transform = box.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
 }
 
 function getAllItems(){
-
-const pizzas=[];
-
-menuData.pizzas.forEach(pizza=>{
-
-pizza.sizes.forEach(size=>{
-
-pizzas.push({
-id:`${pizza.id}_${size.suffix}`,
-name:`${pizza.name} (${size.label})`,
-price:size.price
-})
-
-})
-
-})
-
-return[
-...pizzas,
-...menuData.hamburgueres,
-...menuData.bebidas
-]
-
+  const pizzas=[];
+  menuData.pizzas.forEach(pizza=>{
+    pizza.sizes.forEach(size=>{
+      pizzas.push({ id:`${pizza.id}_${size.suffix}`, name:`${pizza.name} (${size.label})`, price:size.price })
+    })
+  });
+  return [...pizzas, ...menuData.hamburgueres, ...menuData.bebidas];
 }
 
 function changeQty(id,delta){
-
-cart[id] = Math.max(0,(cart[id]||0)+delta);
-
-const qty = document.getElementById(`qty-${id}`);
-
-if(qty){
-qty.innerText = cart[id];
-}
-
-if(cart[id]===0){
-delete cart[id]
-}
-
-updateCartBar();
-
+  cart[id] = Math.max(0,(cart[id]||0)+delta);
+  const qty = document.getElementById(`qty-${id}`);
+  if(qty) qty.innerText = cart[id];
+  if(cart[id]===0) delete cart[id];
+  updateCartBar();
 }
 
 function updateCartBar(){
+  const items = getAllItems();
+  let total=0;
+  let count=0;
 
-const items = getAllItems();
+  Object.entries(cart).forEach(([id,qty])=>{
+    const item = items.find(i=>i.id===id);
+    if(item){
+      total += item.price * qty;
+      count += qty;
+    }
+  });
 
-let total=0;
-let count=0;
-
-Object.entries(cart).forEach(([id,qty])=>{
-
-const item = items.find(i=>i.id===id);
-
-if(item){
-total += item.price * qty;
-count += qty;
-}
-
-})
-
-const bar = document.getElementById('cart-bar');
-
-bar.style.bottom = count>0 ? '20px' : '-120px';
-
-document.getElementById('cart-count').innerText = `${count} itens`;
-
-document.getElementById('cart-total').innerText = `R$ ${total.toFixed(2).replace('.',',')}`;
-
+  const bar = document.getElementById('cart-bar');
+  bar.style.bottom = count>0 ? '20px' : '-120px';
+  document.getElementById('cart-count').innerText = `${count} itens`;
+  document.getElementById('cart-total').innerText = `R$ ${total.toFixed(2).replace('.',',')}`;
 }
 
 function openCart(){
+  const modal = document.getElementById('cart-modal');
+  modal.classList.remove('hidden');
 
-const modal = document.getElementById('cart-modal');
-modal.classList.remove('hidden');
+  const items = getAllItems();
+  const cartItems = document.getElementById('cart-items');
+  const footer = document.getElementById('cart-footer');
+  const empty = document.getElementById('cart-empty');
 
-const items = getAllItems();
-const cartItems = document.getElementById('cart-items');
-const footer = document.getElementById('cart-footer');
-const empty = document.getElementById('cart-empty');
+  if(Object.keys(cart).length===0){
+    footer.classList.add('hidden');
+    empty.classList.remove('hidden');
+    cartItems.innerHTML='';
+    return;
+  }
 
-if(Object.keys(cart).length===0){
-footer.classList.add('hidden');
-empty.classList.remove('hidden');
-cartItems.innerHTML='';
-return;
+  footer.classList.remove('hidden');
+  empty.classList.add('hidden');
+
+  let total = 0;
+  cartItems.innerHTML = Object.entries(cart).map(([id,qty])=>{
+    const item = items.find(i=>i.id===id);
+    const subtotal = item.price * qty;
+    total += subtotal;
+    return `
+      <div class="flex justify-between items-center border-b py-4">
+        <div>
+          <div class="font-black">${item.name}</div>
+          <div class="text-sm text-gray-500 mt-1">${qty}x unidade</div>
+        </div>
+        <div class="font-black text-redx text-lg">R$ ${subtotal.toFixed(2).replace('.',',')}</div>
+      </div>
+    `
+  }).join('');
+
+  document.getElementById('modal-total').innerText = `R$ ${total.toFixed(2).replace('.',',')}`;
+  lucide.createIcons();
 }
 
-footer.classList.remove('hidden');
-empty.classList.add('hidden');
-
-let total = 0;
-
-cartItems.innerHTML = Object.entries(cart).map(([id,qty])=>{
-
-const item = items.find(i=>i.id===id);
-
-const subtotal = item.price * qty;
-
-total += subtotal;
-
-return `
-
-<div class="flex justify-between items-center border-b py-4">
-
-<div>
-<div class="font-black">
-${item.name}
-</div>
-
-<div class="text-sm text-gray-500 mt-1">
-${qty}x unidade
-</div>
-</div>
-
-<div class="font-black text-redx text-lg">
-R$ ${subtotal.toFixed(2).replace('.',',')}
-</div>
-
-</div>
-
-`
-
-}).join('');
-
-
-document.getElementById('modal-total').innerText = `R$ ${total.toFixed(2).replace('.',',')}`;
-
-lucide.createIcons();
-
-}
-
-function closeCart(){
-document.getElementById('cart-modal').classList.add('hidden');
-}
+function closeCart(){ document.getElementById('cart-modal').classList.add('hidden'); }
 
 function openImageModal(src){
-
-const modal = document.getElementById('image-modal');
-const image = document.getElementById('modal-image');
-
-image.src = src;
-
-modal.classList.remove('hidden');
-modal.classList.add('flex');
-
-lucide.createIcons();
-
+  const modal = document.getElementById('image-modal');
+  const image = document.getElementById('modal-image');
+  image.src = src;
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+  lucide.createIcons();
 }
 
 function closeImageModal(){
-
-const modal = document.getElementById('image-modal');
-
-modal.classList.add('hidden');
-modal.classList.remove('flex');
-
+  const modal = document.getElementById('image-modal');
+  modal.classList.add('hidden');
+  modal.classList.remove('flex');
 }
+
+// ---- LÓGICA DE VERIFICAÇÃO DE HORÁRIO ----
+function checkStoreStatus() {
+  const now = new Date();
+  const day = now.getDay(); // 0 = Domingo, 1 = Segunda, ..., 6 = Sábado
+  const hour = now.getHours();
+  const minutes = now.getMinutes();
+  
+  const currentTime = hour + (minutes / 60);
+  
+  // Aberto das 18.5 (18:30) até 22.0 (22:00)
+  const isOpenTime = currentTime >= 18.5 && currentTime < 22.0;
+  
+  // Fechado às segundas
+  const isMonday = day === 1;
+
+  if (isMonday || !isOpenTime) {
+    const modal = document.getElementById('closed-modal');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    return false; 
+  }
+  return true; 
+}
+
+function closeStoreStatusModal() {
+  const modal = document.getElementById('closed-modal');
+  modal.classList.add('hidden');
+  modal.classList.remove('flex');
+}
+
+// Roda a verificação assim que a janela carrega
+window.addEventListener('load', () => {
+  checkStoreStatus();
+});
+// ------------------------------------------
 
 function sendWhatsApp(){
+  // TRAVA DE ENVIO SE ESTIVER FECHADO
+  if (!checkStoreStatus()) {
+    alert("Não podemos receber seu pedido agora. Estamos fora do horário de funcionamento!");
+    return;
+  }
 
-const items = getAllItems();
+  const items = getAllItems();
+  let total = 0;
+  let msg = `🍕 *NOVO PEDIDO - ${config.store}*\n\n`;
 
-let total = 0;
+  Object.entries(cart).forEach(([id,qty])=>{
+    const item = items.find(i=>i.id===id);
+    const subtotal = item.price * qty;
+    total += subtotal;
+    msg += `*${qty}x* ${item.name}\n`;
+    msg += `R$ ${subtotal.toFixed(2).replace('.',',')}\n\n`;
+  });
 
-let msg = `🍕 *NOVO PEDIDO - ${config.store}*\n\n`;
+  const obs = document.getElementById('obs').value;
+  if(obs.trim()!==''){
+    msg += `📝 *OBSERVAÇÕES:*\n${obs}\n\n`;
+  }
 
-Object.entries(cart).forEach(([id,qty])=>{
+  msg += `━━━━━━━━━━━━\n`;
+  msg += `💰 *TOTAL: R$ ${total.toFixed(2).replace('.',',')}*`;
 
-const item = items.find(i=>i.id===id);
-
-const subtotal = item.price * qty;
-
-total += subtotal;
-
-msg += `*${qty}x* ${item.name}\n`;
-msg += `R$ ${subtotal.toFixed(2).replace('.',',')}\n\n`;
-
-})
-
-const obs = document.getElementById('obs').value;
-
-if(obs.trim()!==''){
-msg += `📝 *OBSERVAÇÕES:*\n${obs}\n\n`;
+  window.open(`https://wa.me/${config.whatsapp}?text=${encodeURIComponent(msg)}`,'_blank');
 }
 
-msg += `━━━━━━━━━━━━\n`;
-msg += `💰 *TOTAL: R$ ${total.toFixed(2).replace('.',',')}*`;
-
-window.open(`https://wa.me/${config.whatsapp}?text=${encodeURIComponent(msg)}`,'_blank')
-
-}
-
+// Inicializações
 renderMenu();
 lucide.createIcons();
 
 </script>
-
 </body>
 </html>
