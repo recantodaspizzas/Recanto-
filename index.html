@@ -216,9 +216,16 @@ const menuData = {
     { id:'h6', name:'X-Tudo', desc:'2 blends 150g, cheddar, calabresa e salada', price:25, image:'images/x-tudo.png' }
   ],
   bebidas:[
-    { id:'b1', name:'Coca-Cola 2L', desc:'Bem gelada', price:15, image:'images/coca-cola.webp' },
-    { id:'b2', name:'Guaraná Santa Joana 2L', desc:'Bem gelado', price:7, image:'images/santa joana.webp' },
-    { id:'b3', name: 'Guaraná 250ml', desc: 'Guaraná Pequena (escolha nas observações)', price: 2.50, image: 'images/santa joana cola 250ml.webp' },
+    {
+      id:'b1', name:'Coca-Cola', desc:'Bem gelada',
+      image:'images/coca-cola.webp',
+      sizes:[ {label:'2 Litros',price:15,suffix:'2l'}, {label:'250ml',price:2.50,suffix:'250ml'} ]
+    },
+    {
+      id:'b2', name:'Guaraná Santa Joana', desc:'Bem gelado',
+      image:'images/santa joana.webp',
+      sizes:[ {label:'2 Litros',price:7,suffix:'2l'}, {label:'250ml',price:2.50,suffix:'250ml'} ]
+    }
   ]
 }
 
@@ -262,7 +269,39 @@ function renderMenu(){
   hamb.innerHTML = menuData.hamburgueres.map(item=>card(item)).join('');
 
   const bebidas = document.getElementById('menu-bebidas');
-  bebidas.innerHTML = menuData.bebidas.map(item=>card(item)).join('');
+  bebidas.innerHTML = menuData.bebidas.map(item=>`
+    <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-lg mb-4 sm:mb-5 item-card border border-gray-100">
+      <div class="flex gap-3 sm:gap-4 p-3 sm:p-4 cursor-pointer items-center" onclick="togglePizza('${item.id}')">
+        <img src="${item.image}" class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl object-cover shadow-md cursor-pointer hover:scale-105 transition flex-shrink-0" onclick="event.stopPropagation();openImageModal('${item.image}')" onerror="this.src='https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=200&auto=format&fit=crop'">
+        <div class="flex-1 min-w-0">
+          <h3 class="playfair text-xl sm:text-2xl font-black leading-tight">${item.name}</h3>
+          <p class="text-xs sm:text-sm text-gray-500 mt-1 sm:mt-2 leading-relaxed truncate whitespace-normal line-clamp-2">${item.desc}</p>
+          <div class="text-redx font-black text-sm mt-2 sm:mt-3">Escolha a litragem</div>
+        </div>
+        <div class="flex items-center flex-shrink-0 pl-1">
+          <i id="icon-${item.id}" data-lucide="chevron-down" class="pizza-expand w-5 h-5 sm:w-6 sm:h-6 text-gray-400"></i>
+        </div>
+      </div>
+      <div id="sizes-${item.id}" class="hidden bg-gray-50 border-t">
+        ${item.sizes.map(size=>{
+          const itemId = `${item.id}_${size.suffix}`;
+          return `
+            <div class="flex flex-wrap sm:flex-nowrap justify-between items-center p-3 sm:p-4 border-b gap-3">
+              <div class="min-w-0 flex-1">
+                <div class="font-black text-base sm:text-lg truncate">🥤 ${size.label}</div>
+                <div class="text-redx font-black text-lg sm:text-xl mt-1">R$ ${size.price.toFixed(2).replace('.',',')}</div>
+              </div>
+              <div class="flex items-center gap-1 sm:gap-2 bg-white p-1 sm:p-2 rounded-xl shadow border border-gray-100 flex-shrink-0">
+                <button onclick="event.stopPropagation();changeQty('${itemId}',-1)" class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-gray-100 font-black text-lg sm:text-xl flex items-center justify-center">−</button>
+                <span id="qty-${itemId}" class="font-black min-w-[24px] text-center text-sm sm:text-base">${cart[itemId]||0}</span>
+                <button onclick="event.stopPropagation();changeQty('${itemId}',1)" class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-redx text-white font-black text-lg sm:text-xl flex items-center justify-center">+</button>
+              </div>
+            </div>
+          `
+        }).join('')}
+      </div>
+    </div>
+  `).join('');
 
   lucide.createIcons();
 }
@@ -297,13 +336,21 @@ function togglePizza(id){
 }
 
 function getAllItems(){
-  const pizzas=[];
+  const combined=[];
+  
   menuData.pizzas.forEach(pizza=>{
     pizza.sizes.forEach(size=>{
-      pizzas.push({ id:`${pizza.id}_${size.suffix}`, name:`${pizza.name} (${size.label})`, price:size.price })
+      combined.push({ id:`${pizza.id}_${size.suffix}`, name:`${pizza.name} (${size.label})`, price:size.price })
     })
   });
-  return [...pizzas, ...menuData.hamburgueres, ...menuData.bebidas];
+
+  menuData.bebidas.forEach(bebida=>{
+    bebida.sizes.forEach(size=>{
+      combined.push({ id:`${bebida.id}_${size.suffix}`, name:`${bebida.name} (${size.label})`, price:size.price })
+    })
+  });
+
+  return [...combined, ...menuData.hamburgueres];
 }
 
 function changeQty(id,delta){
