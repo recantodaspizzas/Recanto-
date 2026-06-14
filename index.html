@@ -51,12 +51,18 @@ tailwind.config = {
 
 <body class="h-full text-gray-900">
 
-<section class="hero relative h-[300px] sm:h-[340px] flex items-center justify-center text-center px-4">
+<section class="hero relative h-[320px] sm:h-[360px] flex items-center justify-center text-center px-4">
 <div class="absolute inset-0 bg-gradient-to-br from-greenx/80 to-redx/70"></div>
 <div class="relative z-10 max-w-xl w-full">
-<img src="images/logo.jpg.png" class="w-28 h-28 sm:w-36 sm:h-36 rounded-full object-cover border-4 border-white shadow-2xl mx-auto mb-4 sm:mb-5" alt="Logo Recanto das Pizzas" onerror="this.src='images/logo.jpg.png'">
+<img src="images/logo.jpg.png" class="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover border-4 border-white shadow-2xl mx-auto mb-3 sm:mb-4" alt="Logo Recanto das Pizzas" onerror="this.src='images/logo.jpg.png'">
 <h1 class="playfair text-4xl sm:text-5xl font-black text-white drop-shadow-lg leading-tight">Recanto das Pizzas</h1>
-<p class="text-red-100 mt-2 sm:mt-4 font-bold text-sm sm:text-lg">Aberto das 18:30 às 22:00 • Fechado às segundas</p>
+
+<div id="store-badge-status" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs sm:text-sm font-black mt-3 shadow-md transition-all">
+  <span class="w-2 h-2 rounded-full animate-pulse"></span>
+  <span id="store-badge-text">Verificando...</span>
+</div>
+
+<p class="text-red-100 mt-2 font-medium text-xs sm:text-sm opacity-90">Horário padrão: 18:30 às 22:00 • Fechado às segundas</p>
 </div>
 </section>
 
@@ -119,7 +125,6 @@ tailwind.config = {
 </div>
 </div>
 
-<!-- MODAL DO CARRINHO COM CHECKOUT DE DADOS -->
 <div id="cart-modal" class="fixed inset-0 z-[100] hidden">
 <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeCart()"></div>
 <div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-[30px] sm:rounded-t-[35px] max-h-[90%] overflow-y-auto p-4 sm:p-6 modal-anim w-full max-w-3xl mx-auto">
@@ -136,8 +141,6 @@ tailwind.config = {
 </div>
 
 <div id="cart-footer" class="hidden pt-4 sm:pt-6 mt-4 sm:mt-6 border-t">
-  
-  <!-- SEÇÃO DE INFORMAÇÕES DE ENTREGA E IDENTIFICAÇÃO -->
   <div class="mb-6 space-y-4 bg-gray-50 p-4 rounded-2xl border border-gray-100">
     <h4 class="font-black text-gray-800 text-sm sm:text-base uppercase tracking-wider flex items-center gap-2">
       <i data-lucide="user" class="w-4 h-4 text-greenx"></i> Seus Dados
@@ -155,14 +158,12 @@ tailwind.config = {
       </label>
     </div>
 
-    <!-- Campos de Endereço Ocultados Dinamicamente -->
     <div id="address-fields" class="space-y-3">
       <input id="checkout-address" type="text" placeholder="Rua, número e complemento" class="w-full border rounded-xl p-3 outline-none text-sm focus:border-greenx transition bg-white">
       <input id="checkout-neighborhood" type="text" placeholder="Bairro" class="w-full border rounded-xl p-3 outline-none text-sm focus:border-greenx transition bg-white">
     </div>
   </div>
 
-  <!-- SEÇÃO DE PAGAMENTO -->
   <div class="mb-6 space-y-4 bg-gray-50 p-4 rounded-2xl border border-gray-100">
     <h4 class="font-black text-gray-800 text-sm sm:text-base uppercase tracking-wider flex items-center gap-2">
       <i data-lucide="credit-card" class="w-4 h-4 text-greenx"></i> Forma de Pagamento
@@ -198,8 +199,7 @@ Enviar Pedido
   <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeStoreStatusModal()"></div>
   <div class="relative z-10 bg-white max-w-sm w-full p-5 sm:p-6 rounded-3xl shadow-2xl text-center modal-anim">
     <div class="w-20 h-20 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner overflow-hidden">
-      <!-- Nome corrigido para evitar falha em servidores de hospedagem -->
-      <img src="images/logo_janela_fechado.jpeg" alt="Forno a lenha do Recanto" class="w-full h-full object-cover">
+      <img src="images/logo_janela_fechado.jpeg" alt="Recanto Fechado" class="w-full h-full object-cover">
     </div>
     <h3 class="playfair text-2xl sm:text-3xl font-black text-gray-900 mb-2">Estamos Fechados</h3>
     <p class="text-gray-600 mt-2 sm:mt-3 mb-5 sm:mb-6 text-base sm:text-lg leading-relaxed">
@@ -213,62 +213,70 @@ Enviar Pedido
 </div>
 
 <script>
+// CONFIGURAÇÕES GERAIS DE CONTROLE DA LOJA
 const config = {
-  store:'Recanto das Pizzas',
-  whatsapp:'5581997367519'
+  store: 'Recanto das Pizzas',
+  whatsapp: '5581997367519',
+  
+  // ---- GERENCIAMENTO DE STATUS DA LOJA ----
+  // 'auto'   => Segue o horário padrão (18:30 às 22:00, fecha segunda)
+  // 'open'   => Força a loja a ficar HOJE ABERTA (ignora horário e dia)
+  // 'closed' => Força a loja a ficar HOJE FECHADA (ignora horário e dia)
+  statusOverride: 'auto' 
 }
 
 let cart = {};
 
+// CONFIGURAÇÃO DOS PRODUTOS (Para desativar um item, mude 'available' para false)
 const menuData = {
   pizzas:[
     {
-      id:'p1', name:'Pizza Mussarela', desc:'Molho de tomate, mussarela, fatias de tomate, azeitonas e orégano',
+      id:'p1', name:'Pizza Mussarela', desc:'Molho de tomate, mussarela, fatias de tomate, azeitonas e orégano', available: true,
       image:'images/pizza_mussarela.jpg.png.jpg',
       sizes:[ {label:'Grande',price:40,suffix:'grande'}, {label:'Média',price:35,suffix:'media'}, {label:'Brotinho',price:10,suffix:'brotinho'} ]
     },
     {
-      id:'p2', name:'Pizza Calabresa', desc:'Molho de tomate, mussarela, calabresa fatiada e cebola',
+      id:'p2', name:'Pizza Calabresa', desc:'Molho de tomate, mussarela, calabresa fatiada e cebola', available: true,
       image:'images/pizza_calabresa.jpg.png',
       sizes:[ {label:'Grande',price:40,suffix:'grande'}, {label:'Média',price:35,suffix:'media'}, {label:'Brotinho',price:10,suffix:'brotinho'} ]
     },
     {
-      id:'p3', name:'Pizza Frango com Catupiry', desc:'Molho de tomate, frango desfiado e catupiry original',
+      id:'p3', name:'Pizza Frango com Catupiry', desc:'Molho de tomate, frango desfiado e catupiry original', available: true,
       image:'images/frango com catupiry.png',
       sizes:[ {label:'Grande',price:40,suffix:'grande'}, {label:'Média',price:35,suffix:'media'}, {label:'Brotinho',price:10,suffix:'brotinho'} ]
     },
     {
-      id:'p4', name:'Pizza Portuguesa', desc:'Presunto, mussarela, ovos, ervilha, cebola e azeitonas',
+      id:'p4', name:'Pizza Portuguesa', desc:'Presunto, mussarela, ovos, ervilha, cebola e azeitonas', available: false, // EXEMPLO INDISPONÍVEL
       image:'images/pizza de portuguesa.png',
       sizes:[ {label:'Grande',price:40,suffix:'grande'}, {label:'Média',price:35,suffix:'media'}, {label:'Brotinho',price:10,suffix:'brotinho'} ]
     },
     {
-      id:'p5', name:'Pizza 2 Queijos', desc:'Mussarela, parmesão e gorgonzola',
+      id:'p5', name:'Pizza 2 Queijos', desc:'Mussarela, parmesão e gorgonzola', available: true,
       image:'images/pizza dois queijo.png',
       sizes:[ {label:'Grande',price:40,suffix:'grande'}, {label:'Média',price:35,suffix:'media'}, {label:'Brotinho',price:10,suffix:'brotinho'} ]
     },
     {
-      id:'p6', name:'Pizza Napolitana', desc:'Mussarela, tomate, manjericão e azeitonas',
+      id:'p6', name:'Pizza Napolitana', desc:'Mussarela, tomate, manjericão e azeitonas', available: true,
       image:'images/pizza napolitano.png',
       sizes:[ {label:'Grande',price:40,suffix:'grande'}, {label:'Média',price:35,suffix:'media'}, {label:'Brotinho',price:10,suffix:'brotinho'} ]
     }
   ],
   hamburgueres:[
-    { id:'h1', name:'X-Burger Simples', desc:'Blend bovino 150g, cheddar, milho e maionese da casa', price:10, image:'images/x-burguer simplis.png' },
-    { id:'h2', name:'X-Salada', desc:'Blend bovino 150g, Alface, Tomate, Cebola, cheddar, milho e maionese da casa', price:12, image:'images/x-salada.png' },
-    { id:'h3', name:'X-Bacon', desc:'Blend 150g, cheddar, bacon crocante e salada', price:17, image:'images/x-bacon (2).png' },
-    { id:'h4', name:'X-Calabresa', desc:'Blend 150g, cheddar e calabresa fatiada', price:15, image:'images/x-calabresa.png' },
-    { id:'h5', name:'X-EGG', desc:'Blend 150g, cheddar, ovo e salada', price:14, image:'images/x-Egg.png' },
-    { id:'h6', name:'X-Tudo', desc:'2 blends 150g, cheddar, calabresa e salada', price:25, image:'images/x-tudo.png' }
+    { id:'h1', name:'X-Burger Simples', desc:'Blend bovino 150g, cheddar, milho e maionese da casa', price:10, available: true, image:'images/x-burguer simplis.png' },
+    { id:'h2', name:'X-Salada', desc:'Blend bovino 150g, Alface, Tomate, Cebola, cheddar, milho e maionese da casa', price:12, available: true, image:'images/x-salada.png' },
+    { id:'h3', name:'X-Bacon', desc:'Blend 150g, cheddar, bacon crocante e salada', price:17, available: true, image:'images/x-bacon (2).png' },
+    { id:'h4', name:'X-Calabresa', desc:'Blend 150g, cheddar e calabresa fatiada', price:15, available: true, image:'images/x-calabresa.png' },
+    { id:'h5', name:'X-EGG', desc:'Blend 150g, cheddar, ovo e salada', price:14, available: false, image:'images/x-Egg.png' }, // EXEMPLO INDISPONÍVEL
+    { id:'h6', name:'X-Tudo', desc:'2 blends 150g, cheddar, calabresa e salada', price:25, available: true, image:'images/x-tudo.png' }
   ],
   bebidas:[
     {
-      id:'b1', name:'Coca-Cola', desc:'Bem gelada',
+      id:'b1', name:'Coca-Cola', desc:'Bem gelada', available: true,
       image:'images/coca-cola.webp',
       sizes:[ {label:'2 Litros',price:15,suffix:'2l'}, {label:'250ml',price:2.50,suffix:'250ml'} ]
     },
     {
-      id:'b2', name:'Guaraná Santa Joana', desc:'Bem gelado',
+      id:'b2', name:'Guaraná Santa Joana', desc:'Bem gelado', available: true,
       image:'images/santa joana.webp',
       sizes:[ {label:'2 Litros',price:7,suffix:'2l'}, {label:'250ml',price:2.50,suffix:'250ml'} ]
     }
@@ -277,17 +285,22 @@ const menuData = {
 
 function renderMenu(){
   const pizzas = document.getElementById('menu-pizzas');
-  pizzas.innerHTML = menuData.pizzas.map(item=>`
-    <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-lg mb-4 sm:mb-5 item-card border border-gray-100">
-      <div class="flex gap-3 sm:gap-4 p-3 sm:p-4 cursor-pointer items-center" onclick="togglePizza('${item.id}')">
+  pizzas.innerHTML = menuData.pizzas.map(item=>{
+    const isAvail = item.available !== false;
+    return `
+    <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-lg mb-4 sm:mb-5 item-card border border-gray-100 ${!isAvail ? 'opacity-60 select-none' : ''}">
+      <div class="flex gap-3 sm:gap-4 p-3 sm:p-4 cursor-pointer items-center" ${isAvail ? `onclick="togglePizza('${item.id}')"` : ''}>
         <img src="${item.image}" class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl object-cover shadow-md cursor-pointer hover:scale-105 transition flex-shrink-0" onclick="event.stopPropagation();openImageModal('${item.image}')" onerror="this.src='https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=200&auto=format&fit=crop'">
         <div class="flex-1 min-w-0">
-          <h3 class="playfair text-xl sm:text-2xl font-black leading-tight">${item.name}</h3>
+          <div class="flex items-center gap-2 flex-wrap">
+            <h3 class="playfair text-xl sm:text-2xl font-black leading-tight">${item.name}</h3>
+            ${!isAvail ? `<span class="bg-red-100 text-redx font-black text-[10px] uppercase px-2 py-0.5 rounded-md tracking-wider">Esgotado</span>` : ''}
+          </div>
           <p class="text-xs sm:text-sm text-gray-500 mt-1 sm:mt-2 leading-relaxed truncate whitespace-normal line-clamp-2">${item.desc}</p>
-          <div class="text-redx font-black text-sm mt-2 sm:mt-3">Escolha o tamanho</div>
+          <div class="${isAvail ? 'text-redx' : 'text-gray-400'} font-black text-sm mt-2 sm:mt-3">${isAvail ? 'Escolha o tamanho' : 'Indisponível no momento'}</div>
         </div>
         <div class="flex items-center flex-shrink-0 pl-1">
-          <i id="icon-${item.id}" data-lucide="chevron-down" class="pizza-expand w-5 h-5 sm:w-6 sm:h-6 text-gray-400"></i>
+          ${isAvail ? `<i id="icon-${item.id}" data-lucide="chevron-down" class="pizza-expand w-5 h-5 sm:w-6 sm:h-6 text-gray-400"></i>` : ''}
         </div>
       </div>
       <div id="sizes-${item.id}" class="hidden bg-gray-50 border-t">
@@ -309,23 +322,28 @@ function renderMenu(){
         }).join('')}
       </div>
     </div>
-  `).join('');
+  `}).join('');
 
   const hamb = document.getElementById('menu-hamburgueres');
   hamb.innerHTML = menuData.hamburgueres.map(item=>card(item)).join('');
 
   const bebidas = document.getElementById('menu-bebidas');
-  bebidas.innerHTML = menuData.bebidas.map(item=>`
-    <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-lg mb-4 sm:mb-5 item-card border border-gray-100">
-      <div class="flex gap-3 sm:gap-4 p-3 sm:p-4 cursor-pointer items-center" onclick="togglePizza('${item.id}')">
+  bebidas.innerHTML = menuData.bebidas.map(item=>{
+    const isAvail = item.available !== false;
+    return `
+    <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-lg mb-4 sm:mb-5 item-card border border-gray-100 ${!isAvail ? 'opacity-60 select-none' : ''}">
+      <div class="flex gap-3 sm:gap-4 p-3 sm:p-4 cursor-pointer items-center" ${isAvail ? `onclick="togglePizza('${item.id}')"` : ''}>
         <img src="${item.image}" class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl object-cover shadow-md cursor-pointer hover:scale-105 transition flex-shrink-0" onclick="event.stopPropagation();openImageModal('${item.image}')" onerror="this.src='https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=200&auto=format&fit=crop'">
         <div class="flex-1 min-w-0">
-          <h3 class="playfair text-xl sm:text-2xl font-black leading-tight">${item.name}</h3>
+          <div class="flex items-center gap-2 flex-wrap">
+            <h3 class="playfair text-xl sm:text-2xl font-black leading-tight">${item.name}</h3>
+            ${!isAvail ? `<span class="bg-red-100 text-redx font-black text-[10px] uppercase px-2 py-0.5 rounded-md tracking-wider">Esgotado</span>` : ''}
+          </div>
           <p class="text-xs sm:text-sm text-gray-500 mt-1 sm:mt-2 leading-relaxed truncate whitespace-normal line-clamp-2">${item.desc}</p>
-          <div class="text-redx font-black text-sm mt-2 sm:mt-3">Escolha a litragem</div>
+          <div class="${isAvail ? 'text-redx' : 'text-gray-400'} font-black text-sm mt-2 sm:mt-3">${isAvail ? 'Escolha a litragem' : 'Indisponível no momento'}</div>
         </div>
         <div class="flex items-center flex-shrink-0 pl-1">
-          <i id="icon-${item.id}" data-lucide="chevron-down" class="pizza-expand w-5 h-5 sm:w-6 sm:h-6 text-gray-400"></i>
+          ${isAvail ? `<i id="icon-${item.id}" data-lucide="chevron-down" class="pizza-expand w-5 h-5 sm:w-6 sm:h-6 text-gray-400"></i>` : ''}
         </div>
       </div>
       <div id="sizes-${item.id}" class="hidden bg-gray-50 border-t">
@@ -347,27 +365,36 @@ function renderMenu(){
         }).join('')}
       </div>
     </div>
-  `).join('');
+  `}).join('');
 
   lucide.createIcons();
 }
 
 function card(item){
+  const isAvail = item.available !== false;
   return `
-    <div class="bg-white rounded-3xl p-3 sm:p-4 shadow-sm hover:shadow-lg mb-4 sm:mb-5 flex gap-3 sm:gap-4 item-card border border-gray-100 items-center sm:items-stretch">
+    <div class="bg-white rounded-3xl p-3 sm:p-4 shadow-sm hover:shadow-lg mb-4 sm:mb-5 flex gap-3 sm:gap-4 item-card border border-gray-100 items-center sm:items-stretch ${!isAvail ? 'opacity-60 select-none' : ''}">
       <img src="${item.image}" class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-cover cursor-pointer hover:scale-105 transition flex-shrink-0" onclick="openImageModal('${item.image}')" onerror="this.src='https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=200&auto=format&fit=crop'">
       <div class="flex-1 flex flex-col justify-between min-w-0">
         <div>
-          <h3 class="font-black text-lg sm:text-xl leading-tight truncate whitespace-normal line-clamp-1 sm:line-clamp-none">${item.name}</h3>
+          <div class="flex items-center gap-2 flex-wrap">
+            <h3 class="font-black text-lg sm:text-xl leading-tight truncate ${isAvail ? '' : 'text-gray-500'}">${item.name}</h3>
+            ${!isAvail ? `<span class="bg-red-100 text-redx font-black text-[10px] uppercase px-2 py-0.5 rounded-md tracking-wider">Esgotado</span>` : ''}
+          </div>
           <p class="text-xs sm:text-sm text-gray-500 mt-1 truncate whitespace-normal line-clamp-1 sm:line-clamp-2">${item.desc}</p>
         </div>
         <div class="flex justify-between items-center mt-2 sm:mt-4">
-          <div class="text-redx font-black text-lg sm:text-2xl">R$ ${item.price.toFixed(2).replace('.',',')}</div>
-          <div class="flex items-center gap-1 sm:gap-2 bg-gray-50 border p-1 rounded-xl flex-shrink-0">
-            <button onclick="changeQty('${item.id}',-1)" class="w-7 h-7 sm:w-9 sm:h-9 rounded-lg bg-white shadow-sm font-black text-base sm:text-xl flex items-center justify-center">−</button>
-            <span id="qty-${item.id}" class="font-black min-w-[20px] text-center text-sm sm:text-base">${cart[item.id]||0}</span>
-            <button onclick="changeQty('${item.id}',1)" class="w-7 h-7 sm:w-9 sm:h-9 rounded-lg bg-redx text-white shadow-sm font-black text-base sm:text-xl flex items-center justify-center">+</button>
-          </div>
+          <div class="${isAvail ? 'text-redx' : 'text-gray-400'} font-black text-lg sm:text-2xl">R$ ${item.price.toFixed(2).replace('.',',')}</div>
+          
+          ${isAvail ? `
+            <div class="flex items-center gap-1 sm:gap-2 bg-gray-50 border p-1 rounded-xl flex-shrink-0">
+              <button onclick="changeQty('${item.id}',-1)" class="w-7 h-7 sm:w-9 sm:h-9 rounded-lg bg-white shadow-sm font-black text-base sm:text-xl flex items-center justify-center">−</button>
+              <span id="qty-${item.id}" class="font-black min-w-[20px] text-center text-sm sm:text-base">${cart[item.id]||0}</span>
+              <button onclick="changeQty('${item.id}',1)" class="w-7 h-7 sm:w-9 sm:h-9 rounded-lg bg-redx text-white shadow-sm font-black text-base sm:text-xl flex items-center justify-center">+</button>
+            </div>
+          ` : `
+            <span class="text-xs font-bold text-gray-400 bg-gray-100 px-3 py-1.5 rounded-xl border border-dashed">Indisponível</span>
+          `}
         </div>
       </div>
     </div>
@@ -377,26 +404,33 @@ function card(item){
 function togglePizza(id){
   const box = document.getElementById(`sizes-${id}`);
   const icon = document.getElementById(`icon-${id}`);
+  if(!box) return;
   box.classList.toggle('hidden');
-  icon.style.transform = box.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+  if(icon) icon.style.transform = box.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
 }
 
 function getAllItems(){
   const combined=[];
   
   menuData.pizzas.forEach(pizza=>{
-    pizza.sizes.forEach(size=>{
-      combined.push({ id:`${pizza.id}_${size.suffix}`, name:`${pizza.name} (${size.label})`, price:size.price })
-    })
+    if(pizza.available !== false) {
+      pizza.sizes.forEach(size=>{
+        combined.push({ id:`${pizza.id}_${size.suffix}`, name:`${pizza.name} (${size.label})`, price:size.price })
+      })
+    }
   });
 
   menuData.bebidas.forEach(bebida=>{
-    bebida.sizes.forEach(size=>{
-      combined.push({ id:`${bebida.id}_${size.suffix}`, name:`${bebida.name} (${size.label})`, price:size.price })
-    })
+    if(bebida.available !== false) {
+      bebida.sizes.forEach(size=>{
+        combined.push({ id:`${bebida.id}_${size.suffix}`, name:`${bebida.name} (${size.label})`, price:size.price })
+      })
+    }
   });
 
-  return [...combined, ...menuData.hamburgueres];
+  const availableBurgers = menuData.hamburgueres.filter(h => h.available !== false);
+
+  return [...combined, ...availableBurgers];
 }
 
 function changeQty(id,delta){
@@ -448,6 +482,7 @@ function openCart(){
   let total = 0;
   cartItems.innerHTML = Object.entries(cart).map(([id,qty])=>{
     const item = items.find(i=>i.id===id);
+    if(!item) return '';
     const subtotal = item.price * qty;
     total += subtotal;
     return `
@@ -482,7 +517,6 @@ function closeImageModal(){
   modal.classList.remove('flex');
 }
 
-// Controladores Visuais Dinâmicos do Checkout
 function handleDeliveryTypeChange(value) {
   const addressFields = document.getElementById('address-fields');
   if (value === 'Retirada') {
@@ -501,25 +535,60 @@ function handlePaymentChange(value) {
   }
 }
 
-// ---- LÓGICA DE VERIFICAÇÃO DE HORÁRIO ----
+// ---- ATUALIZAÇÃO DA LÓGICA DE STATUS DA LOJA ----
 function checkStoreStatus() {
+  const badge = document.getElementById('store-badge-status');
+  const text = document.getElementById('store-badge-text');
+
+  // 1. Verificação Manual por Override
+  if (config.statusOverride === 'open') {
+    if(badge && text) {
+      badge.className = "inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs sm:text-sm font-black mt-3 shadow-md bg-green-500 text-white";
+      text.innerText = "ABERTO HOJE (Exceção)";
+    }
+    return true;
+  }
+  
+  if (config.statusOverride === 'closed') {
+    if(badge && text) {
+      badge.className = "inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs sm:text-sm font-black mt-3 shadow-md bg-red-600 text-white";
+      text.innerText = "FECHADO HOJE (Exceção)";
+    }
+    const modal = document.getElementById('closed-modal');
+    if (modal && modal.classList.contains('hidden')) {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+    return false;
+  }
+
+  // 2. Fluxo Automático por Horário Padrão ('auto')
   const now = new Date();
   const day = now.getDay(); 
   const hour = now.getHours();
   const minutes = now.getMinutes();
-  
   const currentTime = hour + (minutes / 60);
   
-  // Aberto das 18.5 (18:30) até 22.0 (22:00)
   const isOpenTime = currentTime >= 18.5 && currentTime < 22.0;
-  
-  // Fechado às segundas
   const isMonday = day === 1;
+  const isOpen = !isMonday && isOpenTime;
 
-  if (isMonday || !isOpenTime) {
+  if(badge && text) {
+    if (isOpen) {
+      badge.className = "inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs sm:text-sm font-black mt-3 shadow-md bg-emerald-600 text-white";
+      text.innerText = "ABERTO AGORA";
+    } else {
+      badge.className = "inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs sm:text-sm font-black mt-3 shadow-md bg-red-600 text-white";
+      text.innerText = "FECHADO NO MOMENTO";
+    }
+  }
+
+  if (!isOpen) {
     const modal = document.getElementById('closed-modal');
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
+    if (modal) {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
     return false; 
   }
   return true; 
@@ -527,14 +596,15 @@ function checkStoreStatus() {
 
 function closeStoreStatusModal() {
   const modal = document.getElementById('closed-modal');
-  modal.classList.add('hidden');
-  modal.classList.remove('flex');
+  if(modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
 }
 
 window.addEventListener('load', () => {
   checkStoreStatus();
 });
-// ------------------------------------------
 
 function sendWhatsApp(){
   if (!checkStoreStatus()) {
@@ -542,7 +612,6 @@ function sendWhatsApp(){
     return;
   }
 
-  // Validação dos novos campos adicionados
   const name = document.getElementById('checkout-name').value.trim();
   const deliveryType = document.querySelector('input[name="delivery-type"]:checked').value;
   const address = document.getElementById('checkout-address').value.trim();
@@ -564,7 +633,6 @@ function sendWhatsApp(){
   const items = getAllItems();
   let total = 0;
   
-  // Estrutura organizada da mensagem enviada
   let msg = `🍕 *NOVO PEDIDO - ${config.store}*\n`;
   msg += `━━━━━━━━━━━━━━━━━━━━━\n\n`;
   msg += `👤 *Cliente:* ${name}\n`;
@@ -575,7 +643,7 @@ function sendWhatsApp(){
     msg += `🏡 *Bairro:* ${neighborhood}\n`;
   }
   
-  msg += `💳 *Forma de Pagamento:* ${payment}\n`;
+  msg += `card_index *Forma de Pagamento:* ${payment}\n`;
   if (payment === 'Dinheiro' && change) {
     msg += `💵 *Troco para:* R$ ${change}\n`;
   }
@@ -585,10 +653,12 @@ function sendWhatsApp(){
 
   Object.entries(cart).forEach(([id,qty])=>{
     const item = items.find(i=>i.id===id);
-    const subtotal = item.price * qty;
-    total += subtotal;
-    msg += `• *${qty}x* ${item.name}\n`;
-    msg += `  R$ ${subtotal.toFixed(2).replace('.',',')}\n\n`;
+    if(item) {
+      const subtotal = item.price * qty;
+      total += subtotal;
+      msg += `• *${qty}x* ${item.name}\n`;
+      msg += `  R$ ${subtotal.toFixed(2).replace('.',',')}\n\n`;
+    }
   });
 
   if(obs !== ''){
