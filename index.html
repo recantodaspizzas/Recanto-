@@ -11,7 +11,7 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght=700;900&family=Lato:wght=400;700;900&display=swap" rel="stylesheet">
 
 <style>
 *{ margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
@@ -57,6 +57,7 @@ tailwind.config = {
 <img src="images/logo.jpg.png" class="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover border-4 border-white shadow-2xl mx-auto mb-3 sm:mb-4" alt="Logo Recanto das Pizzas" onerror="this.src='images/logo.jpg.png'">
 <h1 class="playfair text-4xl sm:text-5xl font-black text-white drop-shadow-lg leading-tight">Recanto das Pizzas</h1>
 
+<!-- Badge Dinâmico de Status da Loja -->
 <div id="store-badge-status" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs sm:text-sm font-black mt-3 shadow-md transition-all">
   <span class="w-2 h-2 rounded-full animate-pulse"></span>
   <span id="store-badge-text">Verificando...</span>
@@ -159,8 +160,7 @@ tailwind.config = {
     </div>
 
     <div id="address-fields" class="space-y-3">
-      <input id="checkout-address" type="text" placeholder="Rua, número e complemento" class="w-full border rounded-xl p-3 outline-none text-sm focus:border-greenx transition bg-white">
-      <input id="checkout-neighborhood" type="text" placeholder="Bairro" class="w-full border rounded-xl p-3 outline-none text-sm focus:border-greenx transition bg-white">
+      <input id="checkout-address" type="text" placeholder="Endereço completo (Rua, número, bairro...)" class="w-full border rounded-xl p-3 outline-none text-sm focus:border-greenx transition bg-white">
     </div>
   </div>
 
@@ -246,7 +246,7 @@ const menuData = {
       sizes:[ {label:'Grande',price:40,suffix:'grande'}, {label:'Média',price:35,suffix:'media'}, {label:'Brotinho',price:10,suffix:'brotinho'} ]
     },
     {
-      id:'p4', name:'Pizza Portuguesa', desc:'Presunto, mussarela, ovos, ervilha, cebola e azeitonas', available: false, // EXEMPLO INDISPONÍVEL
+      id:'p4', name:'Pizza Portuguesa', desc:'Presunto, mussarela, ovos, ervilha, cebola e azeitonas', available: false,
       image:'images/pizza de portuguesa.png',
       sizes:[ {label:'Grande',price:40,suffix:'grande'}, {label:'Média',price:35,suffix:'media'}, {label:'Brotinho',price:10,suffix:'brotinho'} ]
     },
@@ -266,7 +266,7 @@ const menuData = {
     { id:'h2', name:'X-Salada', desc:'Blend bovino 150g, Alface, Tomate, Cebola, cheddar, milho e maionese da casa', price:12, available: true, image:'images/x-salada.png' },
     { id:'h3', name:'X-Bacon', desc:'Blend 150g, cheddar, bacon crocante e salada', price:17, available: true, image:'images/x-bacon (2).png' },
     { id:'h4', name:'X-Calabresa', desc:'Blend 150g, cheddar e calabresa fatiada', price:15, available: true, image:'images/x-calabresa.png' },
-    { id:'h5', name:'X-EGG', desc:'Blend 150g, cheddar, ovo e salada', price:14, available: false, image:'images/x-Egg.png' }, // EXEMPLO INDISPONÍVEL
+    { id:'h5', name:'X-EGG', desc:'Blend 150g, cheddar, ovo e salada', price:14, available: false, image:'images/x-Egg.png' },
     { id:'h6', name:'X-Tudo', desc:'2 blends 150g, cheddar, calabresa e salada', price:25, available: true, image:'images/x-tudo.png' }
   ],
   bebidas:[
@@ -535,12 +535,10 @@ function handlePaymentChange(value) {
   }
 }
 
-// ---- ATUALIZAÇÃO DA LÓGICA DE STATUS DA LOJA ----
 function checkStoreStatus() {
   const badge = document.getElementById('store-badge-status');
   const text = document.getElementById('store-badge-text');
 
-  // 1. Verificação Manual por Override
   if (config.statusOverride === 'open') {
     if(badge && text) {
       badge.className = "inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs sm:text-sm font-black mt-3 shadow-md bg-green-500 text-white";
@@ -562,7 +560,6 @@ function checkStoreStatus() {
     return false;
   }
 
-  // 2. Fluxo Automático por Horário Padrão ('auto')
   const now = new Date();
   const day = now.getDay(); 
   const hour = now.getHours();
@@ -615,7 +612,6 @@ function sendWhatsApp(){
   const name = document.getElementById('checkout-name').value.trim();
   const deliveryType = document.querySelector('input[name="delivery-type"]:checked').value;
   const address = document.getElementById('checkout-address').value.trim();
-  const neighborhood = document.getElementById('checkout-neighborhood').value.trim();
   const payment = document.getElementById('checkout-payment').value;
   const change = document.getElementById('checkout-change').value.trim();
   const obs = document.getElementById('obs').value.trim();
@@ -625,8 +621,8 @@ function sendWhatsApp(){
     return;
   }
 
-  if (deliveryType === 'Entrega' && (!address || !neighborhood)) {
-    alert("Por favor, preencha o endereço completo (Rua e Bairro) para a entrega.");
+  if (deliveryType === 'Entrega' && !address) {
+    alert("Por favor, preencha o endereço completo para a entrega.");
     return;
   }
 
@@ -640,10 +636,9 @@ function sendWhatsApp(){
   
   if (deliveryType === 'Entrega') {
     msg += `📍 *Endereço:* ${address}\n`;
-    msg += `🏡 *Bairro:* ${neighborhood}\n`;
   }
   
-  msg += `card_index *Forma de Pagamento:* ${payment}\n`;
+  msg += `💳 *Forma de Pagamento:* ${payment}\n`;
   if (payment === 'Dinheiro' && change) {
     msg += `💵 *Troco para:* R$ ${change}\n`;
   }
@@ -671,10 +666,8 @@ function sendWhatsApp(){
   window.open(`https://wa.me/${config.whatsapp}?text=${encodeURIComponent(msg)}`,'_blank');
 }
 
-// Inicializações
 renderMenu();
 lucide.createIcons();
-
 </script>
 </body>
 </html>
