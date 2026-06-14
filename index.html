@@ -119,6 +119,7 @@ tailwind.config = {
 </div>
 </div>
 
+<!-- MODAL DO CARRINHO COM CHECKOUT DE DADOS -->
 <div id="cart-modal" class="fixed inset-0 z-[100] hidden">
 <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeCart()"></div>
 <div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-[30px] sm:rounded-t-[35px] max-h-[90%] overflow-y-auto p-4 sm:p-6 modal-anim w-full max-w-3xl mx-auto">
@@ -133,14 +134,58 @@ tailwind.config = {
 <div class="text-5xl sm:text-6xl mb-4">🛒</div>
 <p class="font-bold text-lg sm:text-xl">Seu carrinho está vazio</p>
 </div>
+
 <div id="cart-footer" class="hidden pt-4 sm:pt-6 mt-4 sm:mt-6 border-t">
+  
+  <!-- SEÇÃO DE INFORMAÇÕES DE ENTREGA E IDENTIFICAÇÃO -->
+  <div class="mb-6 space-y-4 bg-gray-50 p-4 rounded-2xl border border-gray-100">
+    <h4 class="font-black text-gray-800 text-sm sm:text-base uppercase tracking-wider flex items-center gap-2">
+      <i data-lucide="user" class="w-4 h-4 text-greenx"></i> Seus Dados
+    </h4>
+    <input id="checkout-name" type="text" placeholder="Seu nome completo" class="w-full border rounded-xl p-3 outline-none text-sm focus:border-greenx transition bg-white">
+    
+    <div class="grid grid-cols-2 gap-3">
+      <label class="flex items-center gap-2 bg-white p-3 border rounded-xl cursor-pointer shadow-sm">
+        <input type="radio" name="delivery-type" value="Entrega" checked onchange="handleDeliveryTypeChange(this.value)" class="accent-greenx">
+        <span class="text-xs sm:text-sm font-bold text-gray-700">🛵 Entrega</span>
+      </label>
+      <label class="flex items-center gap-2 bg-white p-3 border rounded-xl cursor-pointer shadow-sm">
+        <input type="radio" name="delivery-type" value="Retirada" onchange="handleDeliveryTypeChange(this.value)" class="accent-greenx">
+        <span class="text-xs sm:text-sm font-bold text-gray-700">🏪 Retirada</span>
+      </label>
+    </div>
+
+    <!-- Campos de Endereço Ocultados Dinamicamente -->
+    <div id="address-fields" class="space-y-3">
+      <input id="checkout-address" type="text" placeholder="Rua, número e complemento" class="w-full border rounded-xl p-3 outline-none text-sm focus:border-greenx transition bg-white">
+      <input id="checkout-neighborhood" type="text" placeholder="Bairro" class="w-full border rounded-xl p-3 outline-none text-sm focus:border-greenx transition bg-white">
+    </div>
+  </div>
+
+  <!-- SEÇÃO DE PAGAMENTO -->
+  <div class="mb-6 space-y-4 bg-gray-50 p-4 rounded-2xl border border-gray-100">
+    <h4 class="font-black text-gray-800 text-sm sm:text-base uppercase tracking-wider flex items-center gap-2">
+      <i data-lucide="credit-card" class="w-4 h-4 text-greenx"></i> Forma de Pagamento
+    </h4>
+    <select id="checkout-payment" onchange="handlePaymentChange(this.value)" class="w-full border rounded-xl p-3 outline-none text-sm bg-white focus:border-greenx transition">
+      <option value="Pix">💎 Pix</option>
+      <option value="Cartão de Crédito">💳 Cartão de Crédito</option>
+      <option value="Cartão de Débito">💳 Cartão de Débito</option>
+      <option value="Dinheiro">💵 Dinheiro</option>
+    </select>
+    
+    <div id="change-field" class="hidden">
+      <input id="checkout-change" type="text" placeholder="Precisa de troco para quanto? (Ex: 50)" class="w-full border rounded-xl p-3 outline-none text-sm focus:border-greenx transition bg-white">
+    </div>
+  </div>
+
 <div class="bg-gray-50 rounded-2xl p-4 sm:p-5 mb-4 sm:mb-5">
 <div class="flex justify-between items-center">
 <span class="font-bold text-base sm:text-lg">Total</span>
 <span id="modal-total" class="playfair text-2xl sm:text-3xl font-black text-redx">R$ 0,00</span>
 </div>
 </div>
-<textarea id="obs" placeholder="Observações do pedido..." class="w-full border rounded-2xl p-4 mb-4 sm:mb-5 outline-none resize-none h-24 sm:h-28 text-sm sm:text-base"></textarea>
+<textarea id="obs" placeholder="Observações do pedido (ex: sem cebola, retirar borda)..." class="w-full border rounded-2xl p-4 mb-4 sm:mb-5 outline-none resize-none h-24 sm:h-28 text-sm sm:text-base"></textarea>
 <button onclick="sendWhatsApp()" class="w-full bg-gradient-to-r from-greenx to-redx text-white font-black text-base sm:text-lg py-3 sm:py-4 rounded-2xl shadow-xl hover:scale-[1.02] transition flex items-center justify-center gap-3">
 <i data-lucide="send"></i>
 Enviar Pedido
@@ -153,7 +198,8 @@ Enviar Pedido
   <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeStoreStatusModal()"></div>
   <div class="relative z-10 bg-white max-w-sm w-full p-5 sm:p-6 rounded-3xl shadow-2xl text-center modal-anim">
     <div class="w-20 h-20 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner overflow-hidden">
-      <img src="images/logo da janela feixado.jpeg" alt="Forno a lenha do Recanto" class="w-full h-full object-cover">
+      <!-- Nome corrigido para evitar falha em servidores de hospedagem -->
+      <img src="images/logo_janela_fechado.jpeg" alt="Forno a lenha do Recanto" class="w-full h-full object-cover">
     </div>
     <h3 class="playfair text-2xl sm:text-3xl font-black text-gray-900 mb-2">Estamos Fechados</h3>
     <p class="text-gray-600 mt-2 sm:mt-3 mb-5 sm:mb-6 text-base sm:text-lg leading-relaxed">
@@ -436,6 +482,25 @@ function closeImageModal(){
   modal.classList.remove('flex');
 }
 
+// Controladores Visuais Dinâmicos do Checkout
+function handleDeliveryTypeChange(value) {
+  const addressFields = document.getElementById('address-fields');
+  if (value === 'Retirada') {
+    addressFields.classList.add('hidden');
+  } else {
+    addressFields.classList.remove('hidden');
+  }
+}
+
+function handlePaymentChange(value) {
+  const changeField = document.getElementById('change-field');
+  if (value === 'Dinheiro') {
+    changeField.classList.remove('hidden');
+  } else {
+    changeField.classList.add('hidden');
+  }
+}
+
 // ---- LÓGICA DE VERIFICAÇÃO DE HORÁRIO ----
 function checkStoreStatus() {
   const now = new Date();
@@ -477,25 +542,61 @@ function sendWhatsApp(){
     return;
   }
 
+  // Validação dos novos campos adicionados
+  const name = document.getElementById('checkout-name').value.trim();
+  const deliveryType = document.querySelector('input[name="delivery-type"]:checked').value;
+  const address = document.getElementById('checkout-address').value.trim();
+  const neighborhood = document.getElementById('checkout-neighborhood').value.trim();
+  const payment = document.getElementById('checkout-payment').value;
+  const change = document.getElementById('checkout-change').value.trim();
+  const obs = document.getElementById('obs').value.trim();
+
+  if (!name) {
+    alert("Por favor, informe o seu nome para o pedido.");
+    return;
+  }
+
+  if (deliveryType === 'Entrega' && (!address || !neighborhood)) {
+    alert("Por favor, preencha o endereço completo (Rua e Bairro) para a entrega.");
+    return;
+  }
+
   const items = getAllItems();
   let total = 0;
-  let msg = `🍕 *NOVO PEDIDO - ${config.store}*\n\n`;
+  
+  // Estrutura organizada da mensagem enviada
+  let msg = `🍕 *NOVO PEDIDO - ${config.store}*\n`;
+  msg += `━━━━━━━━━━━━━━━━━━━━━\n\n`;
+  msg += `👤 *Cliente:* ${name}\n`;
+  msg += `📌 *Tipo:* ${deliveryType}\n`;
+  
+  if (deliveryType === 'Entrega') {
+    msg += `📍 *Endereço:* ${address}\n`;
+    msg += `🏡 *Bairro:* ${neighborhood}\n`;
+  }
+  
+  msg += `💳 *Forma de Pagamento:* ${payment}\n`;
+  if (payment === 'Dinheiro' && change) {
+    msg += `💵 *Troco para:* R$ ${change}\n`;
+  }
+  
+  msg += `\n━━━━━━━━━━━━━━━━━━━━━\n`;
+  msg += `🛒 *ITENS DO PEDIDO*\n\n`;
 
   Object.entries(cart).forEach(([id,qty])=>{
     const item = items.find(i=>i.id===id);
     const subtotal = item.price * qty;
     total += subtotal;
-    msg += `*${qty}x* ${item.name}\n`;
-    msg += `R$ ${subtotal.toFixed(2).replace('.',',')}\n\n`;
+    msg += `• *${qty}x* ${item.name}\n`;
+    msg += `  R$ ${subtotal.toFixed(2).replace('.',',')}\n\n`;
   });
 
-  const obs = document.getElementById('obs').value;
-  if(obs.trim()!==''){
+  if(obs !== ''){
     msg += `📝 *OBSERVAÇÕES:*\n${obs}\n\n`;
   }
 
-  msg += `━━━━━━━━━━━━\n`;
-  msg += `💰 *TOTAL: R$ ${total.toFixed(2).replace('.',',')}*`;
+  msg += `━━━━━━━━━━━━━━━━━━━━━\n`;
+  msg += `💰 *TOTAL DO PEDIDO: R$ ${total.toFixed(2).replace('.',',')}*`;
 
   window.open(`https://wa.me/${config.whatsapp}?text=${encodeURIComponent(msg)}`,'_blank');
 }
