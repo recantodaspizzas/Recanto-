@@ -547,7 +547,7 @@ function checkStoreStatus() {
     return true;
   }
   
-  if (config.statusOverride === 'open') {
+  if (config.statusOverride === 'closed') {
     if(badge && text) {
       badge.className = "inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs sm:text-sm font-black mt-3 shadow-md bg-red-600 text-white";
       text.innerText = "FECHADO HOJE (Exceção)";
