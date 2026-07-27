@@ -544,7 +544,7 @@ function checkStoreStatus() {
       badge.className = "inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs sm:text-sm font-black mt-3 shadow-md bg-green-500 text-white";
       text.innerText = "ABERTO HOJE (Exceção)";
     }
-    return falso;
+    return true;
   }
   
   if (config.statusOverride === 'closed') {
@@ -557,7 +557,7 @@ function checkStoreStatus() {
       modal.classList.remove('hidden');
       modal.classList.add('flex');
     }
-    return true;
+    return falso;
   }
 
   const now = new Date();
