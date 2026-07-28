@@ -222,19 +222,19 @@ const config = {
   // 'auto'   => Segue o horário padrão (18:30 às 22:00, fecha segunda)
   // 'open'   => Força a loja a ficar HOJE ABERTA (ignora horário e dia)
   // 'closed' => Força a loja a ficar HOJE FECHADA (ignora horário e dia)
-  statusOverride: 'closed' 
+  statusOverride: 'auto' 
 }
 
 let cart = {};
 
 // CONFIGURAÇÃO DOS PRODUTOS (Para desativar um item, mude 'available' para false)
 const menuData = {
-  pizzas:[
-    {
-      id:'p1', name:'Pizza Mussarela', desc:'Molho de tomate, mussarela, fatias de tomate, azeitonas e orégano', available: true,
+  pizzas:[:'Molho de tomate, mussarela, fatias de tomate, azeitonas e orégano', available: true,
       image:'images/pizza_mussarela.jpg.png.jpg',
       sizes:[ {label:'Grande',price:40,suffix:'grande'}, {label:'Média',price:35,suffix:'media'}, {label:'Brotinho',price:10,suffix:'brotinho'} ]
     },
+    {
+      id:'p1', name:'Pizza Mussarela', desc
     {
       id:'p2', name:'Pizza Calabresa', desc:'Molho de tomate, mussarela, calabresa fatiada e cebola', available: true,
       image:'images/pizza_calabresa.jpg.png',
