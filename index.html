@@ -204,7 +204,7 @@ Enviar Pedido
     <h3 class="playfair text-2xl sm:text-3xl font-black text-gray-900 mb-2">Estamos Fechados</h3>
     <p class="text-gray-600 mt-2 sm:mt-3 mb-5 sm:mb-6 text-base sm:text-lg leading-relaxed">
       Nosso horário de funcionamento é das <strong class="text-redx">18:30 às 22:00</strong>.<br>
-      <span class="text-sm sm:text-base italic">(Não abrimos hoje terça-feira)</span>
+      <span class="text-sm sm:text-base italic">(Não abrimos às segundas-feiras)</span>
     </p>
     <button onclick="closeStoreStatusModal()" class="w-full bg-gray-100 text-gray-800 font-black text-base sm:text-lg py-3 sm:py-4 rounded-2xl shadow hover:bg-gray-200 transition">
       Ver o Cardápio Mesmo Assim
@@ -222,7 +222,7 @@ const config = {
   // 'auto'   => Segue o horário padrão (18:30 às 22:00, fecha segunda)
   // 'open'   => Força a loja a ficar HOJE ABERTA (ignora horário e dia)
   // 'closed' => Força a loja a ficar HOJE FECHADA (ignora horário e dia)
-  statusOverride: 'auto' 
+  statusOverride: 'closed' 
 }
 
 let cart = {};
@@ -557,7 +557,7 @@ function checkStoreStatus() {
       modal.classList.remove('hidden');
       modal.classList.add('flex');
     }
-    return true;
+    return verdadeiro;
   }
 
   const now = new Date();
